@@ -43,7 +43,7 @@ if ($cleared.roots -ne 0 -or $cleared.survivingToys -ne 0) { throw 'Machine toys
 $null=Invoke-LabScreenshot -Name 'scp294-cleared'
 $null=Invoke-LabServer '/scp294 spawn'
 $replacement=Machine-State
-if ($replacement.roots -ne 1 -or $replacement.toys -ne $machineState.toys) { throw 'Replacement model count changed' }
+if ($replacement.roots -ne 1 -or $replacement.toys -ne $machineState.toys -or [Math]::Abs($replacement.baseY - $machineState.baseY) -gt 0.02) { throw 'Replacement model count or floor placement changed' }
 $null=Invoke-LabInput @{id='model-respawn-quota';frames=90;keys=@(101);capture=$true}
 if (@(@(Observe -ClientsOnly)[0].items).Count -ne 1) { throw 'Machine replacement reset quota' }
 $null=Invoke-LabServer '/scp294 clear'

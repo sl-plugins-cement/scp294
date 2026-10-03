@@ -60,7 +60,12 @@ namespace Qlz.Model
         public void Dispose()
         {
             // Native AdminToy destruction cascades to the replicated child hierarchy.
-            if (root != null && !root.IsDestroyed) root.Destroy();
+            if (root != null && !root.IsDestroyed)
+            {
+                // Unity defers destruction; a same-frame replacement must not raycast onto the old cabinet.
+                foreach (Collider collider in root.GameObject.GetComponentsInChildren<Collider>()) collider.enabled = false;
+                root.Destroy();
+            }
             root = null;
         }
     }

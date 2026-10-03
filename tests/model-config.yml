@@ -58,4 +58,3 @@ buff_hint_x: -260
 item_hint_y: 790
 # 临时文案纵坐标，与介绍和倒计时分开。
 message_hint_y: 560
-

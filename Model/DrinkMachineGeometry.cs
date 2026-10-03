@@ -30,12 +30,12 @@ namespace Qlz.Model
         internal static readonly Label[] Labels =
         {
             Text("nameplate", "<color=#EBE5D4><b>SCP-294</b></color>", 0f, 2.09f, -0.371f, 1.03f, 100f, 16),
-            Text("display-title", "<color=#342C27><b>咖啡 · 饮料</b></color>", -0.13f, 1.92f, -0.371f, 0.83f, 100f, 12),
+            Text("display-title", "<color=#342C27><b>咖啡 · 饮料</b></color>", -0.13f, 1.92f, -0.381f, 0.83f, 100f, 12),
             Text("keyboard-numbers", "1  2  3  4  5  6  7  8  9  0", -0.13f, 1.36f, -0.391f, 0.72f, 150f, 9),
             Text("keyboard-qwerty", "Q  W  E  R  T  Y  U  I  O  P", -0.13f, 1.295f, -0.391f, 0.72f, 150f, 9),
             Text("keyboard-home", "A  S  D  F  G  H  J  K  L", -0.115f, 1.23f, -0.391f, 0.66f, 150f, 9),
             Text("keyboard-bottom", "Z  X  C  V  B  N  M", -0.105f, 1.165f, -0.391f, 0.52f, 150f, 9),
-            Text("coin-display", "<color=#C2E09D>就绪</color>", 0.465f, 1.58f, -0.386f, 0.20f, 80f, 14),
+            Text("coin-display", "<color=#C2E09D>就绪</color>", 0.465f, 1.58f, -0.393f, 0.20f, 80f, 14),
             Text("instructions", "<color=#DFE4D4>按住互动键领取</color>", -0.11f, 0.92f, -0.374f, 0.76f, 110f, 12),
             Text("quota", "<color=#C4C9CA>每条生命一瓶</color>", -0.11f, 0.34f, -0.374f, 0.72f, 110f, 11),
         };

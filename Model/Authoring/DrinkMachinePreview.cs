@@ -100,4 +100,3 @@ namespace Scp294Authoring
         }
     }
 }
-
