@@ -69,29 +69,57 @@ internal static class Program
         Check(verifiedKeys == yaml.Count, "全部 YAML 配置字段均有代码默认值");
 
         // A short gameplay walkthrough cannot establish the legendary roll's probability.
+        Check(DrinkRolls.TryCreate(config, out DrinkRolls? rolls, out _), "Default odds form a valid lottery");
         var counts = new Dictionary<Drink, int>();
         for (int ticket = 0; ticket < DrinkRolls.Tickets; ticket++)
         {
-            Drink drink = DrinkRolls.Pick(ticket);
+            Drink drink = rolls!.Pick(ticket);
             counts.TryGetValue(drink, out int count);
             counts[drink] = count + 1;
         }
-        Check(counts.Count == 8 && DrinkRolls.Tickets == 1000, "All drinks represented in the exact 1,000-ticket lottery");
-        Check(counts[Drink.Coffee] == 800, "Ordinary coffee 80%");
-        Check(counts[Drink.Ahead] == 100, "Mild Ahead 10%");
-        Check(counts[Drink.QiaoLeZi] == 20, "QiaoLeZi 2%, with its existing branch roll");
-        Check(counts[Drink.SixtySeven] == 30, "67 3%");
-        Check(counts[Drink.Vodka] == 30, "Vodka 3%");
-        Check(counts[Drink.CompoundV] == 10, "Compound V 1%");
-        Check(counts[Drink.Meteor] == 8, "Meteor 0.8%");
-        Check(counts[Drink.Jiahao] == 2, "Jiahao 0.2%, with its existing 10% success roll");
+        Check(counts.Count == 8 && DrinkRolls.Tickets == 10000, "Exact 10,000-ticket lottery");
+        Check(counts[Drink.Scp207] == 7800, "Native SCP-207 78%");
+        Check(counts[Drink.Ahead] == 1000, "Mild Ahead 10%");
+        Check(counts[Drink.QiaoLeZi] == 240, "QiaoLeZi 2.4%");
+        Check(counts[Drink.SixtySeven] == 360, "67 3.6%");
+        Check(counts[Drink.Vodka] == 360, "Vodka 3.6%");
+        Check(counts[Drink.CompoundV] == 120, "Compound V 1.2%");
+        Check(counts[Drink.Meteor] == 96, "Meteor 0.96%");
+        Check(counts[Drink.Jiahao] == 24, "Jiahao 0.24%");
         foreach (int invalid in new[] { -1, DrinkRolls.Tickets })
         {
             bool rejected = false;
-            try { DrinkRolls.Pick(invalid); }
+            try { rolls!.Pick(invalid); }
             catch (ArgumentOutOfRangeException) { rejected = true; }
             Check(rejected, "Lottery rejects an out-of-range ticket");
         }
+        Config Only207() => new()
+        {
+            Scp207ChancePercent = 100, AheadChancePercent = 0, QiaoLeZiChancePercent = 0,
+            SixtySevenChancePercent = 0, VodkaChancePercent = 0, CompoundVChancePercent = 0,
+            MeteorChancePercent = 0, JiahaoChancePercent = 0,
+        };
+        var nativeOnly = Only207();
+        Check(DrinkRolls.TryCreate(nativeOnly, out DrinkRolls? forced, out _), "100% native bottle config accepted");
+        bool allNative = true;
+        for (int i = 0; i < DrinkRolls.Tickets; i++) allNative &= forced!.Pick(i) == Drink.Scp207;
+        Check(allNative, "Zero-weight rare drinks cannot be selected");
+        nativeOnly.Scp207ChancePercent = 0;
+        Check(forced!.Pick(DrinkRolls.Tickets - 1) == Drink.Scp207, "Loaded odds are an immutable snapshot");
+        var tiny = Only207();
+        tiny.Scp207ChancePercent = 99.99;
+        tiny.JiahaoChancePercent = 0.01;
+        Check(DrinkRolls.TryCreate(tiny, out DrinkRolls? minimum, out _) &&
+            minimum!.Pick(9998) == Drink.Scp207 && minimum.Pick(9999) == Drink.Jiahao, "Smallest supported percentage and ticket boundary");
+        foreach (double invalid in new[] { -1, 101, 99, 0, double.NaN, double.PositiveInfinity, double.NegativeInfinity, 99.999 })
+        {
+            var bad = Only207();
+            bad.Scp207ChancePercent = invalid;
+            Check(!DrinkRolls.TryCreate(bad, out DrinkRolls? rejected, out string error) && rejected == null && error.Length > 0,
+                "Invalid odds rejected with a diagnostic: " + invalid);
+        }
+        var over = new Config { Scp207ChancePercent = 79 };
+        Check(!DrinkRolls.TryCreate(over, out _, out _), "Combined total over 100% rejected");
         Console.WriteLine($"Passed {checks} life quota/default configuration/rarity checks.");
     }
 }

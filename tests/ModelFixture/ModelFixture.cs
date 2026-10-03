@@ -53,11 +53,11 @@ public sealed class FixtureCommand : ICommand
             return true;
         }
         if (args.Count != 2 || !int.TryParse(args.At(1), out int id) || !Player.TryGet(id, out Player player))
-        { response = "Usage: scp294fixture place|view|angle|fill|empty|effects <id>"; return false; }
+        { response = "Usage: scp294fixture place|view|angle|fill|empty|injure|vulnerable|effects <id>"; return false; }
         switch (args.At(0))
         {
             case "effects":
-                response = FormattableString.Invariant($"EFFECT_STATE {{\"maxHealth\":{player.MaxHealth},\"health\":{player.Health},\"movement\":{player.GetEffect<CustomPlayerEffects.MovementBoost>().Intensity},\"slowness\":{player.GetEffect<CustomPlayerEffects.Slowness>().Intensity}}}");
+                response = FormattableString.Invariant($"EFFECT_STATE {{\"maxHealth\":{player.MaxHealth},\"health\":{player.Health},\"movement\":{player.GetEffect<CustomPlayerEffects.MovementBoost>().Intensity},\"slowness\":{player.GetEffect<CustomPlayerEffects.Slowness>().Intensity},\"scp207\":{player.GetEffect<CustomPlayerEffects.Scp207>().Intensity},\"scp207Duration\":{player.GetEffect<CustomPlayerEffects.Scp207>().Duration},\"damageReduction\":{player.GetEffect<CustomPlayerEffects.DamageReduction>().Intensity},\"cardiac\":{player.GetEffect<CustomPlayerEffects.CardiacArrest>().Intensity},\"stamina\":{player.ReferenceHub.playerStats.GetModule<PlayerStatsSystem.StaminaStat>().CurValue}}}");
                 return true;
             case "view":
                 if (roots.Length != 1) { response = "Expected one machine."; return false; }
@@ -79,6 +79,8 @@ public sealed class FixtureCommand : ICommand
                 for (int i = 0; i < 8; i++) player.AddItem(ItemType.Flashlight);
                 break;
             case "empty": player.ClearInventory(); break;
+            case "injure": player.Health = 50; break;
+            case "vulnerable": player.IsGodModeEnabled = false; break;
             default: response = "Unknown fixture operation."; return false;
         }
         response = "FIXTURE_OK " + args.At(0);

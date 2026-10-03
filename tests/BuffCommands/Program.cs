@@ -44,10 +44,13 @@ internal static class Program
                 "RA access alone cannot " + action + " the machine");
         Check(Run(new[] { "give", "me", "67" }, out _) && plugin.LastTarget == admin && plugin.LastGrant!.Drink == Drink.SixtySeven,
             "管理员自身直接给予");
-        Check(Run(new[] { "give", "2", "coffee", "5" }, out _) && plugin.LastGrant!.Drink == Drink.Coffee && plugin.LastGrant.Duration == 5,
-            "Coffee admin grant with a bounded duration");
-        Check(Run(new[] { "give", "2", "普通咖啡" }, out _) && plugin.LastGrant!.Drink == Drink.Coffee,
-            "Coffee's in-game name resolves to the same drink");
+        foreach (string alias in new[] { "scp207", "207", "正常207", "普通scp-207", "普通咖啡", "coffee" })
+            Check(Run(new[] { "give", "2", alias }, out _) && plugin.LastGrant!.Drink == Drink.Scp207 && plugin.LastGrant.Duration == null,
+                "Native SCP-207 bottle alias: " + alias);
+        int nativeBefore = plugin.GiveCount;
+        foreach (string option in new[] { "5", "primary", "random" })
+            Check(!Run(new[] { "give", "all", "scp207", option }, out _) && plugin.GiveCount == nativeBefore,
+                "Native bottle overrides rejected before inventory changes: " + option);
         Check(Run(new[] { "give", "2", "巧乐兹" }, out _) && plugin.LastGrant!.Branch == BuffBranch.Primary && plugin.LastGrant.Duration == null,
             "巧乐兹默认为加速，沿用配置时长");
         Check(Run(new[] { "give", "2", "qlz", "cardiac", "12.5" }, out _) && plugin.LastGrant!.Branch == BuffBranch.Secondary && plugin.LastGrant.Duration == 12.5f,

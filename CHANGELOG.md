@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.7.0
+
+- Expose all eight drop probabilities, conditional branch probabilities and movement, damage and backlash percentages in configuration.
+- Increase combined rare drink odds from 10% to 12%, with 78% normal SCP-207 and 10% Ahead.
+- Replace ordinary coffee with a native SCP-207 bottle, preserving native use, healing, stacking and health drain; remove `coffee_duration`.
+- Give native bottles through `scp294 buff give ... scp207`; retain coffee aliases and reject duration or branch overrides for this result.
+
 ## 0.6.0
 
 - Make 90% of draws mild coffee or Ahead, with the strongest and joke drinks occupying the remaining 10%; Jiahao drops at 0.2% and retains its 10% success branch.

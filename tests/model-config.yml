@@ -24,8 +24,33 @@ spawn_broadcast_duration: 8
 qiao_le_zi_duration: 120
 # 巧乐兹负面分支的心脏骤停持续秒数。
 qiao_le_zi_cardiac_duration: 6
-# Ordinary coffee's mild speed boost duration, in seconds.
-coffee_duration: 30
+# Drop percentages: 0 disables a drink; up to two decimal places; total must be 100.
+# Invalid odds log a warning and use the default odds below until the next load.
+scp207_chance_percent: 78
+ahead_chance_percent: 10
+qiao_le_zi_chance_percent: 2.4
+sixty_seven_chance_percent: 3.6
+vodka_chance_percent: 3.6
+compound_v_chance_percent: 1.2
+meteor_chance_percent: 0.96
+jiahao_chance_percent: 0.24
+# Conditional branch probabilities, 0-100 percent.
+qiao_le_zi_cardiac_chance_percent: 50
+jiahao_success_chance_percent: 10
+# Bonus movement speed: native MovementBoost intensity, 0-255 percent.
+qiao_le_zi_speed_boost_percent: 100
+ahead_speed_boost_percent: 20
+compound_v_speed_boost_percent: 255
+meteor_speed_boost_percent: 150
+# Firearm damage bonus, clamped to 0-1000 percent.
+ahead_firearm_damage_bonus_percent: 5
+# Slowness, clamped to 0-100 percent.
+ahead_backlash_slowness_percent: 20
+# Original maximum HP retained during backlash, clamped to 1-100 percent.
+ahead_backlash_max_health_percent: 80
+vodka_slowness_percent: 10
+# Actual damage reduction, clamped to 0-100 and rounded to native 0.5% steps.
+vodka_damage_reduction_percent: 7.5
 # 67 饮料的效果持续时间。
 sixty_seven_duration: 67
 # 遥遥领先主效果持续时间。
