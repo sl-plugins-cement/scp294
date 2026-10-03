@@ -4,12 +4,12 @@ using System.Globalization;
 
 namespace Qlz;
 
-internal enum Drink { QiaoLeZi, SixtySeven, Ahead, Vodka, CompoundV, Meteor, Jiahao, Coffee }
+internal enum Drink { QiaoLeZi, SixtySeven, Ahead, Vodka, CompoundV, Meteor, Jiahao, Scp207 }
 internal enum BuffBranch { Primary, Secondary, Random }
 
 internal sealed class BuffGrant
 {
-    internal const string Catalog = "普通咖啡(coffee)、巧乐兹(qlz)、67、遥遥领先(ahead)、伏特加(vodka)、5号化合物(v)、美味流星(meteor)、嘉豪(jiahao)";
+    internal const string Catalog = "普通SCP-207(scp207，给予原生瓶子)、巧乐兹(qlz)、67、遥遥领先(ahead)、伏特加(vodka)、5号化合物(v)、美味流星(meteor)、嘉豪(jiahao)";
     public Drink Drink { get; }
     public float? Duration { get; }
     public BuffBranch Branch { get; }
@@ -28,7 +28,8 @@ internal sealed class BuffGrant
         Drink drink;
         switch (name.ToLowerInvariant().TrimEnd('?', '？'))
         {
-            case "普通咖啡": case "咖啡": case "coffee": drink = Drink.Coffee; break;
+            case "scp207": case "207": case "普通207": case "正常207": case "普通scp-207":
+            case "普通咖啡": case "咖啡": case "coffee": drink = Drink.Scp207; break;
             case "巧乐兹": case "qlz": case "qiaolezi": drink = Drink.QiaoLeZi; break;
             case "67": case "sixtyseven": drink = Drink.SixtySeven; break;
             case "遥遥领先": case "ahead": drink = Drink.Ahead; break;
@@ -76,6 +77,8 @@ internal sealed class BuffGrant
             }
             hasBranch = true;
         }
+        if (drink == Drink.Scp207 && (duration.HasValue || hasBranch))
+        { error = "普通SCP-207给予原生瓶子，不接受自定义秒数或分支。"; return false; }
         grant = new BuffGrant(drink, duration, branch);
         return true;
     }

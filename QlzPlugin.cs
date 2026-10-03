@@ -22,14 +22,10 @@ public sealed class QlzPlugin : Plugin<Config>
     public override string Name => "SCP-294？";
     public override string Description => "地表 SCP-294 搞怪饮料机。";
     public override string Author => "Codex";
-    public override Version Version => new(0, 6, 0);
+    public override Version Version => new(0, 7, 0);
     public override Version RequiredApiVersion => new(LabApiProperties.CompiledVersion);
 
-    private const byte CoffeeSpeedBoost = 10;
-    private const byte AheadSpeedBoost = 20;
-    private const float AheadDamageMultiplier = 1.05f;
-    private const byte AheadBacklashSlowness = 20;
-    private const float AheadBacklashHealthMultiplier = 0.8f;
+    private DrinkRolls lottery = null!;
     private readonly Dictionary<ushort, Drink> drinks = new();
     private readonly Dictionary<int, float> nextUse = new();
     private readonly LifeBottleQuota bottleQuota = new();
@@ -71,6 +67,12 @@ public sealed class QlzPlugin : Plugin<Config>
         }
 
         Hints.Reset();
+        if (!DrinkRolls.TryCreate(Config, out DrinkRolls? configuredRolls, out string error))
+        {
+            Logger.Warn("[SCP-294?] " + error + " Using default drink chances.");
+            DrinkRolls.TryCreate(new Config(), out configuredRolls, out _);
+        }
+        lottery = configuredRolls!;
         PlayerEvents.SearchingToy += OnSearchingToy;
         PlayerEvents.SearchedToy += OnSearchedToy;
         PlayerEvents.UsingItem += OnUsingItem;
@@ -147,8 +149,11 @@ public sealed class QlzPlugin : Plugin<Config>
 
     internal string GiveBuff(Player player, BuffGrant grant)
     {
-        ApplyDrink(player, grant.Drink, grant.Duration, grant.Branch);
         string prefix = $"{player.Nickname}({player.PlayerId})：";
+        if (grant.Drink == Drink.Scp207)
+            return prefix + (player.IsInventoryFull || player.AddItem(ItemType.SCP207) == null
+                ? "背包已满，无法给予普通SCP-207。" : "已给予普通SCP-207，按原生流程饮用。");
+        ApplyDrink(player, grant.Drink, grant.Duration, grant.Branch);
         return prefix + (player.IsAlive ? GetBuffDescription(player) : "已触发嘉豪失败分支，玩家死亡。");
     }
 
@@ -233,17 +238,19 @@ public sealed class QlzPlugin : Plugin<Config>
             Notice(player, $"<color=#FFD34D>饮料机还在冷却：{ready - now:0.0} 秒</color>", 2f);
             return;
         }
-        Drink drink = DrinkRolls.Pick(UnityEngine.Random.Range(0, DrinkRolls.Tickets));
+        Drink drink = lottery.Pick(UnityEngine.Random.Range(0, DrinkRolls.Tickets));
         Item? item = player.AddItem(ItemType.SCP207);
         if (item == null)
         {
             Notice(player, "<color=#FF6969>你的背包没有空间，饮料机拒绝出货。</color>");
             return;
         }
-        drinks[item.Serial] = drink;
+        // Ordinary bottles remain entirely native, including use, healing and stacking.
+        if (drink != Drink.Scp207) drinks[item.Serial] = drink;
         bottleQuota.RecordReceived(player.PlayerId, player.LifeId);
         nextUse[player.PlayerId] = now + Config!.PersonalCooldown;
-        Notice(player, $"<color=#FFD447>你获得了：{DrinkName(drink)}</color>\n<color=#CCCCCC>{DrinkIntro(drink)} · 手持可查看介绍</color>");
+        string heldIntro = drink == Drink.Scp207 ? string.Empty : " · 手持可查看介绍";
+        Notice(player, $"<color=#FFD447>你获得了：{DrinkName(drink)}</color>\n<color=#CCCCCC>{DrinkIntro(drink)}{heldIntro}</color>");
         Logger.Info($"[SCP-294?] {player.Nickname} received {drink} serial={item.Serial}.");
     }
 
@@ -278,7 +285,7 @@ public sealed class QlzPlugin : Plugin<Config>
     private void OnUsingItem(PlayerUsingItemEventArgs ev)
     {
         if (IsMeteor(ev.Player)) { ev.IsAllowed = false; return; }
-        if (ev.UsableItem == null || !drinks.TryGetValue(ev.UsableItem.Serial, out Drink drink)) return;
+        if (!ev.IsAllowed || ev.UsableItem == null || !drinks.TryGetValue(ev.UsableItem.Serial, out Drink drink)) return;
         ev.IsAllowed = false;
         Player player = ev.Player;
         if (!player.IsAlive) return;
@@ -292,7 +299,6 @@ public sealed class QlzPlugin : Plugin<Config>
     {
         switch (drink)
         {
-            case Drink.Coffee: ApplyCoffee(player, duration ?? Config!.CoffeeDuration); break;
             case Drink.QiaoLeZi: ApplyQiaoLeZi(player, duration, branch); break;
             case Drink.SixtySeven: ApplySixtySeven(player, duration ?? Config!.SixtySevenDuration); break;
             case Drink.Ahead: ApplyAhead(player, duration ?? Config!.AheadDuration); break;
@@ -343,7 +349,7 @@ public sealed class QlzPlugin : Plugin<Config>
 
     private void ApplyQiaoLeZi(Player player, float? requestedDuration, BuffBranch branch)
     {
-        bool cardiac = branch == BuffBranch.Secondary || branch == BuffBranch.Random && UnityEngine.Random.Range(0, 2) == 0;
+        bool cardiac = branch == BuffBranch.Secondary || branch == BuffBranch.Random && RollPercent(Config!.QiaoLeZiCardiacChancePercent, 50);
         float duration = requestedDuration ?? (cardiac ? Config!.QiaoLeZiCardiacDuration : Config!.QiaoLeZiDuration);
         BuffState state = Capture(player, Drink.QiaoLeZi, duration);
         state.QiaoLeZiCardiac = cardiac;
@@ -353,15 +359,8 @@ public sealed class QlzPlugin : Plugin<Config>
             Notice(player, "<color=#FF7777>我看你嘴唇发紫是不是心脏不好</color>");
             return;
         }
-        player.EnableEffect<CustomPlayerEffects.MovementBoost>(100, duration, false);
+        player.EnableEffect<CustomPlayerEffects.MovementBoost>(Config!.QiaoLeZiSpeedBoostPercent, duration, false);
         Notice(player, "<color=#FFD447>你好像获得了某位故人的天赋</color>");
-    }
-
-    private void ApplyCoffee(Player player, float duration)
-    {
-        Capture(player, Drink.Coffee, duration);
-        player.EnableEffect<CustomPlayerEffects.MovementBoost>(CoffeeSpeedBoost, duration, false);
-        Notice(player, "<color=#DCC5A5>只是普通咖啡。今天也要打起精神！</color>");
     }
 
     private void ApplySixtySeven(Player player, float duration)
@@ -380,7 +379,7 @@ public sealed class QlzPlugin : Plugin<Config>
     {
         BuffState state = Capture(player, Drink.Ahead, duration);
         state.Timeline = new DrinkTimeline(state.EndAt);
-        player.EnableEffect<CustomPlayerEffects.MovementBoost>(AheadSpeedBoost, duration, false);
+        player.EnableEffect<CustomPlayerEffects.MovementBoost>(Config!.AheadSpeedBoostPercent, duration, false);
         Notice(player, "<color=#FFD447>遥遥领先，我们继续领先(*°▽°*)八(*°▽°*)♪</color>\n<color=#FF8A8A>我们领先于GOC 67？%，让GOC永远追不上！</color>");
         state.AheadDebuffApplied = false;
     }
@@ -392,8 +391,8 @@ public sealed class QlzPlugin : Plugin<Config>
         player.MaxHealth = 200f;
         player.Health = 200f;
         buffs[player.PlayerId].Ahp = player.CreateAhpProcess(150f, 150f, 0f, 1f, duration, true);
-        player.EnableEffect<CustomPlayerEffects.Slowness>(10, duration, false);
-        player.EnableEffect<CustomPlayerEffects.DamageReduction>(15, duration, false);
+        player.EnableEffect<CustomPlayerEffects.Slowness>(Math.Min((byte)100, Config!.VodkaSlownessPercent), duration, false);
+        player.EnableEffect<CustomPlayerEffects.DamageReduction>((byte)Math.Round(SafePercent(Config.VodkaDamageReductionPercent, 100, 7.5f) * 2), duration, false);
         Notice(player, "<color=#D9E8FF>你获得了某位强悍人物的视野</color>");
     }
 
@@ -401,7 +400,7 @@ public sealed class QlzPlugin : Plugin<Config>
     {
         BuffState state = Capture(player, Drink.CompoundV, duration);
         state.Timeline = new DrinkTimeline(state.EndAt);
-        player.EnableEffect<CustomPlayerEffects.MovementBoost>(255, duration, false);
+        player.EnableEffect<CustomPlayerEffects.MovementBoost>(Config!.CompoundVSpeedBoostPercent, duration, false);
         Notice(player, "<color=#66D9FF>5号化合物入体：祖国人体验卡已到账！</color>");
     }
 
@@ -409,7 +408,7 @@ public sealed class QlzPlugin : Plugin<Config>
     {
         BuffState state = Capture(player, Drink.Meteor, duration);
         player.EnableEffect<CustomPlayerEffects.Scp207>(3, duration, false);
-        player.EnableEffect<CustomPlayerEffects.MovementBoost>(150, duration, false);
+        player.EnableEffect<CustomPlayerEffects.MovementBoost>(Config!.MeteorSpeedBoostPercent, duration, false);
         state.Motion = new MeteorMotion(Time.realtimeSinceStartup);
         Notice(player, "<color=#FFB766>美味流星，出发！停下一秒就会燃尽。</color>");
     }
@@ -419,7 +418,7 @@ public sealed class QlzPlugin : Plugin<Config>
 
     private void ApplyJiahao(Player player, float duration, BuffBranch branch)
     {
-        if (branch == BuffBranch.Secondary || branch == BuffBranch.Random && UnityEngine.Random.Range(0, 10) != 0)
+        if (branch == BuffBranch.Secondary || branch == BuffBranch.Random && !RollPercent(Config!.JiahaoSuccessChancePercent, 10))
         {
             player.Kill("你凡人的身躯还不足以驾驭这份力量");
             Notice(player, "<color=#ECA0AC>你凡人的身躯，还不足以驾驭</color>\n<color=#FFD700><b>这份力量</b></color>", 5f);
@@ -432,6 +431,12 @@ public sealed class QlzPlugin : Plugin<Config>
         state.Music = JiahaoAudio.Start(player, MusicPath, Config!.JiahaoMusicRadius, Config.JiahaoMusicVolume);
         GlobalNotice("<color=#FFD700><b>那个男人？</b></color>\n<color=#D8C8F0>难道又重出江湖了吗</color>", 5f);
     }
+
+    private static float SafePercent(float value, float maximum, float fallback) =>
+        float.IsNaN(value) || float.IsInfinity(value) ? fallback : Mathf.Clamp(value, 0, maximum);
+
+    private static bool RollPercent(float chance, float fallback) =>
+        UnityEngine.Random.Range(0, DrinkRolls.Tickets) < SafePercent(chance, 100, fallback) * 100;
 
     private void GlobalNotice(string text, float duration = 5f)
     {
@@ -524,7 +529,7 @@ public sealed class QlzPlugin : Plugin<Config>
         if (ev.Attacker == null || !buffs.TryGetValue(ev.Attacker.PlayerId, out BuffState state) || state.Drink != Drink.Ahead ||
             state.AheadDebuffApplied || state.EndAt <= Time.realtimeSinceStartup || ev.DamageHandler is not FirearmDamageHandler firearm)
             return;
-        firearm.Damage *= AheadDamageMultiplier;
+        firearm.Damage *= 1 + SafePercent(Config!.AheadFirearmDamageBonusPercent, 1000, 5) / 100;
     }
 
     private void OnUpdatingEffect(PlayerEffectUpdatingEventArgs ev)
@@ -603,8 +608,8 @@ public sealed class QlzPlugin : Plugin<Config>
                 {
                     player.DisableEffect<CustomPlayerEffects.MovementBoost>();
                     state.EndAt = state.Timeline.EndAt;
-                    player.EnableEffect<CustomPlayerEffects.Slowness>(AheadBacklashSlowness, Math.Max(0.01f, state.EndAt - now), false);
-                    player.MaxHealth = Math.Max(1f, state.BaseMaxHealth * AheadBacklashHealthMultiplier);
+                    player.EnableEffect<CustomPlayerEffects.Slowness>(Math.Min((byte)100, Config.AheadBacklashSlownessPercent), Math.Max(0.01f, state.EndAt - now), false);
+                    player.MaxHealth = Math.Max(1f, state.BaseMaxHealth * Math.Max(1, SafePercent(Config.AheadBacklashMaxHealthPercent, 100, 80)) / 100);
                     player.Health = Math.Min(player.Health, player.MaxHealth);
                     state.AheadDebuffApplied = true;
                     ClearBuffHud(player);
@@ -650,7 +655,6 @@ public sealed class QlzPlugin : Plugin<Config>
         foreach (var pair in state.Effects)
         {
             bool modified = state.Drink == Drink.Vodka && (pair.Key is CustomPlayerEffects.Slowness || pair.Key is CustomPlayerEffects.DamageReduction)
-                || state.Drink == Drink.Coffee && pair.Key is CustomPlayerEffects.MovementBoost
                 || state.Drink == Drink.Ahead && (pair.Key is CustomPlayerEffects.MovementBoost || state.AheadDebuffApplied && pair.Key is CustomPlayerEffects.Slowness)
                 || state.Drink == Drink.QiaoLeZi && (state.QiaoLeZiCardiac ? pair.Key is CustomPlayerEffects.CardiacArrest : pair.Key is CustomPlayerEffects.MovementBoost)
                 || state.Drink == Drink.CompoundV && (pair.Key is CustomPlayerEffects.MovementBoost || state.Timeline!.Backlash &&
@@ -665,14 +669,14 @@ public sealed class QlzPlugin : Plugin<Config>
 
     private static string DrinkName(Drink drink) => drink switch
     {
-        Drink.Coffee => "普通咖啡", Drink.QiaoLeZi => "巧乐兹", Drink.SixtySeven => "67", Drink.Ahead => "遥遥领先", Drink.Vodka => "伏特加",
+        Drink.Scp207 => "普通SCP-207", Drink.QiaoLeZi => "巧乐兹", Drink.SixtySeven => "67", Drink.Ahead => "遥遥领先", Drink.Vodka => "伏特加",
         Drink.CompoundV => "5号化合物", Drink.Meteor => "美味流星",
         Drink.Jiahao => "嘉豪の圣遗物？",
         _ => throw new ArgumentOutOfRangeException(nameof(drink)),
     };
     private static string DrinkIntro(Drink drink) => drink switch
     {
-        Drink.Coffee => "上班提神，下班续命。",
+        Drink.Scp207 => "按原生流程饮用，加速与无尽体力，也要承受生命流失。",
         Drink.QiaoLeZi => "我看你嘴唇发紫是不是心脏不好",
         Drink.SixtySeven => "676767？", Drink.Ahead => "让 GOC 永远追不上！", Drink.Vodka => "某神秘民族的白开水？",
         Drink.CompoundV => "沃特出品，英雄也有保质期。", Drink.Meteor => "把自己变成夜空中最美味的那颗星。",

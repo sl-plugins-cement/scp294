@@ -35,8 +35,36 @@ public sealed class Config
     [Description("巧乐兹负面分支的心脏骤停持续秒数。")]
     public float QiaoLeZiCardiacDuration { get; set; } = 6f;
 
-    [Description("普通咖啡的轻微加速持续秒数。")]
-    public float CoffeeDuration { get; set; } = 30f;
+    [Description("Drink drop percentages: two decimal places, all eight must total 100; 0 disables a result.")]
+    public double Scp207ChancePercent { get; set; } = 78;
+    public double AheadChancePercent { get; set; } = 10;
+    public double QiaoLeZiChancePercent { get; set; } = 2.4;
+    public double SixtySevenChancePercent { get; set; } = 3.6;
+    public double VodkaChancePercent { get; set; } = 3.6;
+    public double CompoundVChancePercent { get; set; } = 1.2;
+    public double MeteorChancePercent { get; set; } = 0.96;
+    public double JiahaoChancePercent { get; set; } = 0.24;
+
+    [Description("QiaoLeZi's cardiac-arrest probability after that drink is selected, 0-100 percent.")]
+    public float QiaoLeZiCardiacChancePercent { get; set; } = 50;
+    [Description("Jiahao's successful possession probability after that drink is selected, 0-100 percent.")]
+    public float JiahaoSuccessChancePercent { get; set; } = 10;
+
+    [Description("Native MovementBoost intensity: bonus movement speed percent, 0-255.")]
+    public byte QiaoLeZiSpeedBoostPercent { get; set; } = 100;
+    public byte AheadSpeedBoostPercent { get; set; } = 20;
+    public byte CompoundVSpeedBoostPercent { get; set; } = 255;
+    public byte MeteorSpeedBoostPercent { get; set; } = 150;
+    [Description("Ahead's firearm damage bonus percent, clamped to 0-1000.")]
+    public float AheadFirearmDamageBonusPercent { get; set; } = 5;
+    [Description("Ahead's backlash slowness percent, clamped to 0-100.")]
+    public byte AheadBacklashSlownessPercent { get; set; } = 20;
+    [Description("Maximum HP retained during Ahead backlash, clamped to 1-100 percent.")]
+    public float AheadBacklashMaxHealthPercent { get; set; } = 80;
+    [Description("Vodka's slowness percent, clamped to 0-100.")]
+    public byte VodkaSlownessPercent { get; set; } = 10;
+    [Description("Vodka's actual damage reduction percent, clamped to 0-100 and rounded to native 0.5% steps.")]
+    public float VodkaDamageReductionPercent { get; set; } = 7.5f;
 
     [Description("67 饮料的效果持续时间。")]
     public float SixtySevenDuration { get; set; } = 67f;
@@ -50,7 +78,7 @@ public sealed class Config
     [Description("伏特加效果持续时间。")]
     public float VodkaDuration { get; set; } = 120f;
 
-    [Description("5号化合物的移速255效果持续秒数。")]
+    [Description("Compound V's positive movement effect duration, in seconds.")]
     public float CompoundVDuration { get; set; } = 10f;
 
     [Description("5号化合物的反噬持续秒数。")]
