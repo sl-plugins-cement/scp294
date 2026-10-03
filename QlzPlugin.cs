@@ -21,7 +21,7 @@ public sealed class QlzPlugin : Plugin<Config>
     public override string Name => "SCP-294？";
     public override string Description => "固定位置的巨大 SCP-207 搞怪饮料机。";
     public override string Author => "Codex";
-    public override Version Version => new(0, 5, 2);
+    public override Version Version => new(0, 5, 3);
     public override Version RequiredApiVersion => new(LabApiProperties.CompiledVersion);
 
     private static readonly Drink[] DrinkPool = (Drink[])Enum.GetValues(typeof(Drink));
@@ -413,7 +413,7 @@ public sealed class QlzPlugin : Plugin<Config>
         if (branch == BuffBranch.Secondary || branch == BuffBranch.Random && UnityEngine.Random.Range(0, 10) != 0)
         {
             player.Kill("你凡人的身躯还不足以驾驭这份力量");
-            Notice(player, "<color=#FF7777>你凡人的身躯还不足以驾驭这份力量</color>", 5f);
+            Notice(player, "<color=#ECA0AC>你凡人的身躯，还不足以驾驭</color>\n<color=#FFD700><b>这份力量</b></color>", 5f);
             return;
         }
         BuffState state = Capture(player, Drink.Jiahao, duration);
@@ -421,7 +421,7 @@ public sealed class QlzPlugin : Plugin<Config>
         player.EnableEffect<CustomPlayerEffects.Scp1853>(3, duration, false);
         player.EnableEffect<CustomPlayerEffects.Scp207>(3, duration, false);
         state.Music = JiahaoAudio.Start(player, MusicPath, Config!.JiahaoMusicRadius, Config.JiahaoMusicVolume);
-        GlobalNotice("那个男人？难度又重出江湖了吗", 5f);
+        GlobalNotice("<color=#FFD700><b>那个男人？</b></color>\n<color=#D8C8F0>难道又重出江湖了吗</color>", 5f);
     }
 
     private void GlobalNotice(string text, float duration = 5f)
@@ -509,7 +509,7 @@ public sealed class QlzPlugin : Plugin<Config>
                     multiplier *= modifier.GetDamageModifier(1f, damage, HitboxType.Body);
             damage.Damage = multiplier > 0f ? 1f / multiplier : 0f;
             if (ev.Attacker != null)
-                Notice(ev.Attacker, "雕虫小记，不可伤<color=#FFD700>神</color>分毫", 3f);
+                Notice(ev.Attacker, "<color=#D8C8F0>雕虫小记，不可伤</color><color=#FFD700><b>神</b></color><color=#D8C8F0>分毫</color>", 3f);
         }
         if (ev.Attacker == null || !buffs.TryGetValue(ev.Attacker.PlayerId, out BuffState state) || state.Drink != Drink.Ahead ||
             state.EndAt <= Time.realtimeSinceStartup || ev.DamageHandler is not FirearmDamageHandler firearm)
@@ -710,7 +710,7 @@ public sealed class QlzPlugin : Plugin<Config>
         if (buffs.TryGetValue(ev.Player.PlayerId, out BuffState state))
         {
             if (state.Drink == Drink.Jiahao && ev.ChangeReason == RoleChangeReason.Died && state.EndAt > Time.realtimeSinceStartup)
-                GlobalNotice($"真是意犹未尽呐~ {EscapeName(state.HolderName)}老师，我可能这辈子也不会忘记你吧", 5f);
+                GlobalNotice($"<color=#D8C8F0><i>真是意犹未尽呐~</i></color>\n<color=#FFD700><b>{EscapeName(state.HolderName)}老师</b></color><color=#DCE5EE>，我可能这辈子也不会忘记你吧</color>", 5f);
             state.Music?.Stop();
         }
         ClearItemHud(ev.Player); ClearBuffHud(ev.Player); buffs.Remove(ev.Player.PlayerId);
