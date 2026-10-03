@@ -75,11 +75,19 @@ if ($second.health -ne 100 -or $second.scp207Duration -ne 0) { throw 'Native sta
 Arrange 'vulnerable'
 $before=@(Observe -ClientsOnly)[0]
 if ($before.godMode) { throw 'Health-drain fixture still invulnerable' }
+$damageBefore=Read-Effects
 $null=Invoke-LabInput @{id='native207-health-drain';frames=360;keys=@(115);capture=$true;audio=$true;expectAudio=$true}
 $draining=Read-Effects
 $after=@(Observe -ClientsOnly)[0]
 $distance=[Math]::Sqrt([Math]::Pow($after.position.x-$before.position.x,2)+[Math]::Pow($after.position.z-$before.position.z,2))
-if ($after.life -ne $before.life -or $distance -lt 0.2 -or $draining.health -ge $second.health -or $draining.scp207 -ne 2 -or $draining.stamina -lt 0.99) { throw 'Native movement, health drain or stamina failed' }
+if ($after.life -ne $before.life -or $distance -lt 0.2 -or $draining.scp207 -ne 2 -or $draining.stamina -lt 0.99) { throw 'Native movement or stamina failed' }
+$damageAttempts=$draining.scp207DamageAttempts-$damageBefore.scp207DamageAttempts
+$damageCancelled=$draining.scp207DamageCancelled-$damageBefore.scp207DamageCancelled
+if ($damageAttempts -le 0) { throw 'No native SCP-207 ticking damage was observed' }
+# The mirrored server's CokeNoDmg cancels native drain; observe that decision without overriding it.
+if ($damageCancelled -eq $damageAttempts) {
+    if ($draining.health -ne $damageBefore.health) { throw 'Cancelled native drain changed health' }
+} elseif ($draining.health -ge $damageBefore.health) { throw 'Allowed native drain did not reduce health' }
 # Non-default modifiers must be loaded from YAML, and custom cleanup must leave native SCP-207 intact.
 Grant 'ahead' '8'
 $ahead=Read-Effects

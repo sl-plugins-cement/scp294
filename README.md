@@ -21,6 +21,8 @@ All eight drop percentages are configurable. Defaults allocate 78% to normal SCP
 
 With defaults, Jiahao possession occurs on 0.024% of machine draws (about one in 4,167); its failed branch occurs on 0.216%. QiaoLeZi's speed branch occurs on 1.2%. Draws are independent, without a pity counter. Admin grants bypass the lottery.
 
+Normal SCP-207 follows the server's native-item policies, including modifications from server-wide plugins that block its health drain.
+
 The native SCP-1853/207 conflict is suppressed only while Jiahao is active, preserving pre-existing poison. Custom drinks occupy one plugin buff slot; another custom drink replaces it. Normal SCP-207 is owned by the game and can coexist with custom effects. `buff clear` removes custom effects, preserving the native SCP-207 state captured before a custom effect modified it. Custom modifiers, AHP, music and HUD entries are cleaned up on expiry, replacement, death, role change, disconnect, round reset and unload.
 
 ## Configuration

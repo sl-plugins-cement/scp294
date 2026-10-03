@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using CommandSystem;
+using LabApi.Events.Arguments.PlayerEvents;
+using LabApi.Events.Handlers;
 using LabApi.Features;
 using LabApi.Features.Wrappers;
 using LabApi.Loader.Features.Plugins;
@@ -17,8 +20,22 @@ public sealed class FixturePlugin : Plugin
     public override string Author => "Codex";
     public override Version Version => new(1, 0, 0);
     public override Version RequiredApiVersion => new(LabApiProperties.CompiledVersion);
-    public override void Enable() { }
-    public override void Disable() { }
+    internal static readonly Dictionary<int, (int Attempts, int Cancelled)> Native207Damage = new();
+    public override void Enable() => PlayerEvents.Hurting += Observe207Damage;
+    public override void Disable()
+    {
+        PlayerEvents.Hurting -= Observe207Damage;
+        Native207Damage.Clear();
+    }
+
+    private static void Observe207Damage(PlayerHurtingEventArgs ev)
+    {
+        if (Environment.GetEnvironmentVariable("OFFLINE_LAB_OBSERVER") != "1" ||
+            ev.DamageHandler is not PlayerStatsSystem.UniversalDamageHandler damage ||
+            damage.TranslationId != PlayerStatsSystem.DeathTranslations.Scp207.Id) return;
+        Native207Damage.TryGetValue(ev.Player.PlayerId, out var previous);
+        Native207Damage[ev.Player.PlayerId] = (previous.Attempts + 1, previous.Cancelled + (ev.IsAllowed ? 0 : 1));
+    }
 }
 
 [CommandHandler(typeof(RemoteAdminCommandHandler))]
@@ -57,7 +74,8 @@ public sealed class FixtureCommand : ICommand
         switch (args.At(0))
         {
             case "effects":
-                response = FormattableString.Invariant($"EFFECT_STATE {{\"maxHealth\":{player.MaxHealth},\"health\":{player.Health},\"movement\":{player.GetEffect<CustomPlayerEffects.MovementBoost>().Intensity},\"slowness\":{player.GetEffect<CustomPlayerEffects.Slowness>().Intensity},\"scp207\":{player.GetEffect<CustomPlayerEffects.Scp207>().Intensity},\"scp207Duration\":{player.GetEffect<CustomPlayerEffects.Scp207>().Duration},\"damageReduction\":{player.GetEffect<CustomPlayerEffects.DamageReduction>().Intensity},\"cardiac\":{player.GetEffect<CustomPlayerEffects.CardiacArrest>().Intensity},\"stamina\":{player.ReferenceHub.playerStats.GetModule<PlayerStatsSystem.StaminaStat>().CurValue}}}");
+                FixturePlugin.Native207Damage.TryGetValue(player.PlayerId, out var nativeDamage);
+                response = FormattableString.Invariant($"EFFECT_STATE {{\"maxHealth\":{player.MaxHealth},\"health\":{player.Health},\"movement\":{player.GetEffect<CustomPlayerEffects.MovementBoost>().Intensity},\"slowness\":{player.GetEffect<CustomPlayerEffects.Slowness>().Intensity},\"scp207\":{player.GetEffect<CustomPlayerEffects.Scp207>().Intensity},\"scp207Duration\":{player.GetEffect<CustomPlayerEffects.Scp207>().Duration},\"damageReduction\":{player.GetEffect<CustomPlayerEffects.DamageReduction>().Intensity},\"cardiac\":{player.GetEffect<CustomPlayerEffects.CardiacArrest>().Intensity},\"stamina\":{player.ReferenceHub.playerStats.GetModule<PlayerStatsSystem.StaminaStat>().CurValue},\"scp207DamageAttempts\":{nativeDamage.Attempts},\"scp207DamageCancelled\":{nativeDamage.Cancelled}}}");
                 return true;
             case "view":
                 if (roots.Length != 1) { response = "Expected one machine."; return false; }
