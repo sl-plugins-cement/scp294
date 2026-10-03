@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\LifeBottleQuota.cs" Link="LifeBottleQuota.cs" />
+    <Compile Include="..\..\Config.cs" Link="Config.cs" />
+    <None Include="..\..\config.yml" Link="config.yml" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>
