@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\BuffGrant.cs" Link="BuffGrant.cs" />
+    <Compile Include="..\..\BuffCommand.cs" Link="BuffCommand.cs" />
+    <Compile Include="..\..\QlzCommand.cs" Link="QlzCommand.cs" />
+  </ItemGroup>
+</Project>
