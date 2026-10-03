@@ -25,7 +25,11 @@ public sealed class QlzPlugin : Plugin<Config>
     public override Version Version => new(0, 6, 0);
     public override Version RequiredApiVersion => new(LabApiProperties.CompiledVersion);
 
-    private static readonly Drink[] DrinkPool = (Drink[])Enum.GetValues(typeof(Drink));
+    private const byte CoffeeSpeedBoost = 10;
+    private const byte AheadSpeedBoost = 20;
+    private const float AheadDamageMultiplier = 1.05f;
+    private const byte AheadBacklashSlowness = 20;
+    private const float AheadBacklashHealthMultiplier = 0.8f;
     private readonly Dictionary<ushort, Drink> drinks = new();
     private readonly Dictionary<int, float> nextUse = new();
     private readonly LifeBottleQuota bottleQuota = new();
@@ -166,7 +170,7 @@ public sealed class QlzPlugin : Plugin<Config>
     {
         if (!buffs.TryGetValue(player.PlayerId, out BuffState state) || !player.IsAlive || player.LifeId != state.LifeId)
             return "没有饮料 Buff。";
-        if (state.AheadDebuffApplied) return "遥遥领先：GOC 卡脖子，持续本条生命。";
+        if (state.AheadDebuffApplied) return BuffLabel.Timed("遥遥领先（GOC 卡脖子）", state.EndAt - Time.realtimeSinceStartup);
         string phase = state.Drink == Drink.QiaoLeZi ? (state.QiaoLeZiCardiac ? "（心脏骤停）" : "（加速）") :
             state.Drink == Drink.CompoundV && state.Timeline?.Backlash == true ? "（反噬）" : string.Empty;
         return BuffLabel.Timed(DrinkName(state.Drink), state.EndAt - Time.realtimeSinceStartup) + phase;
@@ -229,7 +233,7 @@ public sealed class QlzPlugin : Plugin<Config>
             Notice(player, $"<color=#FFD34D>饮料机还在冷却：{ready - now:0.0} 秒</color>", 2f);
             return;
         }
-        Drink drink = DrinkPool[UnityEngine.Random.Range(0, DrinkPool.Length)];
+        Drink drink = DrinkRolls.Pick(UnityEngine.Random.Range(0, DrinkRolls.Tickets));
         Item? item = player.AddItem(ItemType.SCP207);
         if (item == null)
         {
@@ -288,6 +292,7 @@ public sealed class QlzPlugin : Plugin<Config>
     {
         switch (drink)
         {
+            case Drink.Coffee: ApplyCoffee(player, duration ?? Config!.CoffeeDuration); break;
             case Drink.QiaoLeZi: ApplyQiaoLeZi(player, duration, branch); break;
             case Drink.SixtySeven: ApplySixtySeven(player, duration ?? Config!.SixtySevenDuration); break;
             case Drink.Ahead: ApplyAhead(player, duration ?? Config!.AheadDuration); break;
@@ -352,6 +357,13 @@ public sealed class QlzPlugin : Plugin<Config>
         Notice(player, "<color=#FFD447>你好像获得了某位故人的天赋</color>");
     }
 
+    private void ApplyCoffee(Player player, float duration)
+    {
+        Capture(player, Drink.Coffee, duration);
+        player.EnableEffect<CustomPlayerEffects.MovementBoost>(CoffeeSpeedBoost, duration, false);
+        Notice(player, "<color=#DCC5A5>只是普通咖啡。今天也要打起精神！</color>");
+    }
+
     private void ApplySixtySeven(Player player, float duration)
     {
         Capture(player, Drink.SixtySeven, duration);
@@ -367,7 +379,8 @@ public sealed class QlzPlugin : Plugin<Config>
     private void ApplyAhead(Player player, float duration)
     {
         BuffState state = Capture(player, Drink.Ahead, duration);
-        player.EnableEffect<CustomPlayerEffects.MovementBoost>(50, duration, false);
+        state.Timeline = new DrinkTimeline(state.EndAt);
+        player.EnableEffect<CustomPlayerEffects.MovementBoost>(AheadSpeedBoost, duration, false);
         Notice(player, "<color=#FFD447>遥遥领先，我们继续领先(*°▽°*)八(*°▽°*)♪</color>\n<color=#FF8A8A>我们领先于GOC 67？%，让GOC永远追不上！</color>");
         state.AheadDebuffApplied = false;
     }
@@ -506,11 +519,12 @@ public sealed class QlzPlugin : Plugin<Config>
             damage.Damage = multiplier > 0f ? 1f / multiplier : 0f;
             if (ev.Attacker != null)
                 Notice(ev.Attacker, "<color=#D8C8F0>雕虫小记，不可伤</color><color=#FFD700><b>神</b></color><color=#D8C8F0>分毫</color>", 3f);
+            return;
         }
         if (ev.Attacker == null || !buffs.TryGetValue(ev.Attacker.PlayerId, out BuffState state) || state.Drink != Drink.Ahead ||
-            state.EndAt <= Time.realtimeSinceStartup || ev.DamageHandler is not FirearmDamageHandler firearm)
+            state.AheadDebuffApplied || state.EndAt <= Time.realtimeSinceStartup || ev.DamageHandler is not FirearmDamageHandler firearm)
             return;
-        firearm.Damage *= 1.10f;
+        firearm.Damage *= AheadDamageMultiplier;
     }
 
     private void OnUpdatingEffect(PlayerEffectUpdatingEventArgs ev)
@@ -585,19 +599,18 @@ public sealed class QlzPlugin : Plugin<Config>
                     ExplodeMeteor(player, state);
                     continue;
                 }
-                if (state.Drink == Drink.Ahead && !state.AheadDebuffApplied && state.EndAt <= now)
+                if (state.Drink == Drink.Ahead && state.Timeline!.TryStartBacklash(now, Math.Max(0f, Config!.AheadBacklashDuration)))
                 {
                     player.DisableEffect<CustomPlayerEffects.MovementBoost>();
-                    player.EnableEffect<CustomPlayerEffects.Slowness>(50, 999999f, false);
-                    player.MaxHealth = Math.Max(1f, state.BaseMaxHealth * 0.5f);
+                    state.EndAt = state.Timeline.EndAt;
+                    player.EnableEffect<CustomPlayerEffects.Slowness>(AheadBacklashSlowness, Math.Max(0.01f, state.EndAt - now), false);
+                    player.MaxHealth = Math.Max(1f, state.BaseMaxHealth * AheadBacklashHealthMultiplier);
                     player.Health = Math.Min(player.Health, player.MaxHealth);
                     state.AheadDebuffApplied = true;
                     ClearBuffHud(player);
                     Notice(player, "<color=#FF7777>你被GOC卡脖子了（悲</color>");
-                    // Keep state for cleanup/replacement. The penalty has no expiry specified;
-                    // it lasts for this life, and is labelled separately from a timed buff.
                 }
-                if (state.Drink != Drink.Ahead && state.EndAt <= now)
+                if (state.EndAt <= now)
                 {
                     RestoreBase(player, state);
                     buffs.Remove(pair.Key);
@@ -637,6 +650,7 @@ public sealed class QlzPlugin : Plugin<Config>
         foreach (var pair in state.Effects)
         {
             bool modified = state.Drink == Drink.Vodka && (pair.Key is CustomPlayerEffects.Slowness || pair.Key is CustomPlayerEffects.DamageReduction)
+                || state.Drink == Drink.Coffee && pair.Key is CustomPlayerEffects.MovementBoost
                 || state.Drink == Drink.Ahead && (pair.Key is CustomPlayerEffects.MovementBoost || state.AheadDebuffApplied && pair.Key is CustomPlayerEffects.Slowness)
                 || state.Drink == Drink.QiaoLeZi && (state.QiaoLeZiCardiac ? pair.Key is CustomPlayerEffects.CardiacArrest : pair.Key is CustomPlayerEffects.MovementBoost)
                 || state.Drink == Drink.CompoundV && (pair.Key is CustomPlayerEffects.MovementBoost || state.Timeline!.Backlash &&
@@ -651,13 +665,14 @@ public sealed class QlzPlugin : Plugin<Config>
 
     private static string DrinkName(Drink drink) => drink switch
     {
-        Drink.QiaoLeZi => "巧乐兹", Drink.SixtySeven => "67", Drink.Ahead => "遥遥领先", Drink.Vodka => "伏特加",
+        Drink.Coffee => "普通咖啡", Drink.QiaoLeZi => "巧乐兹", Drink.SixtySeven => "67", Drink.Ahead => "遥遥领先", Drink.Vodka => "伏特加",
         Drink.CompoundV => "5号化合物", Drink.Meteor => "美味流星",
         Drink.Jiahao => "嘉豪の圣遗物？",
         _ => throw new ArgumentOutOfRangeException(nameof(drink)),
     };
     private static string DrinkIntro(Drink drink) => drink switch
     {
+        Drink.Coffee => "上班提神，下班续命。",
         Drink.QiaoLeZi => "我看你嘴唇发紫是不是心脏不好",
         Drink.SixtySeven => "676767？", Drink.Ahead => "让 GOC 永远追不上！", Drink.Vodka => "某神秘民族的白开水？",
         Drink.CompoundV => "沃特出品，英雄也有保质期。", Drink.Meteor => "把自己变成夜空中最美味的那颗星。",
@@ -682,7 +697,7 @@ public sealed class QlzPlugin : Plugin<Config>
     private void UpdateBuffHud(Player player, BuffState state, float now)
     {
         float y = Config!.BuffHintY;
-        string label = state.AheadDebuffApplied ? $"{DrinkName(state.Drink)}[本条生命]" : BuffLabel.Timed(DrinkName(state.Drink), state.EndAt - now);
+        string label = BuffLabel.Timed(state.AheadDebuffApplied ? "遥遥领先（反噬）" : DrinkName(state.Drink), state.EndAt - now);
         Hints.Remove(player, "buff-name");
         Hints.Show(player, "buff-time", $"<color=#FFD447>{label}</color>", y, 23, 0f, Config.BuffHintX, "Right");
         if (player.CurrentItem is FirearmItem firearm && state.VirtualMagazines.TryGetValue(firearm.Serial, out VirtualMagazine magazine))

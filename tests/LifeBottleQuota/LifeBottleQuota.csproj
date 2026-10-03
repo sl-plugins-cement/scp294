@@ -7,6 +7,8 @@
   <ItemGroup>
     <Compile Include="..\..\LifeBottleQuota.cs" Link="LifeBottleQuota.cs" />
     <Compile Include="..\..\Config.cs" Link="Config.cs" />
+    <Compile Include="..\..\BuffGrant.cs" Link="BuffGrant.cs" />
+    <Compile Include="..\..\DrinkRolls.cs" Link="DrinkRolls.cs" />
     <None Include="..\..\config.yml" Link="config.yml" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

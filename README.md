@@ -6,17 +6,24 @@ This standalone LabAPI plugin spawns a custom SCP-294 coffee cabinet on Surface 
 
 程序集及项目名为 `SCP294`；LabAPI 名称使用 `SCP-294？` 的全角问号，避免 Windows 配置文件夹非法字符。源代码保留 `Qlz` 命名空间以兼容原有文件。
 
-七种饮料等概率出货（各约 14.29%）：
+Eight drinks use the exact lottery in `DrinkRolls.cs`. Normal results account for 90% of draws; rarer drinks keep their high-risk effects. The per-life bottle limit applies to all results.
 
-- `巧乐兹`：50% 获得 10 秒原生心脏骤停，提示 `我看你嘴唇发紫是不是心脏不好`；50% 移速 +100%，持续 3 分钟，提示 `你好像获得了某位故人的天赋`。心脏骤停包含原生掉血和体力消耗，可用原生支持的药品治疗；到期、替换饮料及卸载时恢复先前状态。
-- `67`：简介 `676767？`。使用后生命上限与生命值为 67，获得不会衰减的 67 AHP 和 67 休谟护盾，持续 67 秒。COM15 等普通弹匣枪与霰弹枪可装填总共 67 发，无视弹匣容量，换弹后恢复 67。左轮用虚拟弹匣连续供应 67 发，在每次原生射击完成后补入下一发；HSM 显示真实剩余弹数，原生六弹膛 UI 保留。第 67 发后耗尽，换弹恢复 67 发。备用弹药为 67，特殊能量武器保留原生容量。
-- `遥遥领先`：显示 `遥遥领先，我们继续领先(*°▽°*)八(*°▽°*)♪`，移速 +50%、子弹伤害 +10%，持续 2 分钟；结束后移速 -50%、生命上限变为原来的 50%，显示 `你被GOC卡脖子了（悲`。
-- `伏特加`：简介 `某神秘民族的白开水？`。体型缩放为 `(1.15, 0.8, 1.15)`，生命与生命上限 200，不衰减 AHP 150，移速 -10%，伤害抗性 +15%，持续 2 分 50 秒。宽度从原来的两倍大幅缩窄，具体门框通行需在游戏内验收。
-- `5号化合物`：简介 `沃特出品，英雄也有保质期。`。MovementBoost 强度 255（移速 +255%），持续 15 秒；结束后获得 60 秒原生 Burned 易伤（通常受伤 +25%）、缓慢 50%、Concussed 眩晕。HUD 切换到反噬倒计时。
-- `美味流星`：简介 `把自己变成夜空中最美味的那颗星。`。仅获得三层原生 SCP-207 和 MovementBoost 150（移速 +150%），完全由玩家控制方向及移动。连续静止超过一秒或使用后达到 30 秒时，原地引爆一枚原生 HE 并死亡；以实际速度低于 0.1 米/秒判定静止，出生时有一秒起步时间。效果期间禁止切换/收起/丢弃物品和使用可用物品，包括药品及其他饮料。三层 207 包含原生掉血。提前死亡或变更角色会清理效果。
-- `嘉豪の圣遗物？`：简介 `凡人的身躯，能驾驭这份力量吗？`。使用后 10% 获得 180 秒嘉豪附体，90% 直接死亡并显示 `你凡人的身躯还不足以驾驭这份力量`。附体成功时向全服（含观察者）发送五秒 HSM `那个男人？难道又重出江湖了吗`。获得强度 3 的原生 1853 和三层 207；1853 强度不随原生危险系统变化，阻止这份饮料的 1853/207 组合自动产生中毒。原生 1853 新版强度代表危险等级，强度 3 不是旧版三倍属性倍率。
-- 嘉豪附体期间，枪击和 SCP 伤害最多一点（护甲、友伤开关或免伤可以继续减少）；攻击者提示 `雕虫小记，不可伤神分毫`，正文为浅紫色，“神”为金色加粗。环境伤害不减免，三层 207 仍按原生机制掉血。附体玩家在效果期间死亡时全服 HSM 显示五秒 `真是意犹未尽呐~ [玩家名]老师，我可能这辈子也不会忘记你吧`。名字中的富文本尖括号会转义。
-- 嘉豪 BGM：音频解码与播放已直接集成进 SCP294，通过 LabAPI 原生 `SpeakerToy` / `AudioTransmitter` 循环播放 `jh.ogg`，以附体玩家为中心、默认十米距离衰减，随玩家移动。无需外部 AudioRobot、EXILED、AudioPlayerApi 或 SecretLabNAudio。OGG 解码器 NVorbis 和默认音乐均嵌入 DLL；优先使用 DLL 旁的 `jh.ogg`，文件缺失时使用内嵌音乐。支持配置自定义 OGG 路径，其他格式需先转换成 OGG Vorbis。后台解码并缓存 48kHz 单声道样本，所有扬声器操作在 Unity 主线程执行。死亡、离开、角色改变、替换 Buff、到期、回合重置和卸载时停止并销毁自己的音源；解码期间取消不会创建迟到的音源，不干扰其他插件音源。日志记录解码就绪、播放玩家/音源/半径，播放失败额外显示五秒 HSM 提示。
+| Drink | Drop chance | Default effect |
+| --- | ---: | --- |
+| Ordinary coffee (`coffee`) | 80% | +10% movement speed for 30 seconds. |
+| Ahead (`ahead`) | 10% | +20% movement speed and +5% firearm damage for 90 seconds, followed by 30 seconds of 20% slowness and 80% of the original maximum HP. Maximum HP is restored afterwards without healing damage. |
+| QiaoLeZi (`qlz`) | 2% | Equal chance of +100% movement speed for 120 seconds or native cardiac arrest for 6 seconds. Native supported medicine can treat cardiac arrest. |
+| 67 (`67`) | 3% | 67 HP and maximum HP, 67 non-decaying AHP, 67 Hume shield and 67-round firearm magazines for 67 seconds. Revolvers use a virtual 67-shot magazine with the native six-chamber UI. Reloading refills 67 rounds; energy weapons retain their native capacity. |
+| Vodka (`vodka`) | 3% | Scale `(1.15, 0.8, 1.15)`, 200 HP, 150 non-decaying AHP, 10% slowness and native DamageReduction intensity 15 (7.5% reduction) for 120 seconds. |
+| Compound V (`v`) | 1% | +255% movement speed for 10 seconds, then 30 seconds of native Burned, 50% slowness and Concussed. |
+| Meteor (`meteor`) | 0.8% | Three native SCP-207 stacks and +150% movement speed. A stop lasting over one second or the 20-second deadline triggers a native HE explosion and kills the holder. Item switching, dropping and consumable use are blocked during the effect. |
+| Jiahao (`jiahao`) | 0.2% | The existing 10% success / 90% death roll. Success gives 90 seconds of native SCP-1853 intensity 3, three SCP-207 stacks and at most one point of firearm/SCP damage per attack, with the existing broadcast and music. Environmental damage and SCP-207 health drain still apply. |
+
+Jiahao possession therefore occurs on 0.02% of machine draws (about one in 5,000), and its failed branch on 0.18%. QiaoLeZi's speed branch occurs on 1% of draws. Draws are independent; there is no pity counter or guaranteed rare reward. Admin grants remain explicit and bypass the machine lottery.
+
+The native SCP-1853/207 conflict is suppressed only while Jiahao is active, preserving pre-existing poison. Native SCP-1853 intensity represents danger rather than an old-style attribute multiplier. Drink effects, native modifiers, AHP processes, music and HUD state are cleaned up on expiry, replacement, death, role change, disconnect, round reset and plugin unload.
+
+Jiahao music uses LabAPI's native SpeakerToy and AudioTransmitter, follows the holder and attenuates over the configured radius. NVorbis and `jh.ogg` are embedded in the DLL. A sibling `jh.ogg` or a configured absolute OGG Vorbis path can override it; custom audio must be OGG Vorbis. Decoding and caching happen in the background; speaker operations run on the Unity thread. Cancellation prevents delayed playback after cleanup, and each session destroys only its own audio source.
 
 ## 构建
 
@@ -40,11 +47,13 @@ Install `bin/Release/net48/SCP294.dll` in a plugin directory listed by `LabAPI/L
 
 项目根目录的 `config.yml` 是端口 7777 当前配置的完整副本，`Config.cs` 中的默认值已同步。构建输出包含 `SCP294.dll`、`README.md` 和 `config.yml`；新服务器首次加载会自动生成相同默认值，已有服务器配置继续优先使用。
 
-Defaults use position `(58, 292, -43)` projected onto the floor below it, scale 10 (a 2.2-metre cabinet), a 60-second spawn delay, 10-second cardiac arrest, and a 10-metre music radius. See `config.yml` for effect durations and hint positions. Manual configuration belongs in `LabAPI/configs/<port>/SCP-294？/config.yml`; install the DLL in a loaded per-port directory, including `LabAPI/plugins/7777` on SR1.
+Existing configurations override duration defaults. To use the balanced durations on an existing server, update the corresponding keys from `config.yml`, including the new `coffee_duration` and `ahead_backlash_duration`, while preserving its other settings.
+
+Defaults use position `(58, 292, -43)` projected onto the floor below it, scale 10 (a 2.2-metre cabinet), a 60-second spawn delay, 6-second cardiac arrest, and a 10-metre music radius. See `config.yml` for effect durations and hint positions. Manual configuration belongs in `LabAPI/configs/<port>/SCP-294？/config.yml`; install the DLL in a loaded per-port directory, including `LabAPI/plugins/7777` on SR1.
 
 ## HSM 显示
 
-- 右下稍向左、向上：统一单行 `巧乐兹[00:05]` 格式，反噬与自爆也显示饮料名及时间，到期后移除。遥遥领先的无期限负面状态显示 `遥遥领先[本条生命]`。
+- 右下稍向左、向上：统一单行 `巧乐兹[00:05]` 格式，反噬与自爆也显示饮料名及时间，到期后移除。Ahead backlash uses a timed `遥遥领先（反噬）[00:30]` label.
 - 左轮使用 67 时，倒计时下方另起一行显示虚拟弹匣剩余弹药。
 - 中部：领取、使用、结束文案，默认显示 6 秒，同一通知区域复用且不会累计。
 - 全服嘉豪提示：独立中上区域，存续五秒，包含观察者。登场第一行“那个男人？”金色加粗，第二行“难道又重出江湖了吗”浅紫色；死亡语录首行浅紫斜体，第二行玩家名与“老师”金色加粗、余文灰白。附体失败使用两行粉红正文和金色加粗“这份力量”。提示使用固定行数，避免与玩家自己的喝饮料通知重叠。
@@ -53,7 +62,7 @@ Defaults use position `(58, 292, -43)` projected onto the floor below it, scale 
 
 可配置 `buff_hint_x`（默认 -260，相对右边缘向左）、`buff_hint_y`（默认 760）、`item_hint_y`（790）、`message_hint_y`（560）适应服务器其他插件的 HUD。倒计时右对齐，介绍居中，分别占用独立列。
 
-同一玩家同时保持一种饮料效果，喝下另一种会清理上一种；美味流星期间拒绝使用物品，瓶子不消耗。遥遥领先结束后的负面效果持续本条生命，HUD 显示为负面状态，不再显示已经归零的计时。
+同一玩家同时保持一种饮料效果，喝下另一种会清理上一种；美味流星期间拒绝使用物品，瓶子不消耗。Ahead backlash has its own countdown and expires after the configured duration.
 67 的弹药在获得武器和换弹时补充，射击时正常消耗；不会每帧补满。临时生命上限恢复时保留已受到的伤害。
 
 ## 命令
@@ -71,7 +80,7 @@ All `scp294` machine and buff commands require native `ServerConfigs` permission
 
 ```text
 scp294 buff give me 67
-scp294 buff give 2 巧乐兹                 默认加速，持续配置中的 180 秒
+scp294 buff give 2 coffee                Ordinary coffee with its configured duration
 scp294 buff give 2 qlz cardiac 45         指定心脏骤停 45 秒
 scp294 buff give me jiahao                直接嘉豪附体成功
 scp294 buff give 2 jiahao random          按饮料原有 10% 成功概率抽取
@@ -81,7 +90,7 @@ scp294 buff status 2
 scp294 buff clear all
 ```
 
-可用名称/别名：`巧乐兹/qlz/qiaolezi`、`67/sixtyseven`、`遥遥领先/ahead`、`伏特加/vodka`、`5号化合物/v/compoundv`、`美味流星/meteor`、`嘉豪/嘉豪の圣遗物？/jiahao`。巧乐兹默认 `speed` 加速，也可指定 `cardiac` 心脏骤停；嘉豪默认 `success` 附体，也可指定 `fail` 直接死亡；两者都支持 `random` 原概率抽取。喝饮料的概率不变。可选时长范围 0.1～3600 秒，分支与秒数顺序不限；不填时长则使用服务器已有配置。5号化合物时长调整加速阶段，随后仍有配置规定的 60 秒反噬；遥遥领先结束后仍会进入本条生命的负面阶段。清除不会补回受伤损失的生命值。
+Aliases: `普通咖啡/咖啡/coffee`, `巧乐兹/qlz/qiaolezi`, `67/sixtyseven`, `遥遥领先/ahead`, `伏特加/vodka`, `5号化合物/v/compoundv`, `美味流星/meteor`, `嘉豪/嘉豪の圣遗物？/jiahao`. QiaoLeZi defaults to `speed`, with `cardiac` and `random` available; Jiahao defaults to `success`, with `fail` and `random` available. Their branch probabilities stay 50% and 10% respectively. A duration may be supplied once, in either option order, between 0.1 and 3600 seconds; omitted durations use the active configuration. Compound V and Ahead duration overrides affect the positive phase; their backlash uses its separate configured duration. Clearing a buff restores modifiers without healing damage.
 
 旧 `qlz` 命令仍作为别名可用。坐标、旋转、机器缩放、领取冷却、刷新延迟、提示显示时间、各饮料持续时间及 BGM 路径/半径/音量都在插件配置中调整。替换 DLL 后需重启服务器进程来加载新程序集。
 
