@@ -24,29 +24,35 @@ namespace Qlz.Model
         }
         private static readonly Quaternion KeyboardRotation = Quaternion.Euler(55, 0, 0);
         private static readonly Vector3 KeyboardCentre = new Vector3(-0.13f, 1.25f, -0.535f);
+        private static readonly string[] KeyRows = { "1234567890", "QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM" };
         internal static readonly Vector3 InteractionPosition = new Vector3(0, 1.14f, -0.755f);
         internal static readonly Vector3 InteractionSize = new Vector3(1.24f, 1.96f, 0.03f);
         internal static readonly IReadOnlyList<Part> Parts = Build();
-        internal static readonly Label[] Labels =
+        internal static readonly Label[] Labels = BuildLabels();
+        private static Label[] BuildLabels()
         {
-            Text("nameplate", "<color=#E9E6D7><b>SCP-294</b></color>", new Vector3(0, 2.09f, -0.562f), 1.03f, 100, 16),
-            Text("display-title", "<color=#D8DED5>咖啡 · 饮料</color>", new Vector3(-0.13f, 1.91f, -0.559f), 0.76f, 100, 10),
-            Keys("keyboard-numbers", "1  2  3  4  5  6  7  8  9  0", 0, 0.72f),
-            Keys("keyboard-qwerty", "Q  W  E  R  T  Y  U  I  O  P", 1, 0.72f),
-            Keys("keyboard-home", "A  S  D  F  G  H  J  K  L", 2, 0.66f),
-            Keys("keyboard-bottom", "Z  X  C  V  B  N  M", 3, 0.52f),
-            Text("coin-display", "<color=#C2E09D>就绪</color>", new Vector3(0.465f, 1.80f, -0.632f), 0.18f, 80, 13),
-            Text("instructions", "<color=#D8DED5>按住互动键领取</color>", new Vector3(-0.13f, 1.00f, -0.540f), 0.66f, 110, 11),
-            Text("quota", "<color=#394540>每条生命\n限领一瓶</color>", new Vector3(0.17f, 0.69f, -0.531f), 0.34f, 70, 11),
-        };
+            var labels = new List<Label>
+            {
+                Text("nameplate", "<color=#E9E6D7><b>SCP-294</b></color>", new Vector3(0, 2.09f, -0.562f), 1.03f, 100, 16),
+                Text("display-title", "<color=#D8DED5>咖啡 · 饮料</color>", new Vector3(-0.13f, 1.91f, -0.559f), 0.76f, 100, 10),
+                Text("coin-display", "<color=#C2E09D>就绪</color>", new Vector3(0.465f, 1.80f, -0.632f), 0.18f, 80, 13),
+                Text("instructions", "<color=#D8DED5>按住互动键领取</color>", new Vector3(-0.13f, 1.00f, -0.540f), 0.66f, 110, 11),
+                Text("quota", "<color=#D8DED5>每条生命\n限领一瓶</color>", new Vector3(0.17f, 0.69f, -0.531f), 0.34f, 70, 11),
+            };
+            // Individual legends stay centred despite differences in native font spacing.
+            for (int row = 0; row < KeyRows.Length; row++)
+                for (int key = 0; key < KeyRows[row].Length; key++)
+                {
+                    Label label = Text("key-legend-" + row + "-" + key, KeyRows[row][key].ToString(), KeyPosition(row, key, -0.069f), 0.065f, 20, 11);
+                    label.Rotation = KeyboardRotation.eulerAngles;
+                    labels.Add(label);
+                }
+            return labels.ToArray();
+        }
         private static Label Text(string name, string text, Vector3 position, float width, float units, int size)
             => new Label { Name = name, Text = text, Position = position, Width = width, Units = units, FontSize = size };
-        private static Label Keys(string name, string text, int row, float width)
-        {
-            Label label = Text(name, text, KeyboardCentre + KeyboardRotation * new Vector3(0, 0.125f - row * 0.07f, -0.069f), width, 150, 9);
-            label.Rotation = KeyboardRotation.eulerAngles;
-            return label;
-        }
+        private static Vector3 KeyPosition(int row, int key, float depth)
+            => KeyboardCentre + KeyboardRotation * new Vector3((key - (KeyRows[row].Length - 1) / 2f) * 0.073f, 0.125f - row * 0.07f, depth);
         private static IReadOnlyList<Part> Build()
         {
             var parts = new List<Part>();
@@ -112,10 +118,9 @@ namespace Qlz.Model
             }
             Box("keyboard-console", KeyboardCentre, new Vector3(0.94f, 0.41f, 0.075f), new Color(0.22f, 0.24f, 0.22f), KeyboardRotation.eulerAngles);
             foreach (float x in new[] { -0.59f, 0.33f }) B("keyboard-support-" + x, x, 1.23f, -0.46f, 0.035f, 0.27f, 0.34f, black);
-            int[] counts = { 10, 10, 9, 7 };
-            for (int row = 0; row < counts.Length; row++)
-                for (int key = 0; key < counts[row]; key++)
-                    Box("key-" + row + "-" + key, KeyboardCentre + KeyboardRotation * new Vector3((key - (counts[row] - 1) / 2f) * 0.073f, 0.125f - row * 0.07f, -0.052f), new Vector3(0.061f, 0.049f, 0.028f), black, KeyboardRotation.eulerAngles);
+            for (int row = 0; row < KeyRows.Length; row++)
+                for (int key = 0; key < KeyRows[row].Length; key++)
+                    Box("key-" + row + "-" + key, KeyPosition(row, key, -0.052f), new Vector3(0.061f, 0.049f, 0.028f), black, KeyboardRotation.eulerAngles);
             Box("space-key", KeyboardCentre + KeyboardRotation * new Vector3(0, -0.168f, -0.055f), new Vector3(0.265f, 0.04f, 0.03f), black, KeyboardRotation.eulerAngles);
             Cylinder("console-front-lip", new Vector3(-0.13f, 1.13f, -0.706f), 0.03f, 0.94f, steel, new Vector3(0, 0, 90));
 

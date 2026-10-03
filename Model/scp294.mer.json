@@ -4679,128 +4679,8 @@
       }
     },
     {
-      "Name": "keyboard-numbers",
-      "ObjectId": 167,
-      "ParentId": 0,
-      "AnimatorName": "",
-      "Position": {
-        "x": -0.129999995,
-        "y": 1.37821853,
-        "z": -0.47218281
-      },
-      "Rotation": {
-        "x": 55.0000076,
-        "y": 0,
-        "z": 0
-      },
-      "Scale": {
-        "x": 0.0960000008,
-        "y": 0.0960000008,
-        "z": 0.0960000008
-      },
-      "BlockType": 8,
-      "Properties": {
-        "Text": "<align=center><size=9>1  2  3  4  5  6  7  8  9  0</size></align>",
-        "DisplaySize": {
-          "x": 150.0,
-          "y": 40.0
-        },
-        "Static": true
-      }
-    },
-    {
-      "Name": "keyboard-qwerty",
-      "ObjectId": 168,
-      "ParentId": 0,
-      "AnimatorName": "",
-      "Position": {
-        "x": -0.129999995,
-        "y": 1.33806825,
-        "z": -0.529523432
-      },
-      "Rotation": {
-        "x": 55.0000076,
-        "y": 0,
-        "z": 0
-      },
-      "Scale": {
-        "x": 0.0960000008,
-        "y": 0.0960000008,
-        "z": 0.0960000008
-      },
-      "BlockType": 8,
-      "Properties": {
-        "Text": "<align=center><size=9>Q  W  E  R  T  Y  U  I  O  P</size></align>",
-        "DisplaySize": {
-          "x": 150.0,
-          "y": 40.0
-        },
-        "Static": true
-      }
-    },
-    {
-      "Name": "keyboard-home",
-      "ObjectId": 169,
-      "ParentId": 0,
-      "AnimatorName": "",
-      "Position": {
-        "x": -0.129999995,
-        "y": 1.29791784,
-        "z": -0.586864054
-      },
-      "Rotation": {
-        "x": 55.0000076,
-        "y": 0,
-        "z": 0
-      },
-      "Scale": {
-        "x": 0.0879999995,
-        "y": 0.0879999995,
-        "z": 0.0879999995
-      },
-      "BlockType": 8,
-      "Properties": {
-        "Text": "<align=center><size=9>A  S  D  F  G  H  J  K  L</size></align>",
-        "DisplaySize": {
-          "x": 150.0,
-          "y": 40.0
-        },
-        "Static": true
-      }
-    },
-    {
-      "Name": "keyboard-bottom",
-      "ObjectId": 170,
-      "ParentId": 0,
-      "AnimatorName": "",
-      "Position": {
-        "x": -0.129999995,
-        "y": 1.25776744,
-        "z": -0.644204736
-      },
-      "Rotation": {
-        "x": 55.0000076,
-        "y": 0,
-        "z": 0
-      },
-      "Scale": {
-        "x": 0.0693333298,
-        "y": 0.0693333298,
-        "z": 0.0693333298
-      },
-      "BlockType": 8,
-      "Properties": {
-        "Text": "<align=center><size=9>Z  X  C  V  B  N  M</size></align>",
-        "DisplaySize": {
-          "x": 150.0,
-          "y": 40.0
-        },
-        "Static": true
-      }
-    },
-    {
       "Name": "coin-display",
-      "ObjectId": 171,
+      "ObjectId": 167,
       "ParentId": 0,
       "AnimatorName": "",
       "Position": {
@@ -4830,7 +4710,7 @@
     },
     {
       "Name": "instructions",
-      "ObjectId": 172,
+      "ObjectId": 168,
       "ParentId": 0,
       "AnimatorName": "",
       "Position": {
@@ -4860,7 +4740,7 @@
     },
     {
       "Name": "quota",
-      "ObjectId": 173,
+      "ObjectId": 169,
       "ParentId": 0,
       "AnimatorName": "",
       "Position": {
@@ -4880,9 +4760,1089 @@
       },
       "BlockType": 8,
       "Properties": {
-        "Text": "<align=center><size=11><color=#394540>每条生命\n限领一瓶</color></size></align>",
+        "Text": "<align=center><size=11><color=#D8DED5>每条生命\n限领一瓶</color></size></align>",
         "DisplaySize": {
           "x": 70.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-0-0",
+      "ObjectId": 170,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.458499998,
+        "y": 1.37821853,
+        "z": -0.47218281
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>1</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-0-1",
+      "ObjectId": 171,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.385499984,
+        "y": 1.37821853,
+        "z": -0.47218281
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>2</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-0-2",
+      "ObjectId": 172,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.3125,
+        "y": 1.37821853,
+        "z": -0.47218281
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>3</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-0-3",
+      "ObjectId": 173,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.239499986,
+        "y": 1.37821853,
+        "z": -0.47218281
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>4</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-0-4",
+      "ObjectId": 174,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.166500002,
+        "y": 1.37821853,
+        "z": -0.47218281
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>5</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-0-5",
+      "ObjectId": 175,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.0934999958,
+        "y": 1.37821853,
+        "z": -0.47218281
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>6</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-0-6",
+      "ObjectId": 176,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.0204999968,
+        "y": 1.37821853,
+        "z": -0.47218281
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>7</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-0-7",
+      "ObjectId": 177,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.0525000095,
+        "y": 1.37821853,
+        "z": -0.47218281
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>8</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-0-8",
+      "ObjectId": 178,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.125499994,
+        "y": 1.37821853,
+        "z": -0.47218281
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>9</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-0-9",
+      "ObjectId": 179,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.198500007,
+        "y": 1.37821853,
+        "z": -0.47218281
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>0</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-1-0",
+      "ObjectId": 180,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.458499998,
+        "y": 1.33806825,
+        "z": -0.529523432
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>Q</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-1-1",
+      "ObjectId": 181,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.385499984,
+        "y": 1.33806825,
+        "z": -0.529523432
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>W</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-1-2",
+      "ObjectId": 182,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.3125,
+        "y": 1.33806825,
+        "z": -0.529523432
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>E</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-1-3",
+      "ObjectId": 183,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.239499986,
+        "y": 1.33806825,
+        "z": -0.529523432
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>R</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-1-4",
+      "ObjectId": 184,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.166500002,
+        "y": 1.33806825,
+        "z": -0.529523432
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>T</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-1-5",
+      "ObjectId": 185,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.0934999958,
+        "y": 1.33806825,
+        "z": -0.529523432
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>Y</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-1-6",
+      "ObjectId": 186,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.0204999968,
+        "y": 1.33806825,
+        "z": -0.529523432
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>U</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-1-7",
+      "ObjectId": 187,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.0525000095,
+        "y": 1.33806825,
+        "z": -0.529523432
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>I</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-1-8",
+      "ObjectId": 188,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.125499994,
+        "y": 1.33806825,
+        "z": -0.529523432
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>O</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-1-9",
+      "ObjectId": 189,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.198500007,
+        "y": 1.33806825,
+        "z": -0.529523432
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>P</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-2-0",
+      "ObjectId": 190,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.421999991,
+        "y": 1.29791784,
+        "z": -0.586864054
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>A</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-2-1",
+      "ObjectId": 191,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.348999977,
+        "y": 1.29791784,
+        "z": -0.586864054
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>S</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-2-2",
+      "ObjectId": 192,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.275999993,
+        "y": 1.29791784,
+        "z": -0.586864054
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>D</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-2-3",
+      "ObjectId": 193,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.202999994,
+        "y": 1.29791784,
+        "z": -0.586864054
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>F</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-2-4",
+      "ObjectId": 194,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.129999995,
+        "y": 1.29791784,
+        "z": -0.586864054
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>G</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-2-5",
+      "ObjectId": 195,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.0569999963,
+        "y": 1.29791784,
+        "z": -0.586864054
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>H</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-2-6",
+      "ObjectId": 196,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.0160000026,
+        "y": 1.29791784,
+        "z": -0.586864054
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>J</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-2-7",
+      "ObjectId": 197,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.0890000015,
+        "y": 1.29791784,
+        "z": -0.586864054
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>K</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-2-8",
+      "ObjectId": 198,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.162,
+        "y": 1.29791784,
+        "z": -0.586864054
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>L</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-3-0",
+      "ObjectId": 199,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.348999977,
+        "y": 1.25776744,
+        "z": -0.644204736
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>Z</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-3-1",
+      "ObjectId": 200,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.275999993,
+        "y": 1.25776744,
+        "z": -0.644204736
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>X</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-3-2",
+      "ObjectId": 201,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.202999994,
+        "y": 1.25776744,
+        "z": -0.644204736
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>C</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-3-3",
+      "ObjectId": 202,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.129999995,
+        "y": 1.25776744,
+        "z": -0.644204736
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>V</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-3-4",
+      "ObjectId": 203,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.0569999963,
+        "y": 1.25776744,
+        "z": -0.644204736
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>B</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-3-5",
+      "ObjectId": 204,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.0160000026,
+        "y": 1.25776744,
+        "z": -0.644204736
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>N</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-legend-3-6",
+      "ObjectId": 205,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.0890000015,
+        "y": 1.25776744,
+        "z": -0.644204736
+      },
+      "Rotation": {
+        "x": 55.0000076,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0649999976,
+        "y": 0.0649999976,
+        "z": 0.0649999976
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11>M</size></align>",
+        "DisplaySize": {
+          "x": 20.0,
           "y": 40.0
         },
         "Static": true
