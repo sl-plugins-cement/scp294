@@ -1,16 +1,16 @@
 # 是否启用插件。
 is_enabled: true
-# 大型 207 饮料机的固定坐标。
+# SCP-294 position, projected onto the floor below when spawned.
 machine_position:
   x: 58
   y: 292
   z: -43
-# 大型 207 饮料机的旋转。
+# SCP-294 rotation; the front faces local negative Z.
 machine_rotation:
   x: 0
   y: 0
   z: 0
-# 大型 207 的缩放倍数。
+# Model size: 10 gives the authored 2.2-metre cabinet; other values scale proportionally.
 machine_scale: 10
 # 玩家与饮料机交互的个人冷却秒数。
 personal_cooldown: 2
@@ -21,27 +21,31 @@ spawn_delay: 60
 # 饮料机出现时的顶部公告秒数。
 spawn_broadcast_duration: 8
 # 巧乐兹成功时的移速效果持续时间。
-qiao_le_zi_duration: 180
+qiao_le_zi_duration: 120
 # 巧乐兹负面分支的心脏骤停持续秒数。
-qiao_le_zi_cardiac_duration: 10
+qiao_le_zi_cardiac_duration: 6
+# Ordinary coffee's mild speed boost duration, in seconds.
+coffee_duration: 30
 # 67 饮料的效果持续时间。
 sixty_seven_duration: 67
 # 遥遥领先主效果持续时间。
-ahead_duration: 120
+ahead_duration: 90
+# Ahead's temporary backlash duration, in seconds.
+ahead_backlash_duration: 30
 # 伏特加效果持续时间。
-vodka_duration: 170
+vodka_duration: 120
 # 5号化合物的移速255效果持续秒数。
-compound_v_duration: 15
+compound_v_duration: 10
 # 5号化合物的反噬持续秒数。
-compound_v_backlash_duration: 60
+compound_v_backlash_duration: 30
 # 5号化合物反噬的缓慢强度，百分比。
 compound_v_backlash_slowness: 50
 # 美味流星飞行至自爆的秒数。
-meteor_duration: 30
+meteor_duration: 20
 # 美味流星连续静止超过此秒数即自爆。
 meteor_still_seconds: 1
 # 嘉豪附体效果持续秒数。
-jiahao_duration: 180
+jiahao_duration: 90
 # 嘉豪 OGG BGM 路径。优先使用 DLL 旁的 jh.ogg，缺失时使用内嵌音乐；也可填自定义 OGG 绝对路径。
 jiahao_music_path: jh.ogg
 # 嘉豪 BGM 的最大听觉半径，米。

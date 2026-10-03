@@ -67,7 +67,32 @@ internal static class Program
             }
         }
         Check(verifiedKeys == yaml.Count, "全部 YAML 配置字段均有代码默认值");
-        Console.WriteLine($"Passed {checks} life quota/default configuration checks.");
+
+        // A short gameplay walkthrough cannot establish the legendary roll's probability.
+        var counts = new Dictionary<Drink, int>();
+        for (int ticket = 0; ticket < DrinkRolls.Tickets; ticket++)
+        {
+            Drink drink = DrinkRolls.Pick(ticket);
+            counts.TryGetValue(drink, out int count);
+            counts[drink] = count + 1;
+        }
+        Check(counts.Count == 8 && DrinkRolls.Tickets == 1000, "All drinks represented in the exact 1,000-ticket lottery");
+        Check(counts[Drink.Coffee] == 800, "Ordinary coffee 80%");
+        Check(counts[Drink.Ahead] == 100, "Mild Ahead 10%");
+        Check(counts[Drink.QiaoLeZi] == 20, "QiaoLeZi 2%, with its existing branch roll");
+        Check(counts[Drink.SixtySeven] == 30, "67 3%");
+        Check(counts[Drink.Vodka] == 30, "Vodka 3%");
+        Check(counts[Drink.CompoundV] == 10, "Compound V 1%");
+        Check(counts[Drink.Meteor] == 8, "Meteor 0.8%");
+        Check(counts[Drink.Jiahao] == 2, "Jiahao 0.2%, with its existing 10% success roll");
+        foreach (int invalid in new[] { -1, DrinkRolls.Tickets })
+        {
+            bool rejected = false;
+            try { DrinkRolls.Pick(invalid); }
+            catch (ArgumentOutOfRangeException) { rejected = true; }
+            Check(rejected, "Lottery rejects an out-of-range ticket");
+        }
+        Console.WriteLine($"Passed {checks} life quota/default configuration/rarity checks.");
     }
 }
 

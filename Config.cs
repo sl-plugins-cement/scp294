@@ -8,13 +8,13 @@ public sealed class Config
     [Description("是否启用插件。")]
     public bool IsEnabled { get; set; } = true;
 
-    [Description("大型 207 饮料机的固定坐标。")]
+    [Description("SCP-294 饮料机坐标，生成时贴合下方地面。")]
     public Vector3 MachinePosition { get; set; } = new Vector3(58f, 292f, -43f);
 
-    [Description("大型 207 饮料机的旋转。")]
+    [Description("SCP-294 饮料机的旋转，正面朝局部负 Z。")]
     public Vector3 MachineRotation { get; set; } = Vector3.zero;
 
-    [Description("大型 207 的缩放倍数。")]
+    [Description("SCP-294 模型大小，10 为默认约 2.2 米高，按比例缩放。")]
     public float MachineScale { get; set; } = 10f;
 
     [Description("玩家与饮料机交互的个人冷却秒数。")]
@@ -30,37 +30,43 @@ public sealed class Config
     public ushort SpawnBroadcastDuration { get; set; } = 8;
 
     [Description("巧乐兹成功时的移速效果持续时间。")]
-    public float QiaoLeZiDuration { get; set; } = 180f;
+    public float QiaoLeZiDuration { get; set; } = 120f;
 
     [Description("巧乐兹负面分支的心脏骤停持续秒数。")]
-    public float QiaoLeZiCardiacDuration { get; set; } = 10f;
+    public float QiaoLeZiCardiacDuration { get; set; } = 6f;
+
+    [Description("普通咖啡的轻微加速持续秒数。")]
+    public float CoffeeDuration { get; set; } = 30f;
 
     [Description("67 饮料的效果持续时间。")]
     public float SixtySevenDuration { get; set; } = 67f;
 
     [Description("遥遥领先主效果持续时间。")]
-    public float AheadDuration { get; set; } = 120f;
+    public float AheadDuration { get; set; } = 90f;
+
+    [Description("遥遥领先主效果结束后的反噬持续秒数。")]
+    public float AheadBacklashDuration { get; set; } = 30f;
 
     [Description("伏特加效果持续时间。")]
-    public float VodkaDuration { get; set; } = 170f;
+    public float VodkaDuration { get; set; } = 120f;
 
     [Description("5号化合物的移速255效果持续秒数。")]
-    public float CompoundVDuration { get; set; } = 15f;
+    public float CompoundVDuration { get; set; } = 10f;
 
     [Description("5号化合物的反噬持续秒数。")]
-    public float CompoundVBacklashDuration { get; set; } = 60f;
+    public float CompoundVBacklashDuration { get; set; } = 30f;
 
     [Description("5号化合物反噬的缓慢强度，百分比。")]
     public byte CompoundVBacklashSlowness { get; set; } = 50;
 
     [Description("美味流星飞行至自爆的秒数。")]
-    public float MeteorDuration { get; set; } = 30f;
+    public float MeteorDuration { get; set; } = 20f;
 
     [Description("美味流星连续静止超过此秒数即自爆。")]
     public float MeteorStillSeconds { get; set; } = 1f;
 
     [Description("嘉豪附体效果持续秒数。")]
-    public float JiahaoDuration { get; set; } = 180f;
+    public float JiahaoDuration { get; set; } = 90f;
 
     [Description("嘉豪 OGG BGM 路径。优先使用 DLL 旁的 jh.ogg，缺失时使用内嵌音乐；也可填自定义 OGG 绝对路径。")]
     public string JiahaoMusicPath { get; set; } = "jh.ogg";

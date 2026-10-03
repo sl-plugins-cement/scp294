@@ -10,6 +10,7 @@ using LabApi.Loader.Features.Plugins;
 using MEC;
 using PlayerStatsSystem;
 using PlayerRoles;
+using Qlz.Model;
 using UnityEngine;
 using Logger = LabApi.Features.Console.Logger;
 
@@ -19,18 +20,22 @@ public sealed class QlzPlugin : Plugin<Config>
 {
     public static QlzPlugin? Instance { get; private set; }
     public override string Name => "SCP-294？";
-    public override string Description => "固定位置的巨大 SCP-207 搞怪饮料机。";
+    public override string Description => "地表 SCP-294 搞怪饮料机。";
     public override string Author => "Codex";
-    public override Version Version => new(0, 5, 4);
+    public override Version Version => new(0, 6, 0);
     public override Version RequiredApiVersion => new(LabApiProperties.CompiledVersion);
 
-    private static readonly Drink[] DrinkPool = (Drink[])Enum.GetValues(typeof(Drink));
+    private const byte CoffeeSpeedBoost = 10;
+    private const byte AheadSpeedBoost = 20;
+    private const float AheadDamageMultiplier = 1.05f;
+    private const byte AheadBacklashSlowness = 20;
+    private const float AheadBacklashHealthMultiplier = 0.8f;
     private readonly Dictionary<ushort, Drink> drinks = new();
     private readonly Dictionary<int, float> nextUse = new();
     private readonly LifeBottleQuota bottleQuota = new();
     private const string BottleLimitMessage = "<color=#FFD447>本条生命已经领过一瓶饮料啦，下条生命再来品尝吧！</color>";
     private readonly Dictionary<int, BuffState> buffs = new();
-    private Pickup? machine;
+    private DrinkMachineModel? machine;
     private CoroutineHandle tick;
     private float spawnAt = float.PositiveInfinity;
 
@@ -66,8 +71,8 @@ public sealed class QlzPlugin : Plugin<Config>
         }
 
         Hints.Reset();
-        PlayerEvents.SearchingPickup += OnSearchingPickup;
-        PlayerEvents.PickingUpItem += OnPickingUpItem;
+        PlayerEvents.SearchingToy += OnSearchingToy;
+        PlayerEvents.SearchedToy += OnSearchedToy;
         PlayerEvents.UsingItem += OnUsingItem;
         PlayerEvents.ChangingItem += OnChangingItem;
         PlayerEvents.DroppingItem += OnDroppingItem;
@@ -86,14 +91,14 @@ public sealed class QlzPlugin : Plugin<Config>
         JiahaoAudio.Preload(MusicPath);
         if (Config.SpawnOnRoundStart && Round.IsRoundInProgress)
             spawnAt = Time.realtimeSinceStartup + Math.Max(0f, Config.SpawnDelay - (float)Round.Duration.TotalSeconds);
-        Logger.Info("[SCP-294?] Loaded. Use scp294 spawn to place the fixed 10x SCP-207 machine.");
+        Logger.Info("[SCP-294?] Loaded. Use scp294 spawn to place the custom coffee machine.");
     }
 
     public override void Disable()
     {
         Timing.KillCoroutines(tick);
-        PlayerEvents.SearchingPickup -= OnSearchingPickup;
-        PlayerEvents.PickingUpItem -= OnPickingUpItem;
+        PlayerEvents.SearchingToy -= OnSearchingToy;
+        PlayerEvents.SearchedToy -= OnSearchedToy;
         PlayerEvents.UsingItem -= OnUsingItem;
         PlayerEvents.ChangingItem -= OnChangingItem;
         PlayerEvents.DroppingItem -= OnDroppingItem;
@@ -129,13 +134,13 @@ public sealed class QlzPlugin : Plugin<Config>
     internal string SpawnCommand()
     {
         SpawnMachine();
-        return machine == null ? "大型 207 生成失败。" : $"大型 207 饮料机已生成：{Config!.MachinePosition}";
+        return machine == null ? "SCP-294 饮料机生成失败。" : $"SCP-294 饮料机已生成：{machine.Position}";
     }
 
     internal string ClearCommand()
     {
         ClearMachine();
-        return "大型 207 饮料机已清除。";
+        return "SCP-294 饮料机已清除。";
     }
 
     internal bool BuffsAvailable => Config?.IsEnabled == true;
@@ -165,7 +170,7 @@ public sealed class QlzPlugin : Plugin<Config>
     {
         if (!buffs.TryGetValue(player.PlayerId, out BuffState state) || !player.IsAlive || player.LifeId != state.LifeId)
             return "没有饮料 Buff。";
-        if (state.AheadDebuffApplied) return "遥遥领先：GOC 卡脖子，持续本条生命。";
+        if (state.AheadDebuffApplied) return BuffLabel.Timed("遥遥领先（GOC 卡脖子）", state.EndAt - Time.realtimeSinceStartup);
         string phase = state.Drink == Drink.QiaoLeZi ? (state.QiaoLeZiCardiac ? "（心脏骤停）" : "（加速）") :
             state.Drink == Drink.CompoundV && state.Timeline?.Backlash == true ? "（反噬）" : string.Empty;
         return BuffLabel.Timed(DrinkName(state.Drink), state.EndAt - Time.realtimeSinceStartup) + phase;
@@ -195,24 +200,21 @@ public sealed class QlzPlugin : Plugin<Config>
         ClearMachine();
         Vector3 position = Config!.MachinePosition;
         Quaternion rotation = Quaternion.Euler(Config.MachineRotation);
-        machine = Pickup.Create(ItemType.SCP207, position, rotation, Vector3.one * Config.MachineScale, false);
-        if (machine == null) return;
-        // Keep the native Pickup searchable. Intercept only when its native progress completes.
-        machine.IsLocked = false;
-        if (machine.Rigidbody != null)
-            machine.Rigidbody.isKinematic = true;
-        machine.Spawn();
-        if (machine.PickupStandardPhysics?.Rb != null)
-            machine.PickupStandardPhysics.Rb.isKinematic = true;
+        try { machine = DrinkMachineModel.Spawn(position, rotation, Config.MachineScale); }
+        catch (Exception ex)
+        {
+            Logger.Error("[SCP-294?] Machine spawn failed: " + ex);
+            return;
+        }
 
         Server.SendBroadcast("[SCP-294?]已经出现在地表处，快来品尝吧😋", Config.SpawnBroadcastDuration);
 
-        Logger.Info($"[SCP-294?] Machine spawned at {position} scale={Config.MachineScale}.");
+        Logger.Info($"[SCP-294?] Custom machine spawned at {machine.Position} scale={Config.MachineScale}, static toys={machine.ToyCount}.");
     }
 
     private void ClearMachine()
     {
-        if (machine != null && !machine.IsDestroyed) machine.Destroy();
+        machine?.Dispose();
         machine = null;
     }
 
@@ -231,7 +233,7 @@ public sealed class QlzPlugin : Plugin<Config>
             Notice(player, $"<color=#FFD34D>饮料机还在冷却：{ready - now:0.0} 秒</color>", 2f);
             return;
         }
-        Drink drink = DrinkPool[UnityEngine.Random.Range(0, DrinkPool.Length)];
+        Drink drink = DrinkRolls.Pick(UnityEngine.Random.Range(0, DrinkRolls.Tickets));
         Item? item = player.AddItem(ItemType.SCP207);
         if (item == null)
         {
@@ -245,21 +247,17 @@ public sealed class QlzPlugin : Plugin<Config>
         Logger.Info($"[SCP-294?] {player.Nickname} received {drink} serial={item.Serial}.");
     }
 
-    private void OnPickingUpItem(PlayerPickingUpItemEventArgs ev)
+    private void OnSearchedToy(PlayerSearchedToyEventArgs ev)
     {
-        if (!IsMachine(ev.Pickup)) return;
-        // ItemSearchCompletor raises this AFTER the original pickup bar finishes and resets
-        // InUse when cancelled. Preserve the machine and give a separate random bottle.
-        bool allowed = ev.IsAllowed;
-        ev.IsAllowed = false;
-        if (allowed) Dispense(ev.Player);
+        // Native search completion fires only after the progress bar finishes.
+        if (IsMachine(ev.Interactable)) Dispense(ev.Player);
     }
 
-    private bool IsMachine(Pickup pickup) => machine != null && !machine.IsDestroyed && pickup.Base == machine.Base;
+    private bool IsMachine(InteractableToy target) => machine != null && !machine.IsDestroyed && target.Base == machine.Target.Base;
 
-    private void OnSearchingPickup(PlayerSearchingPickupEventArgs ev)
+    private void OnSearchingToy(PlayerSearchingToyEventArgs ev)
     {
-        if (!IsMachine(ev.Pickup) || !ev.IsAllowed) return;
+        if (!IsMachine(ev.Interactable) || !ev.IsAllowed) return;
         if (ev.Player.IsAlive && ev.Player.IsHuman && !bottleQuota.CanReceive(ev.Player.PlayerId, ev.Player.LifeId))
         {
             ev.IsAllowed = false;
@@ -294,6 +292,7 @@ public sealed class QlzPlugin : Plugin<Config>
     {
         switch (drink)
         {
+            case Drink.Coffee: ApplyCoffee(player, duration ?? Config!.CoffeeDuration); break;
             case Drink.QiaoLeZi: ApplyQiaoLeZi(player, duration, branch); break;
             case Drink.SixtySeven: ApplySixtySeven(player, duration ?? Config!.SixtySevenDuration); break;
             case Drink.Ahead: ApplyAhead(player, duration ?? Config!.AheadDuration); break;
@@ -358,6 +357,13 @@ public sealed class QlzPlugin : Plugin<Config>
         Notice(player, "<color=#FFD447>你好像获得了某位故人的天赋</color>");
     }
 
+    private void ApplyCoffee(Player player, float duration)
+    {
+        Capture(player, Drink.Coffee, duration);
+        player.EnableEffect<CustomPlayerEffects.MovementBoost>(CoffeeSpeedBoost, duration, false);
+        Notice(player, "<color=#DCC5A5>只是普通咖啡。今天也要打起精神！</color>");
+    }
+
     private void ApplySixtySeven(Player player, float duration)
     {
         Capture(player, Drink.SixtySeven, duration);
@@ -373,7 +379,8 @@ public sealed class QlzPlugin : Plugin<Config>
     private void ApplyAhead(Player player, float duration)
     {
         BuffState state = Capture(player, Drink.Ahead, duration);
-        player.EnableEffect<CustomPlayerEffects.MovementBoost>(50, duration, false);
+        state.Timeline = new DrinkTimeline(state.EndAt);
+        player.EnableEffect<CustomPlayerEffects.MovementBoost>(AheadSpeedBoost, duration, false);
         Notice(player, "<color=#FFD447>遥遥领先，我们继续领先(*°▽°*)八(*°▽°*)♪</color>\n<color=#FF8A8A>我们领先于GOC 67？%，让GOC永远追不上！</color>");
         state.AheadDebuffApplied = false;
     }
@@ -512,11 +519,12 @@ public sealed class QlzPlugin : Plugin<Config>
             damage.Damage = multiplier > 0f ? 1f / multiplier : 0f;
             if (ev.Attacker != null)
                 Notice(ev.Attacker, "<color=#D8C8F0>雕虫小记，不可伤</color><color=#FFD700><b>神</b></color><color=#D8C8F0>分毫</color>", 3f);
+            return;
         }
         if (ev.Attacker == null || !buffs.TryGetValue(ev.Attacker.PlayerId, out BuffState state) || state.Drink != Drink.Ahead ||
-            state.EndAt <= Time.realtimeSinceStartup || ev.DamageHandler is not FirearmDamageHandler firearm)
+            state.AheadDebuffApplied || state.EndAt <= Time.realtimeSinceStartup || ev.DamageHandler is not FirearmDamageHandler firearm)
             return;
-        firearm.Damage *= 1.10f;
+        firearm.Damage *= AheadDamageMultiplier;
     }
 
     private void OnUpdatingEffect(PlayerEffectUpdatingEventArgs ev)
@@ -591,19 +599,18 @@ public sealed class QlzPlugin : Plugin<Config>
                     ExplodeMeteor(player, state);
                     continue;
                 }
-                if (state.Drink == Drink.Ahead && !state.AheadDebuffApplied && state.EndAt <= now)
+                if (state.Drink == Drink.Ahead && state.Timeline!.TryStartBacklash(now, Math.Max(0f, Config!.AheadBacklashDuration)))
                 {
                     player.DisableEffect<CustomPlayerEffects.MovementBoost>();
-                    player.EnableEffect<CustomPlayerEffects.Slowness>(50, 999999f, false);
-                    player.MaxHealth = Math.Max(1f, state.BaseMaxHealth * 0.5f);
+                    state.EndAt = state.Timeline.EndAt;
+                    player.EnableEffect<CustomPlayerEffects.Slowness>(AheadBacklashSlowness, Math.Max(0.01f, state.EndAt - now), false);
+                    player.MaxHealth = Math.Max(1f, state.BaseMaxHealth * AheadBacklashHealthMultiplier);
                     player.Health = Math.Min(player.Health, player.MaxHealth);
                     state.AheadDebuffApplied = true;
                     ClearBuffHud(player);
                     Notice(player, "<color=#FF7777>你被GOC卡脖子了（悲</color>");
-                    // Keep state for cleanup/replacement. The penalty has no expiry specified;
-                    // it lasts for this life, and is labelled separately from a timed buff.
                 }
-                if (state.Drink != Drink.Ahead && state.EndAt <= now)
+                if (state.EndAt <= now)
                 {
                     RestoreBase(player, state);
                     buffs.Remove(pair.Key);
@@ -643,6 +650,7 @@ public sealed class QlzPlugin : Plugin<Config>
         foreach (var pair in state.Effects)
         {
             bool modified = state.Drink == Drink.Vodka && (pair.Key is CustomPlayerEffects.Slowness || pair.Key is CustomPlayerEffects.DamageReduction)
+                || state.Drink == Drink.Coffee && pair.Key is CustomPlayerEffects.MovementBoost
                 || state.Drink == Drink.Ahead && (pair.Key is CustomPlayerEffects.MovementBoost || state.AheadDebuffApplied && pair.Key is CustomPlayerEffects.Slowness)
                 || state.Drink == Drink.QiaoLeZi && (state.QiaoLeZiCardiac ? pair.Key is CustomPlayerEffects.CardiacArrest : pair.Key is CustomPlayerEffects.MovementBoost)
                 || state.Drink == Drink.CompoundV && (pair.Key is CustomPlayerEffects.MovementBoost || state.Timeline!.Backlash &&
@@ -657,13 +665,14 @@ public sealed class QlzPlugin : Plugin<Config>
 
     private static string DrinkName(Drink drink) => drink switch
     {
-        Drink.QiaoLeZi => "巧乐兹", Drink.SixtySeven => "67", Drink.Ahead => "遥遥领先", Drink.Vodka => "伏特加",
+        Drink.Coffee => "普通咖啡", Drink.QiaoLeZi => "巧乐兹", Drink.SixtySeven => "67", Drink.Ahead => "遥遥领先", Drink.Vodka => "伏特加",
         Drink.CompoundV => "5号化合物", Drink.Meteor => "美味流星",
         Drink.Jiahao => "嘉豪の圣遗物？",
         _ => throw new ArgumentOutOfRangeException(nameof(drink)),
     };
     private static string DrinkIntro(Drink drink) => drink switch
     {
+        Drink.Coffee => "上班提神，下班续命。",
         Drink.QiaoLeZi => "我看你嘴唇发紫是不是心脏不好",
         Drink.SixtySeven => "676767？", Drink.Ahead => "让 GOC 永远追不上！", Drink.Vodka => "某神秘民族的白开水？",
         Drink.CompoundV => "沃特出品，英雄也有保质期。", Drink.Meteor => "把自己变成夜空中最美味的那颗星。",
@@ -688,7 +697,7 @@ public sealed class QlzPlugin : Plugin<Config>
     private void UpdateBuffHud(Player player, BuffState state, float now)
     {
         float y = Config!.BuffHintY;
-        string label = state.AheadDebuffApplied ? $"{DrinkName(state.Drink)}[本条生命]" : BuffLabel.Timed(DrinkName(state.Drink), state.EndAt - now);
+        string label = BuffLabel.Timed(state.AheadDebuffApplied ? "遥遥领先（反噬）" : DrinkName(state.Drink), state.EndAt - now);
         Hints.Remove(player, "buff-name");
         Hints.Show(player, "buff-time", $"<color=#FFD447>{label}</color>", y, 23, 0f, Config.BuffHintX, "Right");
         if (player.CurrentItem is FirearmItem firearm && state.VirtualMagazines.TryGetValue(firearm.Serial, out VirtualMagazine magazine))
