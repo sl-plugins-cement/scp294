@@ -1,0 +1,88 @@
+using System.ComponentModel;
+using UnityEngine;
+
+namespace Qlz;
+
+public sealed class Config
+{
+    [Description("是否启用插件。")]
+    public bool IsEnabled { get; set; } = true;
+
+    [Description("大型 207 饮料机的固定坐标。")]
+    public Vector3 MachinePosition { get; set; } = new Vector3(58f, 292f, -43f);
+
+    [Description("大型 207 饮料机的旋转。")]
+    public Vector3 MachineRotation { get; set; } = Vector3.zero;
+
+    [Description("大型 207 的缩放倍数。")]
+    public float MachineScale { get; set; } = 10f;
+
+    [Description("玩家与饮料机交互的个人冷却秒数。")]
+    public float PersonalCooldown { get; set; } = 2f;
+
+    [Description("是否在每轮开始时自动生成饮料机。")]
+    public bool SpawnOnRoundStart { get; set; } = true;
+
+    [Description("回合开始后自动生成 SCP-294? 的延迟秒数。")]
+    public float SpawnDelay { get; set; } = 60f;
+
+    [Description("饮料机出现时的顶部公告秒数。")]
+    public ushort SpawnBroadcastDuration { get; set; } = 8;
+
+    [Description("巧乐兹成功时的移速效果持续时间。")]
+    public float QiaoLeZiDuration { get; set; } = 180f;
+
+    [Description("巧乐兹负面分支的心脏骤停持续秒数。")]
+    public float QiaoLeZiCardiacDuration { get; set; } = 10f;
+
+    [Description("67 饮料的效果持续时间。")]
+    public float SixtySevenDuration { get; set; } = 67f;
+
+    [Description("遥遥领先主效果持续时间。")]
+    public float AheadDuration { get; set; } = 120f;
+
+    [Description("伏特加效果持续时间。")]
+    public float VodkaDuration { get; set; } = 170f;
+
+    [Description("5号化合物的移速255效果持续秒数。")]
+    public float CompoundVDuration { get; set; } = 15f;
+
+    [Description("5号化合物的反噬持续秒数。")]
+    public float CompoundVBacklashDuration { get; set; } = 60f;
+
+    [Description("5号化合物反噬的缓慢强度，百分比。")]
+    public byte CompoundVBacklashSlowness { get; set; } = 50;
+
+    [Description("美味流星飞行至自爆的秒数。")]
+    public float MeteorDuration { get; set; } = 30f;
+
+    [Description("美味流星连续静止超过此秒数即自爆。")]
+    public float MeteorStillSeconds { get; set; } = 1f;
+
+    [Description("嘉豪附体效果持续秒数。")]
+    public float JiahaoDuration { get; set; } = 180f;
+
+    [Description("嘉豪 OGG BGM 路径。优先使用 DLL 旁的 jh.ogg，缺失时使用内嵌音乐；也可填自定义 OGG 绝对路径。")]
+    public string JiahaoMusicPath { get; set; } = "jh.ogg";
+
+    [Description("嘉豪 BGM 的最大听觉半径，米。")]
+    public float JiahaoMusicRadius { get; set; } = 10f;
+
+    [Description("嘉豪 BGM 音量。")]
+    public float JiahaoMusicVolume { get; set; } = 1f;
+
+    [Description("领取、使用和结束文案显示秒数，到期自动移除。")]
+    public float HintMessageDuration { get; set; } = 6f;
+
+    [Description("饮料倒计时纵坐标，0为顶部、1080为底部。")]
+    public float BuffHintY { get; set; } = 760f;
+
+    [Description("饮料倒计时相对右边缘的水平偏移，负数向左移。")]
+    public float BuffHintX { get; set; } = -260f;
+
+    [Description("手持饮料介绍起始纵坐标，向下排列名称和梗文案。")]
+    public float ItemHintY { get; set; } = 790f;
+
+    [Description("临时文案纵坐标，与介绍和倒计时分开。")]
+    public float MessageHintY { get; set; } = 560f;
+}
