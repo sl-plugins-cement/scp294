@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <AssemblyName>SCP294</AssemblyName>
+    <RootNamespace>Qlz</RootNamespace>
+    <Version>0.5.2</Version>
+    <SCP_SL_MANAGED Condition="'$(SCP_SL_MANAGED)' == ''">..\_buildrefs</SCP_SL_MANAGED>
+    <HINT_SERVICE_MEOW Condition="'$(HINT_SERVICE_MEOW)' == ''">..\奇术打击\LabAPI\HintServiceMeow.dll</HINT_SERVICE_MEOW>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="tests\**\*.cs" />
+    <Reference Include="Assembly-CSharp" HintPath="$(SCP_SL_MANAGED)\Assembly-CSharp.dll" Private="false" />
+    <Reference Include="Assembly-CSharp-firstpass" HintPath="$(SCP_SL_MANAGED)\Assembly-CSharp-firstpass.dll" Private="false" />
+    <Reference Include="CommandSystem.Core" HintPath="$(SCP_SL_MANAGED)\CommandSystem.Core.dll" Private="false" />
+    <Reference Include="LabApi" HintPath="$(SCP_SL_MANAGED)\LabApi.dll" Private="false" />
+    <Reference Include="Mirror" HintPath="$(SCP_SL_MANAGED)\Mirror.dll" Private="false" />
+    <Reference Include="Pooling" HintPath="$(SCP_SL_MANAGED)\Pooling.dll" Private="false" />
+    <Reference Include="UnityEngine" HintPath="$(SCP_SL_MANAGED)\UnityEngine.dll" Private="false" />
+    <Reference Include="UnityEngine.CoreModule" HintPath="$(SCP_SL_MANAGED)\UnityEngine.CoreModule.dll" Private="false" />
+    <Reference Include="UnityEngine.PhysicsModule" HintPath="$(SCP_SL_MANAGED)\UnityEngine.PhysicsModule.dll" Private="false" />
+    <Reference Include="HintServiceMeow" HintPath="$(HINT_SERVICE_MEOW)" Private="false" />
+    <Reference Include="NVorbis" HintPath="lib\NVorbis.dll" Private="false" />
+    <EmbeddedResource Include="lib\NVorbis.dll" LogicalName="SCP294.Dependencies.NVorbis.dll" />
+    <EmbeddedResource Include="lib\NVorbis.LICENSE.txt" LogicalName="SCP294.Dependencies.NVorbis.LICENSE.txt" />
+    <EmbeddedResource Include="jh.ogg" LogicalName="SCP294.Audio.jh.ogg" />
+    <None Update="config.yml" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="README.md" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <Target Name="CheckReferences" BeforeTargets="ResolveReferences">
+    <Error Condition="!Exists('$(SCP_SL_MANAGED)\LabApi.dll')" Text="LabAPI references were not found. Set SCP_SL_MANAGED to SCPSL_Data\Managed." />
+    <Error Condition="!Exists('$(HINT_SERVICE_MEOW)')" Text="HintServiceMeow.dll was not found. Set HINT_SERVICE_MEOW to its LabAPI DLL." />
+  </Target>
+</Project>
