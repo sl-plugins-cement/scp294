@@ -34,6 +34,8 @@ namespace Scp294Authoring
                 go.GetComponent<Renderer>().sharedMaterial = material;
                 var metadata = go.AddComponent<ProjectMerExportMetadata>();
                 metadata.Collidable = part.Collidable;
+                metadata.Visible = part.Visible;
+                go.GetComponent<Renderer>().enabled = part.Visible;
                 if (!part.Collidable) UnityEngine.Object.DestroyImmediate(go.GetComponent<Collider>());
             }
             foreach (DrinkMachineGeometry.Label label in DrinkMachineGeometry.Labels)
@@ -41,6 +43,7 @@ namespace Scp294Authoring
                 var go = new GameObject(label.Name);
                 go.transform.SetParent(root.transform, false);
                 go.transform.localPosition = label.Position;
+                go.transform.localEulerAngles = label.Rotation;
                 go.transform.localScale = Vector3.one * label.Scale;
                 var metadata = go.AddComponent<ProjectMerExportMetadata>();
                 metadata.BlockKind = MerBlockKind.Text;
@@ -67,7 +70,10 @@ namespace Scp294Authoring
             floor.GetComponent<Renderer>().sharedMaterial = new Material(shader) { color = new Color(0.15f, 0.17f, 0.18f) };
             var light = new GameObject("SCP294Preview-Light").AddComponent<Light>();
             light.type = LightType.Directional;
-            light.intensity = 1.3f;
+            light.intensity = 1.05f;
+            light.shadows = LightShadows.Soft;
+            RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Flat;
+            RenderSettings.ambientLight = new Color(0.25f, 0.28f, 0.29f);
             light.transform.rotation = Quaternion.Euler(40, -30, 0);
             var camera = new GameObject("SCP294Preview-Camera").AddComponent<Camera>();
             camera.transform.position = new Vector3(-2.5f, 2.1f, -4.4f);

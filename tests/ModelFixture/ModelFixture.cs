@@ -53,7 +53,7 @@ public sealed class FixtureCommand : ICommand
             return true;
         }
         if (args.Count != 2 || !int.TryParse(args.At(1), out int id) || !Player.TryGet(id, out Player player))
-        { response = "Usage: scp294fixture place|view|fill|empty|effects <id>"; return false; }
+        { response = "Usage: scp294fixture place|view|angle|fill|empty|effects <id>"; return false; }
         switch (args.At(0))
         {
             case "effects":
@@ -62,6 +62,10 @@ public sealed class FixtureCommand : ICommand
             case "view":
                 if (roots.Length != 1) { response = "Expected one machine."; return false; }
                 player.Position = roots[0].Transform.TransformPoint(new Vector3(0, 1.04f, -3.35f));
+                break;
+            case "angle":
+                if (roots.Length != 1) { response = "Expected one machine."; return false; }
+                player.Position = roots[0].Transform.TransformPoint(new Vector3(-1.8f, 1.04f, -2.7f));
                 break;
             case "place":
                 if (roots.Length != 1) { response = "Expected one machine."; return false; }

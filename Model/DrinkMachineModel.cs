@@ -33,13 +33,13 @@ namespace Qlz.Model
                     PrimitiveObjectToy toy = PrimitiveObjectToy.Create(part.Position, Quaternion.Euler(part.Rotation), part.Scale, model.root.Transform, false);
                     toy.Type = part.Type;
                     toy.Color = part.Color;
-                    toy.Flags = PrimitiveFlags.Visible | (part.Collidable ? PrimitiveFlags.Collidable : PrimitiveFlags.None);
+                    toy.Flags = (part.Visible ? PrimitiveFlags.Visible : PrimitiveFlags.None) | (part.Collidable ? PrimitiveFlags.Collidable : PrimitiveFlags.None);
                     toy.IsStatic = true;
                     toy.Spawn();
                 }
                 foreach (DrinkMachineGeometry.Label label in DrinkMachineGeometry.Labels)
                 {
-                    TextToy text = TextToy.Create(label.Position, Quaternion.identity, Vector3.one * label.Scale, model.root.Transform, false);
+                    TextToy text = TextToy.Create(label.Position, Quaternion.Euler(label.Rotation), Vector3.one * label.Scale, model.root.Transform, false);
                     text.DisplaySize = new Vector2(label.Units, 40f);
                     text.TextFormat = "<align=center><size=" + label.FontSize + ">" + label.Text + "</size></align>";
                     text.IsStatic = true;
