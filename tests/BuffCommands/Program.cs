@@ -25,7 +25,7 @@ internal static class Program
         var plugin = new QlzPlugin();
         QlzPlugin.Instance = plugin;
         var command = new BuffCommand();
-        var sender = new Sender { Player = admin };
+        var sender = new Sender { Player = admin, Permission = true };
         bool Run(string[] args, out string response, ICommandSender? caller = null) =>
             command.Execute(new ArraySegment<string>(args), caller ?? sender, out response);
 
@@ -33,6 +33,15 @@ internal static class Program
             "普通玩家不能给予 Buff");
         Check(!Run(new[] { "give", "2", "67" }, out _, new Sender()) && plugin.GiveCount == 0,
             "无权限控制台拒绝");
+        var sponsor = new Sender { Player = admin, Permission = false };
+        Check(!Run(new[] { "give", "all", "jiahao", "fail" }, out _, sponsor) && plugin.GiveCount == 0,
+            "RA access alone cannot grant the lethal buff to all players");
+        Check(!Run(new[] { "clear", "all" }, out _, sponsor) && plugin.ClearCount == 0,
+            "RA access alone cannot clear buffs");
+        var parent = new QlzCommand();
+        foreach (string action in new[] { "spawn", "clear" })
+            Check(!parent.Children.Single(c => c.Command == action).Execute(default, sponsor, out _),
+                "RA access alone cannot " + action + " the machine");
         Check(Run(new[] { "give", "me", "67" }, out _) && plugin.LastTarget == admin && plugin.LastGrant!.Drink == Drink.SixtySeven,
             "管理员自身直接给予");
         Check(Run(new[] { "give", "2", "巧乐兹" }, out _) && plugin.LastGrant!.Branch == BuffBranch.Primary && plugin.LastGrant.Duration == null,

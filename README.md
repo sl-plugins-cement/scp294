@@ -34,13 +34,13 @@ dotnet build SCP294.csproj -c Release `
   -p:HINT_SERVICE_MEOW="D:\\ZHUOMIAN\\ArcaneStrike-master\\奇术打击\\LabAPI\\HintServiceMeow.dll"
 ```
 
-将 `bin/Release/net48/SCP294.dll` 放入 `LabAPI/plugins/global`，移走旧 `Qlz.dll`，避免两个版本同时运行。需已安装兼容的 HintServiceMeow。音频系统无需独立插件或解码器 DLL，默认音乐随 SCP294.dll 一起提供；可在 DLL 旁放 `jh.ogg` 覆盖，或配置自定义 OGG 绝对路径。配置由 LabAPI 在 `LabAPI/configs/<port>/SCP-294？/config.yml` 自动创建；已有配置优先于代码默认值。部署脚本已迁移本机端口 7777 的旧 QLZ 配置及属性。NVorbis 使用 Ms-PL，完整许可及版权声明在 `lib/NVorbis.LICENSE.txt` 并随 DLL 嵌入。
+Install `bin/Release/net48/SCP294.dll` in a plugin directory listed by `LabAPI/LabApi-<port>.yml`. On SR1, use `LabAPI/plugins/7777`; its loader excludes `plugins/global`. Remove an old `Qlz.dll` from the loaded paths to avoid duplicate instances. A compatible HintServiceMeow must be installed. NVorbis and the default music are embedded in SCP294.dll; a sibling `jh.ogg` or a configured absolute OGG path can override the music. LabAPI creates `LabAPI/configs/<port>/SCP-294？/config.yml` automatically and preserves existing configuration. The embedded NVorbis license is also available in `lib/NVorbis.LICENSE.txt`.
 
 ## 默认配置
 
 项目根目录的 `config.yml` 是端口 7777 当前配置的完整副本，`Config.cs` 中的默认值已同步。构建输出包含 `SCP294.dll`、`README.md` 和 `config.yml`；新服务器首次加载会自动生成相同默认值，已有服务器配置继续优先使用。
 
-这份默认配置使用固定坐标 `(58, 292, -43)`、10 倍模型、开局 60 秒刷新、巧乐兹心脏骤停 10 秒，以及嘉豪音乐半径 10 米。各 Buff 的其他持续时间和 HSM 位置见随附 `config.yml`。如需手动安装配置，将它放入 `LabAPI/configs/<port>/SCP-294？/config.yml`，插件 DLL 放入 `LabAPI/plugins/global`。
+Defaults use position `(58, 292, -43)`, scale 10, a 60-second spawn delay, 10-second cardiac arrest, and a 10-metre music radius. See `config.yml` for effect durations and hint positions. Manual configuration belongs in `LabAPI/configs/<port>/SCP-294？/config.yml`; install the DLL in a loaded per-port directory, including `LabAPI/plugins/7777` on SR1.
 
 ## HSM 显示
 
@@ -67,7 +67,7 @@ scp294 buff status <玩家>                    查看效果、阶段及剩余时
 scp294 buff clear <玩家>                     清除饮料 Buff（不移除机器）
 ```
 
-Buff 指令仅限有 Remote Admin 权限的管理员；服务器控制台需拥有 ServerConfigs 权限。目标支持玩家 ID、`me`（自身）、`all`/`*`（全体）、完整 UserId、完整昵称或唯一昵称片段；昵称歧义会列出玩家 ID，建议用 ID。给予仅适用于存活人类，`all` 自动跳过 SCP 和观察者。直接给予复用喝饮料的效果、HSM、音乐及清理流程，一名玩家同时保持一个 Buff，给予新效果会替换原效果。管理员可清除或替换美味流星，清除后解除锁物品并取消该次自爆。
+All `scp294` machine and buff commands require native `ServerConfigs` permission for both player and console senders. Remote Admin access alone does not authorize these commands. 目标支持玩家 ID、`me`（自身）、`all`/`*`（全体）、完整 UserId、完整昵称或唯一昵称片段；昵称歧义会列出玩家 ID，建议用 ID。给予仅适用于存活人类，`all` 自动跳过 SCP 和观察者。直接给予复用喝饮料的效果、HSM、音乐及清理流程，一名玩家同时保持一个 Buff，给予新效果会替换原效果。管理员可清除或替换美味流星，清除后解除锁物品并取消该次自爆。
 
 ```text
 scp294 buff give me 67

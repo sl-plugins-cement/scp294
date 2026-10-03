@@ -1,6 +1,5 @@
 using System;
 using CommandSystem;
-using LabApi.Features.Wrappers;
 
 namespace Qlz;
 
@@ -28,13 +27,12 @@ public sealed class QlzCommand : ParentCommand
 
     internal static bool Allowed(ICommandSender sender, out string response)
     {
-        Player? player = Player.Get(sender);
-        if (player != null ? player.RemoteAdminAccess : sender.CheckPermission(PlayerPermissions.ServerConfigs, out _))
+        if (sender.CheckPermission(PlayerPermissions.ServerConfigs, out _))
         {
             response = string.Empty;
             return true;
         }
-        response = "需要 Remote Admin 权限。";
+        response = "需要 ServerConfigs 权限。";
         return false;
     }
 
