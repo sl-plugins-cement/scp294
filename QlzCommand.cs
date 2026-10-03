@@ -40,7 +40,7 @@ public sealed class QlzCommand : ParentCommand
     {
         public string Command => "spawn";
         public string[] Aliases => new[] { "create", "rearm" };
-        public string Description => "生成或重置固定大型 207。";
+        public string Description => "生成或重置 SCP-294 饮料机。";
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             if (!Allowed(sender, out response)) return false;
@@ -53,7 +53,7 @@ public sealed class QlzCommand : ParentCommand
     {
         public string Command => "clear";
         public string[] Aliases => new[] { "remove", "stop" };
-        public string Description => "清除固定大型 207。";
+        public string Description => "清除 SCP-294 饮料机。";
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             if (!Allowed(sender, out response)) return false;

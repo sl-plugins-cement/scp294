@@ -1,0 +1,61 @@
+# 是否启用插件。
+is_enabled: true
+# SCP-294 position, projected onto the floor below when spawned.
+machine_position:
+  x: 58
+  y: 292
+  z: -43
+# SCP-294 rotation; the front faces local negative Z.
+machine_rotation:
+  x: 0
+  y: 0
+  z: 0
+# Model size: 10 gives the authored 2.2-metre cabinet; other values scale proportionally.
+machine_scale: 10
+# 玩家与饮料机交互的个人冷却秒数。
+personal_cooldown: 2
+# 是否在每轮开始时自动生成饮料机。
+spawn_on_round_start: false
+# 回合开始后自动生成 SCP-294? 的延迟秒数。
+spawn_delay: 60
+# 饮料机出现时的顶部公告秒数。
+spawn_broadcast_duration: 8
+# 巧乐兹成功时的移速效果持续时间。
+qiao_le_zi_duration: 180
+# 巧乐兹负面分支的心脏骤停持续秒数。
+qiao_le_zi_cardiac_duration: 10
+# 67 饮料的效果持续时间。
+sixty_seven_duration: 67
+# 遥遥领先主效果持续时间。
+ahead_duration: 120
+# 伏特加效果持续时间。
+vodka_duration: 170
+# 5号化合物的移速255效果持续秒数。
+compound_v_duration: 15
+# 5号化合物的反噬持续秒数。
+compound_v_backlash_duration: 60
+# 5号化合物反噬的缓慢强度，百分比。
+compound_v_backlash_slowness: 50
+# 美味流星飞行至自爆的秒数。
+meteor_duration: 30
+# 美味流星连续静止超过此秒数即自爆。
+meteor_still_seconds: 1
+# 嘉豪附体效果持续秒数。
+jiahao_duration: 180
+# 嘉豪 OGG BGM 路径。优先使用 DLL 旁的 jh.ogg，缺失时使用内嵌音乐；也可填自定义 OGG 绝对路径。
+jiahao_music_path: jh.ogg
+# 嘉豪 BGM 的最大听觉半径，米。
+jiahao_music_radius: 10
+# 嘉豪 BGM 音量。
+jiahao_music_volume: 1
+# 领取、使用和结束文案显示秒数，到期自动移除。
+hint_message_duration: 6
+# 饮料倒计时纵坐标，0为顶部、1080为底部。
+buff_hint_y: 760
+# 饮料倒计时相对右边缘的水平偏移，负数向左移。
+buff_hint_x: -260
+# 手持饮料介绍起始纵坐标，向下排列名称和梗文案。
+item_hint_y: 790
+# 临时文案纵坐标，与介绍和倒计时分开。
+message_hint_y: 560
+

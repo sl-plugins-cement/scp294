@@ -10,6 +10,7 @@ using LabApi.Loader.Features.Plugins;
 using MEC;
 using PlayerStatsSystem;
 using PlayerRoles;
+using Qlz.Model;
 using UnityEngine;
 using Logger = LabApi.Features.Console.Logger;
 
@@ -19,9 +20,9 @@ public sealed class QlzPlugin : Plugin<Config>
 {
     public static QlzPlugin? Instance { get; private set; }
     public override string Name => "SCP-294？";
-    public override string Description => "固定位置的巨大 SCP-207 搞怪饮料机。";
+    public override string Description => "地表 SCP-294 搞怪饮料机。";
     public override string Author => "Codex";
-    public override Version Version => new(0, 5, 4);
+    public override Version Version => new(0, 6, 0);
     public override Version RequiredApiVersion => new(LabApiProperties.CompiledVersion);
 
     private static readonly Drink[] DrinkPool = (Drink[])Enum.GetValues(typeof(Drink));
@@ -30,7 +31,7 @@ public sealed class QlzPlugin : Plugin<Config>
     private readonly LifeBottleQuota bottleQuota = new();
     private const string BottleLimitMessage = "<color=#FFD447>本条生命已经领过一瓶饮料啦，下条生命再来品尝吧！</color>";
     private readonly Dictionary<int, BuffState> buffs = new();
-    private Pickup? machine;
+    private DrinkMachineModel? machine;
     private CoroutineHandle tick;
     private float spawnAt = float.PositiveInfinity;
 
@@ -66,8 +67,8 @@ public sealed class QlzPlugin : Plugin<Config>
         }
 
         Hints.Reset();
-        PlayerEvents.SearchingPickup += OnSearchingPickup;
-        PlayerEvents.PickingUpItem += OnPickingUpItem;
+        PlayerEvents.SearchingToy += OnSearchingToy;
+        PlayerEvents.SearchedToy += OnSearchedToy;
         PlayerEvents.UsingItem += OnUsingItem;
         PlayerEvents.ChangingItem += OnChangingItem;
         PlayerEvents.DroppingItem += OnDroppingItem;
@@ -86,14 +87,14 @@ public sealed class QlzPlugin : Plugin<Config>
         JiahaoAudio.Preload(MusicPath);
         if (Config.SpawnOnRoundStart && Round.IsRoundInProgress)
             spawnAt = Time.realtimeSinceStartup + Math.Max(0f, Config.SpawnDelay - (float)Round.Duration.TotalSeconds);
-        Logger.Info("[SCP-294?] Loaded. Use scp294 spawn to place the fixed 10x SCP-207 machine.");
+        Logger.Info("[SCP-294?] Loaded. Use scp294 spawn to place the custom coffee machine.");
     }
 
     public override void Disable()
     {
         Timing.KillCoroutines(tick);
-        PlayerEvents.SearchingPickup -= OnSearchingPickup;
-        PlayerEvents.PickingUpItem -= OnPickingUpItem;
+        PlayerEvents.SearchingToy -= OnSearchingToy;
+        PlayerEvents.SearchedToy -= OnSearchedToy;
         PlayerEvents.UsingItem -= OnUsingItem;
         PlayerEvents.ChangingItem -= OnChangingItem;
         PlayerEvents.DroppingItem -= OnDroppingItem;
@@ -129,13 +130,13 @@ public sealed class QlzPlugin : Plugin<Config>
     internal string SpawnCommand()
     {
         SpawnMachine();
-        return machine == null ? "大型 207 生成失败。" : $"大型 207 饮料机已生成：{Config!.MachinePosition}";
+        return machine == null ? "SCP-294 饮料机生成失败。" : $"SCP-294 饮料机已生成：{machine.Position}";
     }
 
     internal string ClearCommand()
     {
         ClearMachine();
-        return "大型 207 饮料机已清除。";
+        return "SCP-294 饮料机已清除。";
     }
 
     internal bool BuffsAvailable => Config?.IsEnabled == true;
@@ -195,24 +196,21 @@ public sealed class QlzPlugin : Plugin<Config>
         ClearMachine();
         Vector3 position = Config!.MachinePosition;
         Quaternion rotation = Quaternion.Euler(Config.MachineRotation);
-        machine = Pickup.Create(ItemType.SCP207, position, rotation, Vector3.one * Config.MachineScale, false);
-        if (machine == null) return;
-        // Keep the native Pickup searchable. Intercept only when its native progress completes.
-        machine.IsLocked = false;
-        if (machine.Rigidbody != null)
-            machine.Rigidbody.isKinematic = true;
-        machine.Spawn();
-        if (machine.PickupStandardPhysics?.Rb != null)
-            machine.PickupStandardPhysics.Rb.isKinematic = true;
+        try { machine = DrinkMachineModel.Spawn(position, rotation, Config.MachineScale); }
+        catch (Exception ex)
+        {
+            Logger.Error("[SCP-294?] Machine spawn failed: " + ex);
+            return;
+        }
 
         Server.SendBroadcast("[SCP-294?]已经出现在地表处，快来品尝吧😋", Config.SpawnBroadcastDuration);
 
-        Logger.Info($"[SCP-294?] Machine spawned at {position} scale={Config.MachineScale}.");
+        Logger.Info($"[SCP-294?] Custom machine spawned at {machine.Position} scale={Config.MachineScale}, static toys={machine.ToyCount}.");
     }
 
     private void ClearMachine()
     {
-        if (machine != null && !machine.IsDestroyed) machine.Destroy();
+        machine?.Dispose();
         machine = null;
     }
 
@@ -245,21 +243,17 @@ public sealed class QlzPlugin : Plugin<Config>
         Logger.Info($"[SCP-294?] {player.Nickname} received {drink} serial={item.Serial}.");
     }
 
-    private void OnPickingUpItem(PlayerPickingUpItemEventArgs ev)
+    private void OnSearchedToy(PlayerSearchedToyEventArgs ev)
     {
-        if (!IsMachine(ev.Pickup)) return;
-        // ItemSearchCompletor raises this AFTER the original pickup bar finishes and resets
-        // InUse when cancelled. Preserve the machine and give a separate random bottle.
-        bool allowed = ev.IsAllowed;
-        ev.IsAllowed = false;
-        if (allowed) Dispense(ev.Player);
+        // Native search completion fires only after the progress bar finishes.
+        if (IsMachine(ev.Interactable)) Dispense(ev.Player);
     }
 
-    private bool IsMachine(Pickup pickup) => machine != null && !machine.IsDestroyed && pickup.Base == machine.Base;
+    private bool IsMachine(InteractableToy target) => machine != null && !machine.IsDestroyed && target.Base == machine.Target.Base;
 
-    private void OnSearchingPickup(PlayerSearchingPickupEventArgs ev)
+    private void OnSearchingToy(PlayerSearchingToyEventArgs ev)
     {
-        if (!IsMachine(ev.Pickup) || !ev.IsAllowed) return;
+        if (!IsMachine(ev.Interactable) || !ev.IsAllowed) return;
         if (ev.Player.IsAlive && ev.Player.IsHuman && !bottleQuota.CanReceive(ev.Player.PlayerId, ev.Player.LifeId))
         {
             ev.IsAllowed = false;

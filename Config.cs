@@ -8,13 +8,13 @@ public sealed class Config
     [Description("是否启用插件。")]
     public bool IsEnabled { get; set; } = true;
 
-    [Description("大型 207 饮料机的固定坐标。")]
+    [Description("SCP-294 饮料机坐标，生成时贴合下方地面。")]
     public Vector3 MachinePosition { get; set; } = new Vector3(58f, 292f, -43f);
 
-    [Description("大型 207 饮料机的旋转。")]
+    [Description("SCP-294 饮料机的旋转，正面朝局部负 Z。")]
     public Vector3 MachineRotation { get; set; } = Vector3.zero;
 
-    [Description("大型 207 的缩放倍数。")]
+    [Description("SCP-294 模型大小，10 为默认约 2.2 米高，按比例缩放。")]
     public float MachineScale { get; set; } = 10f;
 
     [Description("玩家与饮料机交互的个人冷却秒数。")]

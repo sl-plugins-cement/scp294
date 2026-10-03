@@ -1,8 +1,8 @@
 # SCP-294? 搞怪饮料机
 
-这是一个独立的 LabAPI 插件。每回合开始 60 秒后，默认在 `(58, 292, -43)` 生成一个放大 10 倍的 SCP-207，并使用顶部原生广播显示 `[SCP-294?]已经出现在地表处，快来品尝吧😋`。玩家对它执行游戏原生拾取，进度完成后随机获得饮料；取消拾取不会出货，机器留在原地。回合重置会取消待生成任务。
+This standalone LabAPI plugin spawns a custom SCP-294 coffee cabinet on Surface at `(58, 292, -43)`, 60 seconds after round start. Hold the native interaction key on its front panel to receive a random drink; releasing early cancels without dispensing. The cabinet stays in place and round reset cancels pending spawns. Its wiki-inspired model, attribution and Unity authoring instructions are in [Model/README.md](Model/README.md).
 
-**每名玩家每条生命只能从饮料机领取一瓶。** 成功加入背包才消耗额度；取消原生拾取、背包满或出货失败不消耗。喝掉、丢弃、转交饮料、Buff 到期、管理员清除 Buff 或重新生成机器不会恢复额度；死亡后复活进入新的原生 LifeId 可再次领取。普通掉落饮料的拾取和管理员直接给予 Buff 不受机器领取额度限制。回合重置与离开服务器会清理记录。
+**Each player can receive one bottle per native life.** Only a successful inventory addition consumes the quota. Cancelling the native search, a full inventory or a failed dispense leaves it available. Drinking, dropping or transferring the bottle, buff expiry, admin buff clearing and machine replacement do not reset the quota. A new native LifeId after respawn allows another bottle. Ordinary dropped-item pickup and admin buff grants bypass machine quotas. Round reset and disconnection clear the records.
 
 程序集及项目名为 `SCP294`；LabAPI 名称使用 `SCP-294？` 的全角问号，避免 Windows 配置文件夹非法字符。源代码保留 `Qlz` 命名空间以兼容原有文件。
 
@@ -40,7 +40,7 @@ Install `bin/Release/net48/SCP294.dll` in a plugin directory listed by `LabAPI/L
 
 项目根目录的 `config.yml` 是端口 7777 当前配置的完整副本，`Config.cs` 中的默认值已同步。构建输出包含 `SCP294.dll`、`README.md` 和 `config.yml`；新服务器首次加载会自动生成相同默认值，已有服务器配置继续优先使用。
 
-Defaults use position `(58, 292, -43)`, scale 10, a 60-second spawn delay, 10-second cardiac arrest, and a 10-metre music radius. See `config.yml` for effect durations and hint positions. Manual configuration belongs in `LabAPI/configs/<port>/SCP-294？/config.yml`; install the DLL in a loaded per-port directory, including `LabAPI/plugins/7777` on SR1.
+Defaults use position `(58, 292, -43)` projected onto the floor below it, scale 10 (a 2.2-metre cabinet), a 60-second spawn delay, 10-second cardiac arrest, and a 10-metre music radius. See `config.yml` for effect durations and hint positions. Manual configuration belongs in `LabAPI/configs/<port>/SCP-294？/config.yml`; install the DLL in a loaded per-port directory, including `LabAPI/plugins/7777` on SR1.
 
 ## HSM 显示
 
@@ -59,8 +59,8 @@ Defaults use position `(58, 292, -43)`, scale 10, a 60-second spawn delay, 10-se
 ## 命令
 
 ```text
-scp294 spawn    生成或重置固定大型 207
-scp294 clear    清除大型 207
+scp294 spawn    Spawn or replace SCP-294
+scp294 clear    Clear SCP-294
 scp294 buff list                            查看可用 Buff
 scp294 buff give <玩家> <Buff> [秒数] [分支]  直接给予效果，不需要饮料
 scp294 buff status <玩家>                    查看效果、阶段及剩余时间

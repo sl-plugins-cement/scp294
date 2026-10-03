@@ -1,16 +1,16 @@
 # 是否启用插件。
 is_enabled: true
-# 大型 207 饮料机的固定坐标。
+# SCP-294 position, projected onto the floor below when spawned.
 machine_position:
   x: 58
   y: 292
   z: -43
-# 大型 207 饮料机的旋转。
+# SCP-294 rotation; the front faces local negative Z.
 machine_rotation:
   x: 0
   y: 0
   z: 0
-# 大型 207 的缩放倍数。
+# Model size: 10 gives the authored 2.2-metre cabinet; other values scale proportionally.
 machine_scale: 10
 # 玩家与饮料机交互的个人冷却秒数。
 personal_cooldown: 2

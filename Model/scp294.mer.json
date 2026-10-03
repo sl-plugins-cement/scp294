@@ -1,0 +1,2680 @@
+{
+  "RootObjectId": 0,
+  "Blocks": [
+    {
+      "Name": "SCP294-CoffeeMachine",
+      "ObjectId": 0,
+      "ParentId": -1,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "BlockType": 0,
+      "Properties": {
+        "Static": true
+      }
+    },
+    {
+      "Name": "cabinet",
+      "ObjectId": 1,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0,
+        "y": 1.10000002,
+        "z": 0
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 1.29999995,
+        "y": 2.11999989,
+        "z": 0.699999988
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 3,
+        "Static": true
+      }
+    },
+    {
+      "Name": "left-frame",
+      "ObjectId": 2,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.63499999,
+        "y": 1.13999999,
+        "z": -0.354999989
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0260000005,
+        "y": 2.16000009,
+        "z": 0.0280000009
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#BABFB2FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "right-frame",
+      "ObjectId": 3,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.63499999,
+        "y": 1.13999999,
+        "z": -0.354999989
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0260000005,
+        "y": 2.16000009,
+        "z": 0.0280000009
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#BABFB2FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "top-frame",
+      "ObjectId": 4,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0,
+        "y": 2.20000005,
+        "z": -0.354999989
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 1.29999995,
+        "y": 0.0260000005,
+        "z": 0.0280000009
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#BABFB2FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "nameplate",
+      "ObjectId": 5,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0,
+        "y": 2.08500004,
+        "z": -0.356000006
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 1.23000002,
+        "y": 0.194999993,
+        "z": 0.0250000004
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "screen-frame",
+      "ObjectId": 6,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.129999995,
+        "y": 1.70000005,
+        "z": -0.358999997
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.939999998,
+        "y": 0.574999988,
+        "z": 0.023
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#808580FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "screen",
+      "ObjectId": 7,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.129999995,
+        "y": 1.70000005,
+        "z": -0.374000013
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.86500001,
+        "y": 0.524999976,
+        "z": 0.00899999961
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#99B5B2FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "keyboard-panel",
+      "ObjectId": 8,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.129999995,
+        "y": 1.255,
+        "z": -0.361999989
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.939999998,
+        "y": 0.349999994,
+        "z": 0.0250000004
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#3D403DFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-0-0",
+      "ObjectId": 9,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.458499998,
+        "y": 1.36000001,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-0-1",
+      "ObjectId": 10,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.385499984,
+        "y": 1.36000001,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-0-2",
+      "ObjectId": 11,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.3125,
+        "y": 1.36000001,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-0-3",
+      "ObjectId": 12,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.239499986,
+        "y": 1.36000001,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-0-4",
+      "ObjectId": 13,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.166500002,
+        "y": 1.36000001,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-0-5",
+      "ObjectId": 14,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.0934999958,
+        "y": 1.36000001,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-0-6",
+      "ObjectId": 15,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.0204999968,
+        "y": 1.36000001,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-0-7",
+      "ObjectId": 16,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.0525000021,
+        "y": 1.36000001,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-0-8",
+      "ObjectId": 17,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.125499994,
+        "y": 1.36000001,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-0-9",
+      "ObjectId": 18,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.198500007,
+        "y": 1.36000001,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-1-0",
+      "ObjectId": 19,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.458499998,
+        "y": 1.29500008,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-1-1",
+      "ObjectId": 20,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.385499984,
+        "y": 1.29500008,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-1-2",
+      "ObjectId": 21,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.3125,
+        "y": 1.29500008,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-1-3",
+      "ObjectId": 22,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.239499986,
+        "y": 1.29500008,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-1-4",
+      "ObjectId": 23,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.166500002,
+        "y": 1.29500008,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-1-5",
+      "ObjectId": 24,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.0934999958,
+        "y": 1.29500008,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-1-6",
+      "ObjectId": 25,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.0204999968,
+        "y": 1.29500008,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-1-7",
+      "ObjectId": 26,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.0525000021,
+        "y": 1.29500008,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-1-8",
+      "ObjectId": 27,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.125499994,
+        "y": 1.29500008,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-1-9",
+      "ObjectId": 28,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.198500007,
+        "y": 1.29500008,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-2-0",
+      "ObjectId": 29,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.421999991,
+        "y": 1.23000002,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-2-1",
+      "ObjectId": 30,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.348999977,
+        "y": 1.23000002,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-2-2",
+      "ObjectId": 31,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.275999993,
+        "y": 1.23000002,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-2-3",
+      "ObjectId": 32,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.202999994,
+        "y": 1.23000002,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-2-4",
+      "ObjectId": 33,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.129999995,
+        "y": 1.23000002,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-2-5",
+      "ObjectId": 34,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.0569999963,
+        "y": 1.23000002,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-2-6",
+      "ObjectId": 35,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.0160000026,
+        "y": 1.23000002,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-2-7",
+      "ObjectId": 36,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.0890000015,
+        "y": 1.23000002,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-2-8",
+      "ObjectId": 37,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.162,
+        "y": 1.23000002,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-3-0",
+      "ObjectId": 38,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.348999977,
+        "y": 1.16499996,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-3-1",
+      "ObjectId": 39,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.275999993,
+        "y": 1.16499996,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-3-2",
+      "ObjectId": 40,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.202999994,
+        "y": 1.16499996,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-3-3",
+      "ObjectId": 41,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.129999995,
+        "y": 1.16499996,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-3-4",
+      "ObjectId": 42,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.0569999963,
+        "y": 1.16499996,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-3-5",
+      "ObjectId": 43,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.0160000026,
+        "y": 1.16499996,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "key-3-6",
+      "ObjectId": 44,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.0890000015,
+        "y": 1.16499996,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0610000007,
+        "y": 0.0489999987,
+        "z": 0.0199999996
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "space-key",
+      "ObjectId": 45,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.129999995,
+        "y": 1.10000002,
+        "z": -0.379999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.264999986,
+        "y": 0.0399999991,
+        "z": 0.0179999992
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "metal-front",
+      "ObjectId": 46,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.129999995,
+        "y": 0.709999979,
+        "z": -0.356000006
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.939999998,
+        "y": 0.680000007,
+        "z": 0.0280000009
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#808580FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "cup-recess",
+      "ObjectId": 47,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.300000012,
+        "y": 0.610000014,
+        "z": -0.375
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.319999993,
+        "y": 0.36500001,
+        "z": 0.0250000004
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#060708FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "bay-top",
+      "ObjectId": 48,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.300000012,
+        "y": 0.791999996,
+        "z": -0.398999989
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.360000014,
+        "y": 0.0399999991,
+        "z": 0.0500000007
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#3D4745FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "drip-tray",
+      "ObjectId": 49,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.300000012,
+        "y": 0.428000003,
+        "z": -0.430999994
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.360000014,
+        "y": 0.0350000001,
+        "z": 0.129999995
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "tray-rib-0",
+      "ObjectId": 50,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.437999994,
+        "y": 0.449000001,
+        "z": -0.430999994
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0170000009,
+        "y": 0.00800000038,
+        "z": 0.109999999
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#808580FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "tray-rib-1",
+      "ObjectId": 51,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.39199999,
+        "y": 0.449000001,
+        "z": -0.430999994
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0170000009,
+        "y": 0.00800000038,
+        "z": 0.109999999
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#808580FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "tray-rib-2",
+      "ObjectId": 52,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.345999986,
+        "y": 0.449000001,
+        "z": -0.430999994
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0170000009,
+        "y": 0.00800000038,
+        "z": 0.109999999
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#808580FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "tray-rib-3",
+      "ObjectId": 53,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.299999982,
+        "y": 0.449000001,
+        "z": -0.430999994
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0170000009,
+        "y": 0.00800000038,
+        "z": 0.109999999
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#808580FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "tray-rib-4",
+      "ObjectId": 54,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.254000008,
+        "y": 0.449000001,
+        "z": -0.430999994
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0170000009,
+        "y": 0.00800000038,
+        "z": 0.109999999
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#808580FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "tray-rib-5",
+      "ObjectId": 55,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.207999989,
+        "y": 0.449000001,
+        "z": -0.430999994
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0170000009,
+        "y": 0.00800000038,
+        "z": 0.109999999
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#808580FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "tray-rib-6",
+      "ObjectId": 56,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.162,
+        "y": 0.449000001,
+        "z": -0.430999994
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0170000009,
+        "y": 0.00800000038,
+        "z": 0.109999999
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#808580FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "cup",
+      "ObjectId": 57,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.300000012,
+        "y": 0.512000024,
+        "z": -0.423000008
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.119999997,
+        "y": 0.0599999987,
+        "z": 0.119999997
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 2,
+        "Color": "#E6E0C4FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "cup-rim",
+      "ObjectId": 58,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.300000012,
+        "y": 0.575999975,
+        "z": -0.423000008
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.127000004,
+        "y": 0.00449999981,
+        "z": 0.127000004
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 2,
+        "Color": "#FAF7E3FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "coffee",
+      "ObjectId": 59,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.300000012,
+        "y": 0.58099997,
+        "z": -0.423000008
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.104999997,
+        "y": 0.00150000001,
+        "z": 0.104999997
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 2,
+        "Color": "#1C0E07FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "nozzle",
+      "ObjectId": 60,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.300000012,
+        "y": 0.741999984,
+        "z": -0.419
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0549999997,
+        "y": 0.075000003,
+        "z": 0.0500000007
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#808580FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "coin-frame",
+      "ObjectId": 61,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.465000004,
+        "y": 1.38,
+        "z": -0.363000005
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.25999999,
+        "y": 0.529999971,
+        "z": 0.0240000002
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#808580FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "coin-panel",
+      "ObjectId": 62,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.465000004,
+        "y": 1.38,
+        "z": -0.377999991
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.234999999,
+        "y": 0.5,
+        "z": 0.0120000001
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "coin-lcd",
+      "ObjectId": 63,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.465000004,
+        "y": 1.58000004,
+        "z": -0.386999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.202999994,
+        "y": 0.0599999987,
+        "z": 0.00800000038
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#18241AFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "coin-dial",
+      "ObjectId": 64,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.465000004,
+        "y": 1.46000004,
+        "z": -0.40200001
+      },
+      "Rotation": {
+        "x": 90,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0719999969,
+        "y": 0.00749999983,
+        "z": 0.0719999969
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 2,
+        "Color": "#BABFB2FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "coin-slot",
+      "ObjectId": 65,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.555000007,
+        "y": 1.46000004,
+        "z": -0.395999998
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0120000001,
+        "y": 0.0659999996,
+        "z": 0.0140000004
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#060708FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "coin-list-0",
+      "ObjectId": 66,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.416999996,
+        "y": 1.33000004,
+        "z": -0.386999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0890000015,
+        "y": 0.00600000005,
+        "z": 0.00499999989
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#808580FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "coin-list-1",
+      "ObjectId": 67,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.416999996,
+        "y": 1.30400002,
+        "z": -0.386999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0890000015,
+        "y": 0.00600000005,
+        "z": 0.00499999989
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#808580FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "coin-list-2",
+      "ObjectId": 68,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.416999996,
+        "y": 1.278,
+        "z": -0.386999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0890000015,
+        "y": 0.00600000005,
+        "z": 0.00499999989
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#808580FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "coin-list-3",
+      "ObjectId": 69,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.416999996,
+        "y": 1.25200009,
+        "z": -0.386999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0890000015,
+        "y": 0.00600000005,
+        "z": 0.00499999989
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#808580FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "coin-list-4",
+      "ObjectId": 70,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.416999996,
+        "y": 1.22600007,
+        "z": -0.386999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0890000015,
+        "y": 0.00600000005,
+        "z": 0.00499999989
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#808580FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "coin-list-5",
+      "ObjectId": 71,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.416999996,
+        "y": 1.20000005,
+        "z": -0.386999995
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0890000015,
+        "y": 0.00600000005,
+        "z": 0.00499999989
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#808580FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "return-slot",
+      "ObjectId": 72,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.5,
+        "y": 0.435000002,
+        "z": -0.370000005
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.100000001,
+        "y": 0.0799999982,
+        "z": 0.0120000001
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#808580FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "return-opening",
+      "ObjectId": 73,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.5,
+        "y": 0.435000002,
+        "z": -0.381000012
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0759999976,
+        "y": 0.0450000018,
+        "z": 0.0120000001
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#060708FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "base-plinth",
+      "ObjectId": 74,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0,
+        "y": 0.185000002,
+        "z": -0.00800000038
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 1.22000003,
+        "y": 0.270000011,
+        "z": 0.689999998
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#0E100FFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "left-foot",
+      "ObjectId": 75,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.449999988,
+        "y": 0.0280000009,
+        "z": 0
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.150000006,
+        "y": 0.0549999997,
+        "z": 0.449999988
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#060708FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "right-foot",
+      "ObjectId": 76,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.449999988,
+        "y": 0.0280000009,
+        "z": 0
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.150000006,
+        "y": 0.0549999997,
+        "z": 0.449999988
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#060708FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "display-cup-0",
+      "ObjectId": 77,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.389999986,
+        "y": 1.66999996,
+        "z": -0.38499999
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.170000002,
+        "y": 0.150000006,
+        "z": 0.00800000038
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#D6D6C2FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "display-rim-0",
+      "ObjectId": 78,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.389999986,
+        "y": 1.75,
+        "z": -0.391000003
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.189999998,
+        "y": 0.0189999994,
+        "z": 0.00999999978
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#BABFB2FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "display-coffee-0",
+      "ObjectId": 79,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.389999986,
+        "y": 1.755,
+        "z": -0.398999989
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.144999996,
+        "y": 0.00499999989,
+        "z": 0.00899999961
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#3B2417FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "display-cup-1",
+      "ObjectId": 80,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.129999995,
+        "y": 1.61500001,
+        "z": -0.38499999
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.170000002,
+        "y": 0.150000006,
+        "z": 0.00800000038
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#C2BFB8FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "display-rim-1",
+      "ObjectId": 81,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.129999995,
+        "y": 1.69500005,
+        "z": -0.391000003
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.189999998,
+        "y": 0.0189999994,
+        "z": 0.00999999978
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#BABFB2FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "display-coffee-1",
+      "ObjectId": 82,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.129999995,
+        "y": 1.70000005,
+        "z": -0.398999989
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.144999996,
+        "y": 0.00499999989,
+        "z": 0.00899999961
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#3B2417FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "display-cup-2",
+      "ObjectId": 83,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.129999995,
+        "y": 1.66999996,
+        "z": -0.38499999
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.170000002,
+        "y": 0.150000006,
+        "z": 0.00800000038
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#ADA8ADFF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "display-rim-2",
+      "ObjectId": 84,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.129999995,
+        "y": 1.75,
+        "z": -0.391000003
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.189999998,
+        "y": 0.0189999994,
+        "z": 0.00999999978
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#BABFB2FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "display-coffee-2",
+      "ObjectId": 85,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.129999995,
+        "y": 1.755,
+        "z": -0.398999989
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.144999996,
+        "y": 0.00499999989,
+        "z": 0.00899999961
+      },
+      "BlockType": 1,
+      "Properties": {
+        "PrimitiveType": 3,
+        "Color": "#3B2417FF",
+        "PrimitiveFlags": 2,
+        "Static": true
+      }
+    },
+    {
+      "Name": "nameplate",
+      "ObjectId": 86,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0,
+        "y": 2.08999991,
+        "z": -0.370999992
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.205999985,
+        "y": 0.205999985,
+        "z": 0.205999985
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=16><color=#EBE5D4><b>SCP-294</b></color></size></align>",
+        "DisplaySize": {
+          "x": 100.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "display-title",
+      "ObjectId": 87,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.129999995,
+        "y": 1.91999996,
+        "z": -0.370999992
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.165999994,
+        "y": 0.165999994,
+        "z": 0.165999994
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=12><color=#342C27><b>咖啡 · 饮料</b></color></size></align>",
+        "DisplaySize": {
+          "x": 100.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "keyboard-numbers",
+      "ObjectId": 88,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.129999995,
+        "y": 1.36000001,
+        "z": -0.391000003
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0960000008,
+        "y": 0.0960000008,
+        "z": 0.0960000008
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=9>1  2  3  4  5  6  7  8  9  0</size></align>",
+        "DisplaySize": {
+          "x": 150.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "keyboard-qwerty",
+      "ObjectId": 89,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.129999995,
+        "y": 1.29499996,
+        "z": -0.391000003
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0960000008,
+        "y": 0.0960000008,
+        "z": 0.0960000008
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=9>Q  W  E  R  T  Y  U  I  O  P</size></align>",
+        "DisplaySize": {
+          "x": 150.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "keyboard-home",
+      "ObjectId": 90,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.115000002,
+        "y": 1.23000002,
+        "z": -0.391000003
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0879999995,
+        "y": 0.0879999995,
+        "z": 0.0879999995
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=9>A  S  D  F  G  H  J  K  L</size></align>",
+        "DisplaySize": {
+          "x": 150.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "keyboard-bottom",
+      "ObjectId": 91,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.104999997,
+        "y": 1.16499996,
+        "z": -0.391000003
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0693333298,
+        "y": 0.0693333298,
+        "z": 0.0693333298
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=9>Z  X  C  V  B  N  M</size></align>",
+        "DisplaySize": {
+          "x": 150.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "coin-display",
+      "ObjectId": 92,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": 0.465000004,
+        "y": 1.58000004,
+        "z": -0.386000007
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.0500000007,
+        "y": 0.0500000007,
+        "z": 0.0500000007
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=14><color=#C2E09D>就绪</color></size></align>",
+        "DisplaySize": {
+          "x": 80.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "instructions",
+      "ObjectId": 93,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.109999999,
+        "y": 0.920000017,
+        "z": -0.374000013
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.138181821,
+        "y": 0.138181821,
+        "z": 0.138181821
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=12><color=#DFE4D4>按住互动键领取</color></size></align>",
+        "DisplaySize": {
+          "x": 110.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    },
+    {
+      "Name": "quota",
+      "ObjectId": 94,
+      "ParentId": 0,
+      "AnimatorName": "",
+      "Position": {
+        "x": -0.109999999,
+        "y": 0.340000004,
+        "z": -0.374000013
+      },
+      "Rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "Scale": {
+        "x": 0.1309091,
+        "y": 0.1309091,
+        "z": 0.1309091
+      },
+      "BlockType": 8,
+      "Properties": {
+        "Text": "<align=center><size=11><color=#C4C9CA>每条生命一瓶</color></size></align>",
+        "DisplaySize": {
+          "x": 110.0,
+          "y": 40.0
+        },
+        "Static": true
+      }
+    }
+  ]
+}
