@@ -53,9 +53,16 @@ public sealed class FixtureCommand : ICommand
             return true;
         }
         if (args.Count != 2 || !int.TryParse(args.At(1), out int id) || !Player.TryGet(id, out Player player))
-        { response = "Usage: scp294fixture place|fill|empty <id>"; return false; }
+        { response = "Usage: scp294fixture place|view|fill|empty|effects <id>"; return false; }
         switch (args.At(0))
         {
+            case "effects":
+                response = FormattableString.Invariant($"EFFECT_STATE {{\"maxHealth\":{player.MaxHealth},\"health\":{player.Health},\"movement\":{player.GetEffect<CustomPlayerEffects.MovementBoost>().Intensity},\"slowness\":{player.GetEffect<CustomPlayerEffects.Slowness>().Intensity}}}");
+                return true;
+            case "view":
+                if (roots.Length != 1) { response = "Expected one machine."; return false; }
+                player.Position = roots[0].Transform.TransformPoint(new Vector3(0, 1.04f, -3.35f));
+                break;
             case "place":
                 if (roots.Length != 1) { response = "Expected one machine."; return false; }
                 player.SetRole(RoleTypeId.Tutorial);

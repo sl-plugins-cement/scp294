@@ -2652,8 +2652,8 @@
       "ParentId": 0,
       "AnimatorName": "",
       "Position": {
-        "x": -0.109999999,
-        "y": 0.340000004,
+        "x": 0.170000002,
+        "y": 0.610000014,
         "z": -0.374000013
       },
       "Rotation": {
@@ -2662,15 +2662,15 @@
         "z": 0
       },
       "Scale": {
-        "x": 0.1309091,
-        "y": 0.1309091,
-        "z": 0.1309091
+        "x": 0.0971428603,
+        "y": 0.0971428603,
+        "z": 0.0971428603
       },
       "BlockType": 8,
       "Properties": {
-        "Text": "<align=center><size=11><color=#C4C9CA>每条生命一瓶</color></size></align>",
+        "Text": "<align=center><size=11><color=#C4C9CA>每条生命\n限领一瓶</color></size></align>",
         "DisplaySize": {
-          "x": 110.0,
+          "x": 70.0,
           "y": 40.0
         },
         "Static": true

@@ -37,7 +37,7 @@ namespace Qlz.Model
             Text("keyboard-bottom", "Z  X  C  V  B  N  M", -0.105f, 1.165f, -0.391f, 0.52f, 150f, 9),
             Text("coin-display", "<color=#C2E09D>就绪</color>", 0.465f, 1.58f, -0.393f, 0.20f, 80f, 14),
             Text("instructions", "<color=#DFE4D4>按住互动键领取</color>", -0.11f, 0.92f, -0.374f, 0.76f, 110f, 12),
-            Text("quota", "<color=#C4C9CA>每条生命一瓶</color>", -0.11f, 0.34f, -0.374f, 0.72f, 110f, 11),
+            Text("quota", "<color=#C4C9CA>每条生命\n限领一瓶</color>", 0.17f, 0.61f, -0.374f, 0.34f, 70f, 11),
         };
 
         private static Label Text(string name, string text, float x, float y, float z, float width, float units, int size)
