@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <AssemblyName>SCP294</AssemblyName>
     <RootNamespace>Qlz</RootNamespace>
-    <Version>0.5.3</Version>
+    <Version>0.5.4</Version>
     <SCP_SL_MANAGED Condition="'$(SCP_SL_MANAGED)' == ''">..\_buildrefs</SCP_SL_MANAGED>
     <HINT_SERVICE_MEOW Condition="'$(HINT_SERVICE_MEOW)' == ''">..\奇术打击\LabAPI\HintServiceMeow.dll</HINT_SERVICE_MEOW>
   </PropertyGroup>

@@ -21,7 +21,7 @@ public sealed class QlzPlugin : Plugin<Config>
     public override string Name => "SCP-294？";
     public override string Description => "固定位置的巨大 SCP-207 搞怪饮料机。";
     public override string Author => "Codex";
-    public override Version Version => new(0, 5, 3);
+    public override Version Version => new(0, 5, 4);
     public override Version RequiredApiVersion => new(LabApiProperties.CompiledVersion);
 
     private static readonly Drink[] DrinkPool = (Drink[])Enum.GetValues(typeof(Drink));
@@ -77,6 +77,7 @@ public sealed class QlzPlugin : Plugin<Config>
         PlayerEvents.ShotWeapon += OnShotWeapon;
         PlayerEvents.Left += OnLeft;
         PlayerEvents.ChangedRole += OnChangedRole;
+        PlayerRoleManager.OnServerRoleSet += OnServerRoleSet;
         PlayerEvents.Death += OnDeath;
         ServerEvents.RoundStarted += OnRoundStarted;
         ServerEvents.RoundRestarted += OnRoundReset;
@@ -102,6 +103,7 @@ public sealed class QlzPlugin : Plugin<Config>
         PlayerEvents.ShotWeapon -= OnShotWeapon;
         PlayerEvents.Left -= OnLeft;
         PlayerEvents.ChangedRole -= OnChangedRole;
+        PlayerRoleManager.OnServerRoleSet -= OnServerRoleSet;
         PlayerEvents.Death -= OnDeath;
         ServerEvents.RoundStarted -= OnRoundStarted;
         ServerEvents.RoundRestarted -= OnRoundReset;
@@ -705,6 +707,18 @@ public sealed class QlzPlugin : Plugin<Config>
         Hints.Clear(ev.Player); buffs.Remove(ev.Player.PlayerId); nextUse.Remove(ev.Player.PlayerId);
         bottleQuota.Forget(ev.Player.PlayerId);
     }
+    private void OnServerRoleSet(ReferenceHub hub, RoleTypeId newRole, RoleChangeReason reason)
+    {
+        Player? player = Player.Get(hub);
+        if (player != null && buffs.TryGetValue(player.PlayerId, out BuffState state) &&
+            state.Drink == Drink.Vodka && player.LifeId == state.LifeId)
+        {
+            // Native role changes retain FPC scale. This event runs after cancellation
+            // checks and before replacing the old role, while its scale is still writable.
+            player.Scale = state.BaseScale;
+        }
+    }
+
     private void OnChangedRole(PlayerChangedRoleEventArgs ev)
     {
         if (buffs.TryGetValue(ev.Player.PlayerId, out BuffState state))
