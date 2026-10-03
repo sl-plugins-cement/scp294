@@ -16,7 +16,7 @@ until ($roundReply -match 'Round time:' -or (Get-Date) -gt $deadline)
 if ($roundReply -notmatch 'Round time:') { throw 'Round did not start' }
 $null=Invoke-LabServer '/scp294 spawn'
 $machineState=Machine-State
-if ($machineState.roots -ne 1 -or $machineState.toys -ne 176) { throw 'Expected one complete static model' }
+if ($machineState.roots -ne 1 -or $machineState.toys -ne 175) { throw "Expected one complete 175-toy model: $($machineState | ConvertTo-Json -Compress)" }
 $actorId=@(Observe -ClientsOnly)[0].id
 $null=Invoke-LabServer "/labplacecheck $($machineState.x) $($machineState.baseY + 1.04) $($machineState.z - 1.3) Tutorial"
 Fixture 'place' $actorId
