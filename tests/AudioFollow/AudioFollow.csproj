@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <AssemblyName>SCP294.AudioTests</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\JiahaoAudio.cs" Link="JiahaoAudio.cs" />
+    <Compile Include="..\..\Audio\EmbeddedVorbis.cs" Link="EmbeddedVorbis.cs" />
+    <Compile Include="..\..\Audio\OggDecoder.cs" Link="OggDecoder.cs" />
+    <Reference Include="NVorbis" HintPath="..\..\lib\NVorbis.dll" Private="false" />
+    <EmbeddedResource Include="..\..\lib\NVorbis.dll" LogicalName="SCP294.Dependencies.NVorbis.dll" />
+    <EmbeddedResource Include="..\..\jh.ogg" LogicalName="SCP294.Audio.jh.ogg" />
+  </ItemGroup>
+</Project>
