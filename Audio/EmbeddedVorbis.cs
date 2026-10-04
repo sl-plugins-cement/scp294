@@ -10,7 +10,7 @@ internal static class EmbeddedVorbis
     private static readonly object Sync = new();
     private static Assembly? decoder;
     private static bool initialized;
-    private static readonly AssemblyName Expected = new("NVorbis, Version=0.8.5.0, Culture=neutral, PublicKeyToken=null");
+    private static readonly AssemblyName Expected = new("NVorbis, Version=0.10.4.0, Culture=neutral, PublicKeyToken=null");
 
     internal static void Initialize()
     {
@@ -31,7 +31,9 @@ internal static class EmbeddedVorbis
         }
     }
 
-    private static bool Matches(AssemblyName name) => name.Name == Expected.Name && name.Version == Expected.Version &&
+    // SecretLabNAudio also loads NVorbis; reuse its compatible 0.10 decoder in either load order.
+    private static bool Matches(AssemblyName name) => name.Name == Expected.Name && name.Version >= Expected.Version &&
+        name.Version < new Version(0, 11, 0, 0) &&
         string.IsNullOrEmpty(name.CultureName) && (name.GetPublicKeyToken()?.Length ?? 0) == 0;
 
     private static Assembly? Resolve(object? sender, ResolveEventArgs args)

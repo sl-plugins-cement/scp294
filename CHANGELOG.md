@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.1
+
+- Update the embedded Vorbis decoder to 0.10.4 and reuse compatible SecretLabNAudio decoders, preventing AutoEvent audio initialization failures when SCP294 loads first.
+
 ## 0.7.0
 
 - Expose all eight drop probabilities, conditional branch probabilities and movement, damage and backlash percentages in configuration.

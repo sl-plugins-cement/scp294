@@ -22,7 +22,7 @@ public sealed class QlzPlugin : Plugin<Config>
     public override string Name => "SCP-294？";
     public override string Description => "地表 SCP-294 搞怪饮料机。";
     public override string Author => "Codex";
-    public override Version Version => new(0, 7, 0);
+    public override Version Version => new(0, 7, 1);
     public override Version RequiredApiVersion => new(LabApiProperties.CompiledVersion);
 
     private DrinkRolls lottery = null!;
