@@ -44,7 +44,7 @@ if ($state.force -ne '') { throw "Control actor unexpectedly reports force '$($s
 $null = Set-LabAim -Target @{x=$machineState.x;y=$machineState.y;z=$machineState.z}
 $null = Invoke-LabScreenshot -Name 'control-before'
 $null = Invoke-LabInput @{id='control-dispense';frames=300;inputFrames=150;keys=@(101);capture=$true}
-$items = Items
+$items = @(Items)
 Log "control items $($items -join ',')"
 if ($items.Count -ne 1 -or $items[0] -notmatch 'SCP207') { throw "Control did not receive one SCP-207 bottle: $($items -join ',')" }
 $null = Invoke-LabScreenshot -Name 'control-after'
