@@ -22,13 +22,14 @@ public sealed class QlzPlugin : Plugin<Config>
     public override string Name => "SCP-294？";
     public override string Description => "地表 SCP-294 搞怪饮料机。";
     public override string Author => "Codex";
-    public override Version Version => new(0, 7, 1);
+    public override Version Version => new(0, 8, 0);
     public override Version RequiredApiVersion => new(LabApiProperties.CompiledVersion);
 
     private DrinkRolls lottery = null!;
     private readonly Dictionary<ushort, Drink> drinks = new();
     private readonly Dictionary<int, float> nextUse = new();
     private readonly LifeBottleQuota bottleQuota = new();
+    private readonly ReinforcementForces forces = new();
     private const string BottleLimitMessage = "<color=#FFD447>本条生命已经领过一瓶饮料啦，下条生命再来品尝吧！</color>";
     private readonly Dictionary<int, BuffState> buffs = new();
     private DrinkMachineModel? machine;
@@ -73,6 +74,7 @@ public sealed class QlzPlugin : Plugin<Config>
             DrinkRolls.TryCreate(new Config(), out configuredRolls, out _);
         }
         lottery = configuredRolls!;
+        forces.Enable();
         PlayerEvents.SearchingToy += OnSearchingToy;
         PlayerEvents.SearchedToy += OnSearchedToy;
         PlayerEvents.UsingItem += OnUsingItem;
@@ -115,6 +117,7 @@ public sealed class QlzPlugin : Plugin<Config>
         ServerEvents.RoundStarted -= OnRoundStarted;
         ServerEvents.RoundRestarted -= OnRoundReset;
         ServerEvents.WaitingForPlayers -= OnRoundReset;
+        forces.Disable();
         ClearMachine();
         spawnAt = float.PositiveInfinity;
         foreach (BuffState state in buffs.Values) state.Music?.Stop();
@@ -226,7 +229,12 @@ public sealed class QlzPlugin : Plugin<Config>
     private void Dispense(Player player)
     {
         if (!player.IsAlive || !player.IsHuman || player.IsInventoryFull) return;
-        // Recheck at progress completion so a second pending interaction cannot dispense.
+        // Recheck at progress completion so a second pending interaction or a role change cannot dispense.
+        if (TryGetForceRefusal(player, out string refusal))
+        {
+            Notice(player, refusal, 4f);
+            return;
+        }
         if (!bottleQuota.CanReceive(player.PlayerId, player.LifeId))
         {
             Notice(player, BottleLimitMessage, 3f);
@@ -260,12 +268,31 @@ public sealed class QlzPlugin : Plugin<Config>
         if (IsMachine(ev.Interactable)) Dispense(ev.Player);
     }
 
+    private bool TryGetForceRefusal(Player player, out string refusal)
+    {
+        refusal = string.Empty;
+        string? forceId = forces.GetForceId(player);
+        if (forceId == null || Config!.BlockedReinforcementForces == null) return false;
+        foreach (KeyValuePair<string, string> blocked in Config.BlockedReinforcementForces)
+        {
+            if (!string.Equals(blocked.Key, forceId, StringComparison.OrdinalIgnoreCase)) continue;
+            refusal = blocked.Value;
+            return true;
+        }
+        return false;
+    }
+
     private bool IsMachine(InteractableToy target) => machine != null && !machine.IsDestroyed && target.Base == machine.Target.Base;
 
     private void OnSearchingToy(PlayerSearchingToyEventArgs ev)
     {
         if (!IsMachine(ev.Interactable) || !ev.IsAllowed) return;
-        if (ev.Player.IsAlive && ev.Player.IsHuman && !bottleQuota.CanReceive(ev.Player.PlayerId, ev.Player.LifeId))
+        if (TryGetForceRefusal(ev.Player, out string refusal))
+        {
+            ev.IsAllowed = false;
+            Notice(ev.Player, refusal, 4f);
+        }
+        else if (ev.Player.IsAlive && ev.Player.IsHuman && !bottleQuota.CanReceive(ev.Player.PlayerId, ev.Player.LifeId))
         {
             ev.IsAllowed = false;
             Notice(ev.Player, BottleLimitMessage, 3f);

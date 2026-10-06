@@ -59,6 +59,15 @@ internal static class Program
                     float.Parse(yaml[key + ".z"], CultureInfo.InvariantCulture) == vector.z, "默认向量同步：" + key);
                 verifiedKeys += 3;
             }
+            else if (value is Dictionary<string, string> map)
+            {
+                foreach (KeyValuePair<string, string> entry in map)
+                {
+                    Check(yaml.TryGetValue(key + "." + entry.Key, out string? quoted) &&
+                        Regex.Unescape(quoted.Trim('"')) == entry.Value, "Default map entry matches YAML: " + key + "." + entry.Key);
+                    verifiedKeys++;
+                }
+            }
             else
             {
                 object expected = Convert.ChangeType(yaml[key], property.PropertyType, CultureInfo.InvariantCulture);

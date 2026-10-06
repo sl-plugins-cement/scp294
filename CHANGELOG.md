@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.0
+
+- Bar configured ReinforcementsSystem forces from the machine with a per-force refusal hint; Tau-9 is barred by default. Requires ReinforcementsSystem with `GetReinforcementForceId`; without it nobody is barred.
+
 ## 0.7.1
 
 - Update the embedded Vorbis decoder to 0.10.4 and reuse compatible SecretLabNAudio decoders, preventing AutoEvent audio initialization failures when SCP294 loads first.

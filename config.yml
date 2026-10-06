@@ -14,6 +14,9 @@ machine_rotation:
 machine_scale: 10
 # 玩家与饮料机交互的个人冷却秒数。
 personal_cooldown: 2
+# ReinforcementsSystem force ids that may not use the machine, mapped to the refusal hint shown to them.
+blocked_reinforcement_forces:
+  tau9: "<color=#2AA6FF><b>TAU-9「书虫」守则</b></color>\n<color=#EAF6FF>SCP-294 是未登记的异常物品。依据 O5 奇术指令，书虫只负责封存异常，不得私自取用。</color>"
 # 是否在每轮开始时自动生成饮料机。
 spawn_on_round_start: true
 # 回合开始后自动生成 SCP-294? 的延迟秒数。

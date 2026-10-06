@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
@@ -19,6 +20,12 @@ public sealed class Config
 
     [Description("玩家与饮料机交互的个人冷却秒数。")]
     public float PersonalCooldown { get; set; } = 2f;
+
+    [Description("ReinforcementsSystem force ids that may not use the machine, mapped to the refusal hint shown to them.")]
+    public Dictionary<string, string> BlockedReinforcementForces { get; set; } = new()
+    {
+        ["tau9"] = "<color=#2AA6FF><b>TAU-9「书虫」守则</b></color>\n<color=#EAF6FF>SCP-294 是未登记的异常物品。依据 O5 奇术指令，书虫只负责封存异常，不得私自取用。</color>",
+    };
 
     [Description("是否在每轮开始时自动生成饮料机。")]
     public bool SpawnOnRoundStart { get; set; } = true;

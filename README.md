@@ -45,6 +45,13 @@ machine_scale: 10
 
 The position is projected onto the floor below it; the model front faces local negative Z. Scale 10 produces the authored 2.2-metre cabinet.
 
+ReinforcementsSystem squads can be barred from the machine. Each entry maps a force id to the hint shown when a member tries to use it; the search is cancelled before the progress bar and rechecked before dispensing. Without ReinforcementsSystem loaded, nobody is blocked. The default bars Tau-9:
+
+```yaml
+blocked_reinforcement_forces:
+  tau9: "<color=#2AA6FF><b>TAU-9「书虫」守则</b></color>\n<color=#EAF6FF>SCP-294 是未登记的异常物品。依据 O5 奇术指令，书虫只负责封存异常，不得私自取用。</color>"
+```
+
 Drop chances use percentage values, including up to two decimal places. All eight must total **100**. Set a drink to **0** to disable it. Invalid values or totals produce a warning and use the shipped default distribution until the next load; they are not normalized.
 
 ```yaml
