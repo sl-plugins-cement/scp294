@@ -1,0 +1,53 @@
+is_enabled: true
+machine_position:
+  x: 63
+  y: 292
+  z: -51
+machine_rotation:
+  x: 0
+  y: 180
+  z: 0
+machine_scale: 10
+personal_cooldown: 2
+spawn_on_round_start: false
+spawn_delay: 60
+spawn_broadcast_duration: 8
+qiao_le_zi_duration: 120
+qiao_le_zi_cardiac_duration: 6
+scp207_chance_percent: 100
+ahead_chance_percent: 0
+qiao_le_zi_chance_percent: 0
+sixty_seven_chance_percent: 0
+vodka_chance_percent: 0
+compound_v_chance_percent: 0
+meteor_chance_percent: 0
+jiahao_chance_percent: 0
+qiao_le_zi_cardiac_chance_percent: 50
+jiahao_success_chance_percent: 10
+qiao_le_zi_speed_boost_percent: 100
+ahead_speed_boost_percent: 20
+compound_v_speed_boost_percent: 255
+meteor_speed_boost_percent: 150
+ahead_firearm_damage_bonus_percent: 5
+ahead_backlash_slowness_percent: 20
+ahead_backlash_max_health_percent: 80
+vodka_slowness_percent: 10
+vodka_damage_reduction_percent: 7.5
+sixty_seven_duration: 67
+ahead_duration: 90
+ahead_backlash_duration: 30
+vodka_duration: 120
+compound_v_duration: 10
+compound_v_backlash_duration: 30
+compound_v_backlash_slowness: 50
+meteor_duration: 20
+meteor_still_seconds: 1
+jiahao_duration: 90
+jiahao_music_path: jh.ogg
+jiahao_music_radius: 10
+jiahao_music_volume: 1
+hint_message_duration: 6
+buff_hint_y: 760
+buff_hint_x: -260
+item_hint_y: 790
+message_hint_y: 560

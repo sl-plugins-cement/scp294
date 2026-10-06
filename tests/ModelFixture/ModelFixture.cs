@@ -45,6 +45,18 @@ public sealed class FixtureCommand : ICommand
     public string Command => "scp294fixture";
     public string[] Aliases => Array.Empty<string>();
     public string Description => "Offline-only model arrangement and inspection.";
+    // Read-only probe of the public ReinforcementsSystem API the SCP-294 candidate consumes.
+    private static string ReinforcementForce(Player player)
+    {
+        foreach (System.Reflection.Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+        {
+            if (assembly.GetName().Name != "ReinforcementsSystem") continue;
+            var method = assembly.GetType("ReinforcementsSystem.ReinforcementsSystemPlugin")?.GetMethod("GetReinforcementForceId", new[] { typeof(Player) });
+            return method == null ? "<missing-api>" : (string)method.Invoke(null, new object[] { player }) ?? "";
+        }
+        return "<rs-not-loaded>";
+    }
+
     public bool Execute(ArraySegment<string> args, ICommandSender sender, out string response)
     {
         if (Environment.GetEnvironmentVariable("OFFLINE_LAB_OBSERVER") != "1" ||
@@ -70,7 +82,7 @@ public sealed class FixtureCommand : ICommand
             return true;
         }
         if (args.Count != 2 || !int.TryParse(args.At(1), out int id) || !Player.TryGet(id, out Player player))
-        { response = "Usage: scp294fixture place|view|angle|fill|empty|injure|vulnerable|effects <id>"; return false; }
+        { response = "Usage: scp294fixture place|near|force|view|angle|fill|empty|injure|vulnerable|effects <id>"; return false; }
         switch (args.At(0))
         {
             case "effects":
@@ -92,6 +104,13 @@ public sealed class FixtureCommand : ICommand
                 player.ClearInventory();
                 player.Position = roots[0].Transform.TransformPoint(new Vector3(0, 1.04f, -1.65f));
                 break;
+            case "near":
+                if (roots.Length != 1) { response = "Expected one machine."; return false; }
+                player.Position = roots[0].Transform.TransformPoint(new Vector3(0, 1.04f, -1.65f));
+                break;
+            case "force":
+                response = "FORCE_STATE {\"force\":\"" + ReinforcementForce(player) + "\",\"role\":\"" + player.Role + "\",\"alive\":" + (player.IsAlive ? "true" : "false") + "}";
+                return true;
             case "fill":
                 player.ClearInventory();
                 for (int i = 0; i < 8; i++) player.AddItem(ItemType.Flashlight);
