@@ -24,7 +24,7 @@ public sealed class Config
     [Description("ReinforcementsSystem force ids that may not use the machine, mapped to the refusal hint shown to them.")]
     public Dictionary<string, string> BlockedReinforcementForces { get; set; } = new()
     {
-        ["tau9"] = "<color=#2AA6FF><b>TAU-9「书虫」守则</b></color>\n<color=#EAF6FF>SCP-294 是未登记的异常物品。依据 O5 奇术指令，书虫只负责封存异常，不得私自取用。</color>",
+        ["tau9"] = "<color=#2AA6FF><b>认知/现实屏蔽生效</b></color>\n<color=#EAF6FF>你的抗模因植入与现实锚定装置屏蔽了 SCP-294 的异常效应，饮料机对你毫无反应。</color>",
     };
 
     [Description("是否在每轮开始时自动生成饮料机。")]

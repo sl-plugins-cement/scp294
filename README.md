@@ -49,7 +49,7 @@ ReinforcementsSystem squads can be barred from the machine. Each entry maps a fo
 
 ```yaml
 blocked_reinforcement_forces:
-  tau9: "<color=#2AA6FF><b>TAU-9「书虫」守则</b></color>\n<color=#EAF6FF>SCP-294 是未登记的异常物品。依据 O5 奇术指令，书虫只负责封存异常，不得私自取用。</color>"
+  tau9: "<color=#2AA6FF><b>认知/现实屏蔽生效</b></color>\n<color=#EAF6FF>你的抗模因植入与现实锚定装置屏蔽了 SCP-294 的异常效应，饮料机对你毫无反应。</color>"
 ```
 
 Drop chances use percentage values, including up to two decimal places. All eight must total **100**. Set a drink to **0** to disable it. Invalid values or totals produce a warning and use the shipped default distribution until the next load; they are not normalized.
