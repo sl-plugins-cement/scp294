@@ -45,7 +45,7 @@ machine_scale: 10
 
 The position is projected onto the floor below it; the model front faces local negative Z. Scale 10 produces the authored 2.2-metre cabinet.
 
-ReinforcementsSystem squads can be barred from the machine. Each entry maps a force id to the hint shown when a member tries to use it; the search is cancelled before the progress bar and rechecked before dispensing. Without ReinforcementsSystem loaded, nobody is blocked. The default bars Tau-9:
+ReinforcementsSystem squads can be barred from the machine. Each entry maps a force id to the hint shown when a member tries to use it; the search is cancelled before the progress bar and rechecked before dispensing. Only the machine refuses them: drinks they pick up or are handed work normally. The force id comes from ReinforcementsSystem's public static `ReinforcementsSystemPlugin.GetReinforcementForceId(Player)`, resolved by reflection, so there is no compile-time dependency. Without ReinforcementsSystem loaded, or without that method, nobody is blocked. The default bars Tau-9:
 
 ```yaml
 blocked_reinforcement_forces:
