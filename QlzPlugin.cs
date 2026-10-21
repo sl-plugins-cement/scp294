@@ -21,7 +21,7 @@ public sealed class QlzPlugin : Plugin<Config>
     public static QlzPlugin? Instance { get; private set; }
     public override string Name => "SCP-294？";
     public override string Description => "地表 SCP-294 搞怪饮料机。";
-    public override string Author => "Codex";
+    public override string Author => "星河梦影开发组";
     public override Version Version => new(0, 8, 0);
     public override Version RequiredApiVersion => new(LabApiProperties.CompiledVersion);
 
