@@ -1,4 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(SCPSL_METAREPO)\build\scpsl-deps.props" Condition="'$(SCPSL_METAREPO)' != '' And Exists('$(SCPSL_METAREPO)\build\scpsl-deps.props')" />
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <LangVersion>latest</LangVersion>
@@ -6,8 +7,8 @@
     <AssemblyName>SCP294</AssemblyName>
     <RootNamespace>Qlz</RootNamespace>
     <Version>0.8.0</Version>
-    <SCP_SL_MANAGED Condition="'$(SCP_SL_MANAGED)' == ''">..\_buildrefs</SCP_SL_MANAGED>
-    <HINT_SERVICE_MEOW Condition="'$(HINT_SERVICE_MEOW)' == ''">..\奇术打击\LabAPI\HintServiceMeow.dll</HINT_SERVICE_MEOW>
+    <SCP_SL_MANAGED Condition="'$(SCP_SL_MANAGED)' == ''">C:\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed</SCP_SL_MANAGED>
+    <HINT_SERVICE_MEOW Condition="'$(HINT_SERVICE_MEOW)' == ''">$(ScpslMetarepo)奇术打击\LabAPI\HintServiceMeow.dll</HINT_SERVICE_MEOW>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="tests\**\*.cs" />
@@ -30,7 +31,7 @@
     <None Update="README.md" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <Target Name="CheckReferences" BeforeTargets="ResolveReferences">
-    <Error Condition="!Exists('$(SCP_SL_MANAGED)\LabApi.dll')" Text="LabAPI references were not found. Set SCP_SL_MANAGED to SCPSL_Data\Managed." />
+    <Error Condition="!Exists('$(SCP_SL_MANAGED)\LabApi.dll')" Text="LabAPI references were not found. Set SCPSL_METAREPO to the metarepo checkout (run build\sync-deps.py), or set SCP_SL_MANAGED to SCPSL_Data\Managed." />
     <Error Condition="!Exists('$(HINT_SERVICE_MEOW)')" Text="HintServiceMeow.dll was not found. Set HINT_SERVICE_MEOW to its LabAPI DLL." />
   </Target>
 </Project>

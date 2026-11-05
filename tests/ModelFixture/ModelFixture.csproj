@@ -1,9 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(SCPSL_METAREPO)\build\scpsl-deps.props" Condition="'$(SCPSL_METAREPO)' != '' And Exists('$(SCPSL_METAREPO)\build\scpsl-deps.props')" />
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <LangVersion>latest</LangVersion>
     <AssemblyName>SCP294ModelFixture</AssemblyName>
-    <SCP_SL_MANAGED Condition="'$(SCP_SL_MANAGED)' == ''">..\..\..\_buildrefs</SCP_SL_MANAGED>
+    <SCP_SL_MANAGED Condition="'$(SCP_SL_MANAGED)' == ''">C:\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed</SCP_SL_MANAGED>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp" HintPath="$(SCP_SL_MANAGED)\Assembly-CSharp.dll" Private="false" />
