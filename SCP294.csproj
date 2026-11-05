@@ -8,7 +8,7 @@
     <RootNamespace>Qlz</RootNamespace>
     <Version>0.8.0</Version>
     <SCP_SL_MANAGED Condition="'$(SCP_SL_MANAGED)' == ''">C:\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed</SCP_SL_MANAGED>
-    <HINT_SERVICE_MEOW Condition="'$(HINT_SERVICE_MEOW)' == ''">$(ScpslMetarepo)奇术打击\LabAPI\HintServiceMeow.dll</HINT_SERVICE_MEOW>
+    <HINT_SERVICE_MEOW Condition="'$(HINT_SERVICE_MEOW)' == ''">$(HintServiceMeowDll)</HINT_SERVICE_MEOW>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="tests\**\*.cs" />
@@ -32,6 +32,6 @@
   </ItemGroup>
   <Target Name="CheckReferences" BeforeTargets="ResolveReferences">
     <Error Condition="!Exists('$(SCP_SL_MANAGED)\LabApi.dll')" Text="LabAPI references were not found. Set SCPSL_METAREPO to the metarepo checkout (run build\sync-deps.py), or set SCP_SL_MANAGED to SCPSL_Data\Managed." />
-    <Error Condition="!Exists('$(HINT_SERVICE_MEOW)')" Text="HintServiceMeow.dll was not found. Set HINT_SERVICE_MEOW to its LabAPI DLL." />
+    <Error Condition="!Exists('$(HINT_SERVICE_MEOW)')" Text="HintServiceMeow.dll was not found. Set SCPSL_METAREPO to the metarepo checkout (run build\sync-deps.py), or set HINT_SERVICE_MEOW to its LabAPI DLL." />
   </Target>
 </Project>
