@@ -26,7 +26,8 @@ qiao_le_zi_duration: 120
 qiao_le_zi_cardiac_duration: 6
 # Drop percentages: 0 disables a drink; up to two decimal places; total must be 100.
 # Invalid odds log a warning and use the default odds below until the next load.
-scp207_chance_percent: 78
+scp207_chance_percent: 75
+sunshine_chance_percent: 3
 ahead_chance_percent: 10
 qiao_le_zi_chance_percent: 2.4
 sixty_seven_chance_percent: 3.6

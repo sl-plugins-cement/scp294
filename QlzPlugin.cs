@@ -153,6 +153,7 @@ public sealed class QlzPlugin : Plugin<Config>
     internal string GiveBuff(Player player, BuffGrant grant)
     {
         string prefix = $"{player.Nickname}({player.PlayerId})：";
+        if (grant.Drink == Drink.Sunshine) return prefix + (forces.TryGrantSunshine(player) ? "已给予阳光饮料。" : "阳光饮料不可用或背包已满。");
         if (grant.Drink == Drink.Scp207)
             return prefix + (player.IsInventoryFull || player.AddItem(ItemType.SCP207) == null
                 ? "背包已满，无法给予普通SCP-207。" : "已给予普通SCP-207，按原生流程饮用。");
@@ -247,6 +248,15 @@ public sealed class QlzPlugin : Plugin<Config>
             return;
         }
         Drink drink = lottery.Pick(UnityEngine.Random.Range(0, DrinkRolls.Tickets));
+        if (drink == Drink.Sunshine && forces.TryGrantSunshine(player))
+        {
+            bottleQuota.RecordReceived(player.PlayerId, player.LifeId);
+            nextUse[player.PlayerId] = now + Config!.PersonalCooldown;
+            Notice(player, "<color=#FFD447>你获得了：阳光饮料</color>\n七成概率获得振奋与日光抗性，三成概率化为血肉。");
+            Logger.Info($"[SCP-294?] {player.Nickname} received Sunshine through ReinforcementsSystem.");
+            return;
+        }
+        if (drink == Drink.Sunshine) drink = Drink.Scp207;
         Item? item = player.AddItem(ItemType.SCP207);
         if (item == null)
         {

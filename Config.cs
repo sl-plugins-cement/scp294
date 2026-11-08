@@ -42,8 +42,10 @@ public sealed class Config
     [Description("巧乐兹负面分支的心脏骤停持续秒数。")]
     public float QiaoLeZiCardiacDuration { get; set; } = 6f;
 
-    [Description("Drink drop percentages: two decimal places, all eight must total 100; 0 disables a result.")]
-    public double Scp207ChancePercent { get; set; } = 78;
+    [Description("Drink drop percentages: two decimal places, all nine must total 100; 0 disables a result.")]
+    public double Scp207ChancePercent { get; set; } = 75;
+    [Description("Sunshine share of the regular nine-drink lottery. If ReinforcementsSystem is unavailable or Daybreak is disabled, dispense native SCP-207 instead.")]
+    public double SunshineChancePercent { get; set; } = 3;
     public double AheadChancePercent { get; set; } = 10;
     public double QiaoLeZiChancePercent { get; set; } = 2.4;
     public double SixtySevenChancePercent { get; set; } = 3.6;

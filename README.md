@@ -6,11 +6,12 @@ This standalone LabAPI plugin spawns a custom SCP-294 cabinet on Surface, 60 sec
 
 ## Drinks
 
-All eight drop percentages are configurable. Defaults allocate 78% to normal SCP-207, 10% to Ahead and 12% to the rarer high-risk drinks.
+All nine drop percentages are configurable. Defaults allocate 75% to normal SCP-207 and 3% to Sunshine, 10% to Ahead and 12% to the rarer high-risk drinks.
 
 | Drink | Default chance | Default effect |
 | --- | ---: | --- |
-| Normal SCP-207 (`scp207`) | 78% | A normal native bottle: native drinking animation and cancellation, 30 HP healing, unlimited stamina, speed, stacking up to four and health drain. No plugin duration or buff slot. |
+| Normal SCP-207 (`scp207`) | 75% | A normal native bottle: native drinking animation and cancellation, 30 HP healing, unlimited stamina, speed, stacking up to four and health drain. No plugin duration or buff slot. |
+| Sunshine (`sunshine`) | 3% | A tracked ReinforcementsSystem drink, available in ordinary rounds too: 70% grants healing, stamina, AHP and sun resistance; 30% converts the drinker into hungry flesh, subject to the population cap. |
 | Ahead (`ahead`) | 10% | +20% movement speed and +5% firearm damage for 90 seconds; then 30 seconds of 20% slowness and 80% of original maximum HP. Restores maximum HP without healing. |
 | QiaoLeZi (`qlz`) | 2.4% | 50% chance of +100% movement speed for 120 seconds; otherwise native cardiac arrest for 6 seconds. Native supported medicine can treat it. |
 | 67 (`67`) | 3.6% | 67 HP and maximum HP, 67 non-decaying AHP, 67 Hume shield and 67-round firearm magazines for 67 seconds. Revolvers use a virtual 67-shot magazine with native six-chamber UI; energy weapons retain native capacity. Reloading refills 67 rounds. |
@@ -52,10 +53,11 @@ blocked_reinforcement_forces:
   tau9: "<color=#2AA6FF><b>认知/现实屏蔽生效</b></color>\n<color=#EAF6FF>你的抗模因植入与现实锚定装置屏蔽了 SCP-294 的异常效应，饮料机对你毫无反应。</color>"
 ```
 
-Drop chances use percentage values, including up to two decimal places. All eight must total **100**. Set a drink to **0** to disable it. Invalid values or totals produce a warning and use the shipped default distribution until the next load; they are not normalized.
+Drop chances use percentage values, including up to two decimal places. All nine must total **100**. Set a drink to **0** to disable it. Invalid values or totals produce a warning and use the shipped default distribution until the next load; they are not normalized.
 
 ```yaml
-scp207_chance_percent: 78
+scp207_chance_percent: 75
+sunshine_chance_percent: 3
 ahead_chance_percent: 10
 qiao_le_zi_chance_percent: 2.4
 sixty_seven_chance_percent: 3.6
@@ -143,3 +145,12 @@ dotnet run --project tests/AudioFollow/AudioFollow.csproj -c Release
 ```
 
 The quota check compares every config default to YAML and enumerates the lottery, including disabled and invalid odds. Command checks cover permissions, targeting, native bottle aliases and rejection before mutation. Other checks use native interface contracts for HUD, ammunition/timelines and audio. Real input, networking, rendering and sound require the isolated offline client runner: `tests/balance-and-presentation.ps1` covers configurable placement/odds/strengths and native SCP-207 use; `tests/custom-model.ps1` covers the model, quota and cleanup.
+
+
+Sunshine is the ninth member of the regular lottery, not an event-only pre-roll.
+It uses optional reflection seams `TryGrantSunshine(Player)` and `IsDaybreakActive()`;
+there is no ReinforcementsSystem compile-time dependency. With that plugin missing
+or `daybreak.enabled: false`, a Sunshine selection gives a native SCP-207 bottle.
+The existing force refusal, personal cooldown and one-bottle-per-life quota apply
+before every selection and are recorded only after a successful grant. Sunshine's
+use and BuffSystem timers are owned by ReinforcementsSystem, including after dusk.
