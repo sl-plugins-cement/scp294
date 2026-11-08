@@ -24,7 +24,7 @@ internal sealed class ReinforcementForces
     public void Disable()
     {
         AppDomain.CurrentDomain.AssemblyLoad -= OnAssemblyLoad;
-        getForceId = null;
+        getForceId = null; grantSunshine = null; daybreakActive = null; resolvedType = null;
         needsResolve = true;
     }
 

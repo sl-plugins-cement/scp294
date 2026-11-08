@@ -86,8 +86,9 @@ internal static class Program
             counts.TryGetValue(drink, out int count);
             counts[drink] = count + 1;
         }
-        Check(counts.Count == 8 && DrinkRolls.Tickets == 10000, "Exact 10,000-ticket lottery");
-        Check(counts[Drink.Scp207] == 7800, "Native SCP-207 78%");
+        Check(counts.Count == 9 && DrinkRolls.Tickets == 10000, "Exact 10,000-ticket lottery");
+        Check(counts[Drink.Scp207] == 7500, "Native SCP-207 75%");
+        Check(counts[Drink.Sunshine] == 300, "Sunshine 3%");
         Check(counts[Drink.Ahead] == 1000, "Mild Ahead 10%");
         Check(counts[Drink.QiaoLeZi] == 240, "QiaoLeZi 2.4%");
         Check(counts[Drink.SixtySeven] == 360, "67 3.6%");
@@ -106,7 +107,7 @@ internal static class Program
         {
             Scp207ChancePercent = 100, AheadChancePercent = 0, QiaoLeZiChancePercent = 0,
             SixtySevenChancePercent = 0, VodkaChancePercent = 0, CompoundVChancePercent = 0,
-            MeteorChancePercent = 0, JiahaoChancePercent = 0,
+            MeteorChancePercent = 0, JiahaoChancePercent = 0, SunshineChancePercent = 0,
         };
         var nativeOnly = Only207();
         Check(DrinkRolls.TryCreate(nativeOnly, out DrinkRolls? forced, out _), "100% native bottle config accepted");
