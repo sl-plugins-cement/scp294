@@ -14,6 +14,7 @@ internal sealed class DrinkRolls
         var chances = new (Drink Drink, double Percent)[]
         {
             (Drink.Scp207, config.Scp207ChancePercent),
+            (Drink.Sunshine, config.SunshineChancePercent),
             (Drink.Ahead, config.AheadChancePercent),
             (Drink.QiaoLeZi, config.QiaoLeZiChancePercent),
             (Drink.SixtySeven, config.SixtySevenChancePercent),
