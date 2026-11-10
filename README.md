@@ -86,7 +86,7 @@ Effect percentages are also configurable:
 | `vodka_damage_reduction_percent` | Actual damage reduction; clamped to 0–100 and rounded to native 0.5% steps. |
 | `compound_v_backlash_slowness` | Native backlash slowness intensity, default 50. |
 
-Non-finite floating effect percentages use their defaults. Durations, personal cooldown, automatic spawn/delay, broadcasts, hint coordinates and music settings are in `config.yml`. Native SCP-207 has no plugin duration.
+Non-finite floating effect percentages use their defaults. Durations, personal cooldown, automatic spawn/delay, broadcasts, the held-bottle card position and music settings are in `config.yml`. Native SCP-207 has no plugin duration.
 
 ## Commands
 
@@ -125,18 +125,19 @@ Custom duration overrides accept 0.1–3600 seconds once, in either option order
 dotnet build SCP294.csproj -c Release `
   -p:DeployToLocalServer=false `
   -p:SCP_SL_MANAGED="D:\path\to\SCPSL_Data\Managed" `
-  -p:HINT_SERVICE_MEOW="D:\path\to\HintServiceMeow.dll"
+  -p:HINT_SERVICE_MEOW="D:\path\to\HintServiceMeow.dll" `
+  -p:BuffSystemProject="D:\path\to\BuffSystem\BuffSystem.csproj"
 ```
 
-Install `bin/Release/net48/SCP294.dll` in a plugin directory listed by `LabAPI/LabApi-<port>.yml`. On SR1 use `LabAPI/plugins/7777`; its loader excludes `plugins/global`. Remove another loaded `Qlz.dll` to avoid duplicate instances. A compatible HintServiceMeow is required. Restart the server process after replacing the DLL.
+In the metarepo, `SCPSL_METAREPO` supplies all three paths.
+
+Install `bin/Release/net48/SCP294.dll` in a plugin directory listed by `LabAPI/LabApi-<port>.yml`. On SR1 use `LabAPI/plugins/7777`; its loader excludes `plugins/global`. Remove another loaded `Qlz.dll` to avoid duplicate instances. A compatible HintServiceMeow is required. `BuffSystem.dll` is required once per server: drink timers and notices are drawn in its shared status panel. Restart the server process after replacing the DLL.
 
 NVorbis and `jh.ogg` are embedded. A sibling `jh.ogg` or a configured absolute OGG Vorbis path overrides the default music. Jiahao uses native SpeakerToy/AudioTransmitter, follows its holder and attenuates over the configured radius. Decoding/caching runs in the background; native speaker operations run on the Unity thread. Each session destroys only its own source, and cancellation prevents delayed playback. See `lib/NVorbis.LICENSE.txt` for the decoder license.
 
 ## HUD and verification
 
-Custom drink countdowns use a single right-aligned `巧乐兹[00:05]` line, including backlash and explosion deadlines. A virtual revolver magazine adds its own line. Custom held bottles show the Chinese name and joke; switching, dropping and use clear it. Temporary notices share a timed message area. Jiahao uses a separate global two-line notice, including spectators.
-
-Adjust `buff_hint_x` (default -260 from the right edge), `buff_hint_y` (760), `item_hint_y` (790) and `message_hint_y` (560) for other server HUDs.
+The active custom drink is one row of [BuffSystem](../BuffSystem/README.md)'s right-side status panel, beside buffs, events and other sources: `巧乐兹（加速） [00:05]`, including backlash and explosion deadlines. A virtual 67 magazine adds a readout line under that row. Personal notices use BuffSystem's shared centre notice lane, so a newer notice from any source replaces the previous one. Custom held bottles show the Chinese name and joke at `item_hint_y` (790); switching, dropping and use clear it. Jiahao uses a separate global two-line notice, including spectators.
 
 Existing local checks:
 

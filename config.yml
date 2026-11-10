@@ -88,11 +88,5 @@ jiahao_music_radius: 10
 jiahao_music_volume: 1
 # 领取、使用和结束文案显示秒数，到期自动移除。
 hint_message_duration: 6
-# 饮料倒计时纵坐标，0为顶部、1080为底部。
-buff_hint_y: 760
-# 饮料倒计时相对右边缘的水平偏移，负数向左移。
-buff_hint_x: -260
 # 手持饮料介绍起始纵坐标，向下排列名称和梗文案。
 item_hint_y: 790
-# 临时文案纵坐标，与介绍和倒计时分开。
-message_hint_y: 560

@@ -123,15 +123,6 @@ public sealed class Config
     [Description("领取、使用和结束文案显示秒数，到期自动移除。")]
     public float HintMessageDuration { get; set; } = 6f;
 
-    [Description("饮料倒计时纵坐标，0为顶部、1080为底部。")]
-    public float BuffHintY { get; set; } = 760f;
-
-    [Description("饮料倒计时相对右边缘的水平偏移，负数向左移。")]
-    public float BuffHintX { get; set; } = -260f;
-
     [Description("手持饮料介绍起始纵坐标，向下排列名称和梗文案。")]
     public float ItemHintY { get; set; } = 790f;
-
-    [Description("临时文案纵坐标，与介绍和倒计时分开。")]
-    public float MessageHintY { get; set; } = 560f;
 }
