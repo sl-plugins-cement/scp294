@@ -20,6 +20,7 @@ namespace Qlz;
 // expansion or re-encoding at the native transmitter's fixed 120 kb/s bitrate.
 internal sealed class CabinetAudio : IDisposable
 {
+    private const double FrameSeconds = 0.06;
     private static readonly Lazy<byte[][]> Clip = new(LoadClip);
     private readonly SpeakerToy speaker;
     private readonly List<Player> listeners = new();
@@ -78,12 +79,12 @@ internal sealed class CabinetAudio : IDisposable
         using var reader = new BinaryReader(stream);
         if (Encoding.ASCII.GetString(reader.ReadBytes(8)) != "R294OP01") throw new InvalidDataException("Invalid cabinet audio header.");
         int count = reader.ReadInt32();
-        if (count < 1 || count > 100 * 15 * 60) throw new InvalidDataException("Invalid cabinet audio duration.");
+        if (count < 1 || count > 15000) throw new InvalidDataException("Invalid cabinet audio duration.");
         var packets = new byte[count][];
         for (int i = 0; i < count; i++)
         {
             int length = reader.ReadUInt16();
-            if (length != 20) throw new InvalidDataException("Expected 16 kb/s cabinet audio.");
+            if (length != 120) throw new InvalidDataException("Expected 16 kb/s cabinet audio.");
             packets[i] = reader.ReadBytes(length);
             if (packets[i].Length != length) throw new EndOfStreamException("Truncated cabinet audio.");
         }
@@ -93,7 +94,8 @@ internal sealed class CabinetAudio : IDisposable
 
     internal bool CanHear(Player player)
     {
-        if (disposed || speaker.IsDestroyed || speaker.Volume <= 0f || !player.IsPlayer || !player.IsReady) return false;
+        if (disposed || speaker.IsDestroyed || speaker.Volume <= 0f || player.IsHost || player.IsDummy ||
+            player.ConnectionToClient == null || !player.IsPlayer || !player.IsReady) return false;
         // The spectator camera follows its selected actor, not the spectator's server transform.
         Player? viewpoint = player.IsAlive ? player : player.CurrentlySpectating;
         if (viewpoint?.IsAlive != true) return false;
@@ -116,8 +118,8 @@ internal sealed class CabinetAudio : IDisposable
         {
             // Preserve the shared song position with no listeners. Bound catch-up after a
             // server stall so old music never bursts across the network or fills client buffers.
-            long currentFrame = Math.Max(0, (long)((NetworkTime.time - started) * 100));
-            nextFrame = Math.Max(nextFrame, currentFrame - 4);
+            long currentFrame = Math.Max(0, (long)((NetworkTime.time - started) / FrameSeconds));
+            nextFrame = Math.Max(nextFrame, currentFrame - 1);
             listeners.Clear();
             foreach (Player player in Player.List)
                 if (CanHear(player)) listeners.Add(player);

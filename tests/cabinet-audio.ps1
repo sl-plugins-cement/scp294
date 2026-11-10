@@ -38,8 +38,8 @@ $null=Set-LabAim -Target @{x=$machine.x;y=$machine.y;z=$machine.z}
 $before=Expect-Listeners @($near)
 $null=Invoke-LabInput @{id='cabinet-near';frames=600;capture=$true;audio=$true;expectAudio=$true}
 $after=Expect-Listeners @($near)
-$seconds=($after.packets-$before.packets)/100.0
-if ($seconds -lt 8 -or ($after.bytes-$before.bytes) -ne 20*($after.packets-$before.packets)) { throw 'Missing 16 kb/s native packet stream' }
+$seconds=($after.packets-$before.packets)*0.06
+if ($seconds -lt 8 -or ($after.bytes-$before.bytes) -ne 120*($after.packets-$before.packets)) { throw 'Missing 16 kb/s native packet stream' }
 $null=Invoke-LabScreenshot -Name 'cabinet-music-near'
 # Native backward movement crosses the hearing boundary; the song keeps its place.
 $null=Invoke-LabInput @{id='cabinet-leave-range';frames=600;keys=@(115);capture=$true;audio=$true}
