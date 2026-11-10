@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Add looping cabinet music, pre-encoded as 16 kb/s mono Opus, streamed only to listeners within its configurable hearing radius.
+
 ## 0.8.0
 
 - Bar configured ReinforcementsSystem forces from the machine with a per-force refusal hint; Tau-9 is barred by default. Requires ReinforcementsSystem with `GetReinforcementForceId`; without it nobody is barred.

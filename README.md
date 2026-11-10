@@ -2,6 +2,10 @@
 
 This standalone LabAPI plugin spawns a custom SCP-294 cabinet on Surface, 60 seconds after round start. Hold the native interaction key on its front panel to receive a random drink; releasing early cancels without dispensing. The cabinet stays in place, and round reset cancels pending spawns. See [Model/README.md](Model/README.md) for the wiki-inspired model, attribution and Unity authoring instructions.
 
+The cabinet loops its embedded retro music through a native spatial speaker. `machine_music_radius` defaults to 10 metres; `machine_music_volume` defaults to 0.6 (0 disables music). Only ready clients whose listening camera is within that radius receive packets, including spectators watching a nearby living player. Leaving range stops transmission; returning joins the current song position. Replacement, clearing, round reset and unload remove the owned speaker and stream.
+
+The embedded track uses 16 kb/s mono Opus in 60 ms packets (2,000 audio payload bytes per second per listener, plus transport overhead), with no runtime decoding or encoding. To replace the embedded clip, install FFmpeg with libopus, run `python Audio/encode-cabinet.py <source-media> Audio/cabinet.opuspack`, then rebuild.
+
 **Each player can receive one bottle per native life.** Only successful inventory addition consumes the quota. Cancelling the search, a full inventory or a failed dispense leaves it available. Drinking, dropping, transferring, buff expiry, admin clearing and machine replacement do not reset it. Respawning with a new native LifeId allows another bottle. Ordinary pickup and admin grants bypass machine quotas. Round reset and disconnection clear the records.
 
 ## Drinks

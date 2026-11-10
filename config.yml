@@ -12,6 +12,10 @@ machine_rotation:
   z: 0
 # Model size: 10 gives the authored 2.2-metre cabinet; other values scale proportionally.
 machine_scale: 10
+# Cabinet music hearing radius in metres (1-100).
+machine_music_radius: 10
+# Cabinet music volume (0-2); 0 disables the stream.
+machine_music_volume: 0.6
 # 玩家与饮料机交互的个人冷却秒数。
 personal_cooldown: 2
 # ReinforcementsSystem force ids that may not use the machine, mapped to the refusal hint shown to them.
