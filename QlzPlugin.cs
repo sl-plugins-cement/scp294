@@ -59,6 +59,8 @@ public sealed class QlzPlugin : Plugin<Config>
         public readonly Dictionary<CustomPlayerEffects.StatusEffectBase, (byte Intensity, float EndAt)> Effects = new();
     }
 
+    private BuffSystem.BuffScope? panel;
+
     public override void Enable()
     {
         Instance = this;
@@ -69,6 +71,7 @@ public sealed class QlzPlugin : Plugin<Config>
         }
 
         Hints.Reset();
+        panel = BuffSystem.BuffApi.Acquire("SCP-294");
         if (!DrinkRolls.TryCreate(Config, out DrinkRolls? configuredRolls, out string error))
         {
             Logger.Warn("[SCP-294?] " + error + " Using default drink chances.");
@@ -130,6 +133,8 @@ public sealed class QlzPlugin : Plugin<Config>
             Hints.Clear(player);
         }
         Hints.ClearAll();
+        panel?.Dispose();
+        panel = null;
         drinks.Clear();
         buffs.Clear();
         nextUse.Clear();
@@ -724,8 +729,9 @@ public sealed class QlzPlugin : Plugin<Config>
         Drink.Jiahao => "凡人的身躯，能驾驭这份力量吗？",
         _ => throw new ArgumentOutOfRangeException(nameof(drink)),
     };
+    // Personal notices share BuffSystem's centre lane with every other buff source.
     private void Notice(Player player, string text, float? duration = null) =>
-        Hints.Show(player, "message", text, Config!.MessageHintY, 23, Math.Max(0.5f, duration ?? Config.HintMessageDuration));
+        panel?.Notify(player, text, Math.Max(0.5f, duration ?? Config!.HintMessageDuration));
 
     private void UpdateItemHud(Player player)
     {
@@ -739,21 +745,22 @@ public sealed class QlzPlugin : Plugin<Config>
     {
         Hints.Remove(player, "item-name"); Hints.Remove(player, "item-intro"); Hints.Remove(player, "item-detail");
     }
+    /// <summary>The drink is one row of BuffSystem's status panel, with the 67 magazine as its readout line.</summary>
     private void UpdateBuffHud(Player player, BuffState state, float now)
     {
-        float y = Config!.BuffHintY;
-        string label = BuffLabel.Timed(state.AheadDebuffApplied ? "遥遥领先（反噬）" : DrinkName(state.Drink), state.EndAt - now);
-        Hints.Remove(player, "buff-name");
-        Hints.Show(player, "buff-time", $"<color=#FFD447>{label}</color>", y, 23, 0f, Config.BuffHintX, "Right");
-        if (player.CurrentItem is FirearmItem firearm && state.VirtualMagazines.TryGetValue(firearm.Serial, out VirtualMagazine magazine))
-            Hints.Show(player, "buff-ammo", $"<color=#FFD447>67 弹匣：{magazine.Remaining} / 67</color>", y + 38f, 22, 0f, Config.BuffHintX, "Right");
-        else Hints.Remove(player, "buff-ammo");
+        if (panel == null) return;
+        string phase = state.AheadDebuffApplied ? "（反噬）" :
+            state.Drink == Drink.QiaoLeZi ? (state.QiaoLeZiCardiac ? "（心脏骤停）" : "（加速）") :
+            state.Drink == Drink.CompoundV && state.Timeline?.Backlash == true ? "（反噬）" : string.Empty;
+        string? ammo = player.CurrentItem is FirearmItem firearm && state.VirtualMagazines.TryGetValue(firearm.Serial, out VirtualMagazine magazine)
+            ? $"67 弹匣 {magazine.Remaining} / 67" : null;
+        panel.ShowStatus(player, "drink", new BuffSystem.BuffStatusRow
+        {
+            Label = DrinkName(state.Drink) + phase, Color = "#FFD447",
+            Seconds = Math.Max(0f, state.EndAt - now), Detail = ammo,
+        }, out _);
     }
-    private static void ClearBuffHud(Player player)
-    {
-        Hints.Remove(player, "buff-name"); Hints.Remove(player, "buff-time"); Hints.Remove(player, "buff-detail");
-        Hints.Remove(player, "buff-ammo");
-    }
+    private void ClearBuffHud(Player player) => panel?.ClearStatus(player, "drink");
 
     private void OnLeft(PlayerLeftEventArgs ev)
     {

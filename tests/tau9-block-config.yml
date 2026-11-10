@@ -47,7 +47,4 @@ jiahao_music_path: jh.ogg
 jiahao_music_radius: 10
 jiahao_music_volume: 1
 hint_message_duration: 6
-buff_hint_y: 760
-buff_hint_x: -260
 item_hint_y: 790
-message_hint_y: 560
