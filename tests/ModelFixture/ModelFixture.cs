@@ -70,8 +70,7 @@ public sealed class FixtureCommand : ICommand
         if (args.Count == 1 && args.At(0) == "audio")
         {
             const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
-            var plugin = AppDomain.CurrentDomain.GetAssemblies().First(a => a.GetName().Name == "SCP294")
-                .GetType("Qlz.QlzPlugin").GetProperty("Instance").GetValue(null);
+            var plugin = LabApi.Loader.PluginLoader.EnabledPlugins.Single(p => p.GetType().FullName == "Qlz.QlzPlugin");
             object audio = plugin.GetType().GetField("cabinetAudio", flags).GetValue(plugin);
             long Read(string name) => audio == null ? 0 : Convert.ToInt64(audio.GetType().GetProperty(name, flags).GetValue(audio));
             var eligible = Player.List.Where(p => audio != null && (bool)audio.GetType().GetMethod("CanHear", flags).Invoke(audio, new object[] { p })).Select(p => p.PlayerId);
