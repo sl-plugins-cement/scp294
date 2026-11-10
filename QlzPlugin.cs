@@ -33,6 +33,7 @@ public sealed class QlzPlugin : Plugin<Config>
     private const string BottleLimitMessage = "<color=#FFD447>本条生命已经领过一瓶饮料啦，下条生命再来品尝吧！</color>";
     private readonly Dictionary<int, BuffState> buffs = new();
     private DrinkMachineModel? machine;
+    private CabinetAudio? cabinetAudio;
     private CoroutineHandle tick;
     private float spawnAt = float.PositiveInfinity;
 
@@ -216,6 +217,7 @@ public sealed class QlzPlugin : Plugin<Config>
             return;
         }
 
+        cabinetAudio = CabinetAudio.Start(machine.Position + Vector3.up, Config.MachineMusicRadius, Config.MachineMusicVolume);
         Server.SendBroadcast("[SCP-294?]已经出现在地表处，快来品尝吧😋", Config.SpawnBroadcastDuration);
 
         Logger.Info($"[SCP-294?] Custom machine spawned at {machine.Position} scale={Config.MachineScale}, static toys={machine.ToyCount}.");
@@ -223,6 +225,8 @@ public sealed class QlzPlugin : Plugin<Config>
 
     private void ClearMachine()
     {
+        cabinetAudio?.Dispose();
+        cabinetAudio = null;
         machine?.Dispose();
         machine = null;
     }

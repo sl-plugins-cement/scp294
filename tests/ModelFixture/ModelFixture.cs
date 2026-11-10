@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using CommandSystem;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.Handlers;
@@ -66,6 +67,18 @@ public sealed class FixtureCommand : ICommand
             return false;
         }
         var roots = PrimitiveObjectToy.List.Where(t => !t.IsDestroyed && t.GameObject.name == "SCP294-CoffeeMachine").ToArray();
+        if (args.Count == 1 && args.At(0) == "audio")
+        {
+            const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
+            var plugin = AppDomain.CurrentDomain.GetAssemblies().First(a => a.GetName().Name == "SCP294")
+                .GetType("Qlz.QlzPlugin").GetProperty("Instance").GetValue(null);
+            object audio = plugin.GetType().GetField("cabinetAudio", flags).GetValue(plugin);
+            long Read(string name) => audio == null ? 0 : Convert.ToInt64(audio.GetType().GetProperty(name, flags).GetValue(audio));
+            var eligible = Player.List.Where(p => audio != null && (bool)audio.GetType().GetMethod("CanHear", flags).Invoke(audio, new object[] { p })).Select(p => p.PlayerId);
+            int speakers = SpeakerToy.List.Count(s => !s.IsDestroyed && s.GameObject.name == "SCP294-CabinetSpeaker");
+            response = $"AUDIO_STATE {{\"active\":{(audio != null ? "true" : "false")},\"speakers\":{speakers},\"packets\":{Read("PacketsSent")},\"bytes\":{Read("PayloadBytesSent")},\"listeners\":{Read("ListenerCount")},\"eligible\":[{string.Join(",", eligible)}]}}";
+            return true;
+        }
         if (args.Count == 0 || args.At(0) == "state")
         {
             if (roots.Length != 1)
@@ -85,6 +98,11 @@ public sealed class FixtureCommand : ICommand
         { response = "Usage: scp294fixture place|near|force|view|angle|fill|empty|injure|vulnerable|effects <id>"; return false; }
         switch (args.At(0))
         {
+            case "audio-far":
+                // Native Class-D spawn, far below the Surface cabinet.
+                player.SetRole(RoleTypeId.ClassD);
+                player.IsGodModeEnabled = true;
+                break;
             case "effects":
                 FixturePlugin.Native207Damage.TryGetValue(player.PlayerId, out var nativeDamage);
                 response = FormattableString.Invariant($"EFFECT_STATE {{\"maxHealth\":{player.MaxHealth},\"health\":{player.Health},\"movement\":{player.GetEffect<CustomPlayerEffects.MovementBoost>().Intensity},\"slowness\":{player.GetEffect<CustomPlayerEffects.Slowness>().Intensity},\"scp207\":{player.GetEffect<CustomPlayerEffects.Scp207>().Intensity},\"scp207Duration\":{player.GetEffect<CustomPlayerEffects.Scp207>().Duration},\"damageReduction\":{player.GetEffect<CustomPlayerEffects.DamageReduction>().Intensity},\"cardiac\":{player.GetEffect<CustomPlayerEffects.CardiacArrest>().Intensity},\"stamina\":{player.ReferenceHub.playerStats.GetModule<PlayerStatsSystem.StaminaStat>().CurValue},\"scp207DamageAttempts\":{nativeDamage.Attempts},\"scp207DamageCancelled\":{nativeDamage.Cancelled}}}");

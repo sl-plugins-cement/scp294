@@ -27,6 +27,7 @@
     <EmbeddedResource Include="lib\NVorbis.dll" LogicalName="SCP294.Dependencies.NVorbis.dll" />
     <EmbeddedResource Include="lib\NVorbis.LICENSE.txt" LogicalName="SCP294.Dependencies.NVorbis.LICENSE.txt" />
     <EmbeddedResource Include="jh.ogg" LogicalName="SCP294.Audio.jh.ogg" />
+    <EmbeddedResource Include="Audio\cabinet.opuspack" LogicalName="SCP294.Audio.cabinet.opuspack" />
     <None Update="config.yml" CopyToOutputDirectory="PreserveNewest" />
     <None Update="README.md" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>

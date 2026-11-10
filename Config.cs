@@ -18,6 +18,12 @@ public sealed class Config
     [Description("SCP-294 模型大小，10 为默认约 2.2 米高，按比例缩放。")]
     public float MachineScale { get; set; } = 10f;
 
+    [Description("Cabinet music hearing radius in metres, clamped to 1-100.")]
+    public float MachineMusicRadius { get; set; } = 10f;
+
+    [Description("Cabinet music volume, clamped to 0-2; 0 disables the stream.")]
+    public float MachineMusicVolume { get; set; } = 0.6f;
+
     [Description("玩家与饮料机交互的个人冷却秒数。")]
     public float PersonalCooldown { get; set; } = 2f;
 
