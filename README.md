@@ -137,7 +137,7 @@ NVorbis and `jh.ogg` are embedded. A sibling `jh.ogg` or a configured absolute O
 
 ## HUD and verification
 
-The active custom drink is one row of [BuffSystem](../BuffSystem/README.md)'s right-side status panel, beside buffs, events and other sources: `巧乐兹（加速） [00:05]`, including backlash and explosion deadlines. A virtual 67 magazine adds a readout line under that row. Personal notices use BuffSystem's shared centre notice lane, so a newer notice from any source replaces the previous one. Custom held bottles show the Chinese name and joke at `item_hint_y` (790); switching, dropping and use clear it. Jiahao uses a separate global two-line notice, including spectators.
+The active custom drink is one row of [BuffSystem](../BuffSystem/README.md)'s right-side status panel, beside buffs, events and other sources: `巧乐兹（加速） [00:05]`, including backlash and explosion deadlines. A virtual 67 magazine adds a readout line under that row. Personal notices use BuffSystem's shared notice lane directly under the panel, so a newer notice from any source replaces the previous one. Custom held bottles show the Chinese name and joke at `item_hint_y` (790); switching, dropping and use clear it. Jiahao uses a separate global two-line notice, including spectators.
 
 Existing local checks:
 
