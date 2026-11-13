@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Anchor cabinet music inside the model's front panel with scale and rotation, double its default volume to 1.2 and delay distance falloff until 2.5 metres.
 - Add looping cabinet music, pre-encoded as 16 kb/s mono Opus, streamed only to listeners within its configurable hearing radius.
 - Show the drink timer and 67 magazine as a row of BuffSystem's shared status panel, and send personal notices through its shared notice lane. BuffSystem is now required; `buff_hint_x`, `buff_hint_y` and `message_hint_y` are no longer read.
 

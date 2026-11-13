@@ -222,7 +222,7 @@ public sealed class QlzPlugin : Plugin<Config>
             return;
         }
 
-        cabinetAudio = CabinetAudio.Start(machine.Position + Vector3.up, Config.MachineMusicRadius, Config.MachineMusicVolume);
+        cabinetAudio = CabinetAudio.Start(machine.SpeakerPosition, Config.MachineMusicRadius, Config.MachineMusicVolume);
         Server.SendBroadcast("[SCP-294?]已经出现在地表处，快来品尝吧😋", Config.SpawnBroadcastDuration);
 
         Logger.Info($"[SCP-294?] Custom machine spawned at {machine.Position} scale={Config.MachineScale}, static toys={machine.ToyCount}.");

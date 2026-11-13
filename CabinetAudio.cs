@@ -44,7 +44,8 @@ internal sealed class CabinetAudio : IDisposable
             speaker.ControllerId = (byte)id;
             speaker.IsStatic = true;
             speaker.IsSpatial = true;
-            speaker.MinDistance = 1f;
+            // Keep full volume at the front panel before applying distance falloff.
+            speaker.MinDistance = Mathf.Min(2.5f, radius);
             speaker.MaxDistance = radius;
             speaker.Volume = volume;
             speaker.Spawn();
@@ -56,7 +57,7 @@ internal sealed class CabinetAudio : IDisposable
     internal static CabinetAudio? Start(Vector3 position, float radius, float volume)
     {
         if (float.IsNaN(radius) || float.IsInfinity(radius)) radius = 10f;
-        if (float.IsNaN(volume) || float.IsInfinity(volume)) volume = 0.6f;
+        if (float.IsNaN(volume) || float.IsInfinity(volume)) volume = 1.2f;
         radius = Mathf.Clamp(radius, 1f, 100f);
         volume = Mathf.Clamp(volume, 0f, 2f);
         if (volume == 0f) return null;

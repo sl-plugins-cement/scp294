@@ -36,6 +36,9 @@ Fixture 'audio-far' $far
 $null=Invoke-LabInput @{id='cabinet-settle';frames=120}
 $null=Set-LabAim -Target @{x=$machine.x;y=$machine.y;z=$machine.z}
 $before=Expect-Listeners @($near)
+if ([Math]::Abs($before.localX) -gt 0.01 -or [Math]::Abs($before.localY - 1.1) -gt 0.01 -or
+    [Math]::Abs($before.localZ + 0.4) -gt 0.01 -or [Math]::Abs($before.volume - 1.2) -gt 0.01 -or
+    [Math]::Abs($before.minDistance - 2.5) -gt 0.01) { throw "Speaker alignment/level incorrect: $($before | ConvertTo-Json -Compress)" }
 $null=Invoke-LabInput @{id='cabinet-near';frames=600;capture=$true;audio=$true;expectAudio=$true}
 $after=Expect-Listeners @($near)
 $seconds=($after.packets-$before.packets)*0.06

@@ -12,6 +12,7 @@ namespace Qlz.Model
         internal InteractableToy Target { get; private set; } = null!;
         internal bool IsDestroyed => root == null || root.IsDestroyed;
         internal Vector3 Position => root?.Position ?? Vector3.zero;
+        internal Vector3 SpeakerPosition => root?.Transform.TransformPoint(DrinkMachineGeometry.SpeakerPosition) ?? Vector3.zero;
         internal int ToyCount => DrinkMachineGeometry.Parts.Count + DrinkMachineGeometry.Labels.Length + 2;
 
         internal static DrinkMachineModel Spawn(Vector3 position, Quaternion rotation, float legacyScale)
