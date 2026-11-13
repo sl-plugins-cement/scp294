@@ -60,8 +60,8 @@ $after=Expect-Listeners @($near)
 $seconds=($after.packets-$before.packets)*0.06
 if ($seconds -lt 8 -or ($after.bytes-$before.bytes) -ne 120*($after.packets-$before.packets)) { throw 'Missing 16 kb/s native packet stream' }
 $null=Invoke-LabScreenshot -Name 'cabinet-music-near'
-# The production cabinet faces the opposite way; use the side open to the road.
-$leaveKey=if ($Context.Options.productionPlacement) { 97 } else { 100 }
+# Back out of production's narrow alcove; the default location opens sideways.
+$leaveKey=if ($Context.Options.productionPlacement) { 115 } else { 100 }
 $null=Invoke-LabInput @{id='cabinet-leave-range';frames=600;keys=@($leaveKey);capture=$true;audio=$true}
 Observe -ClientsOnly | ConvertTo-Json -Depth 8 | Set-Content "$($Context.Evidence)/cabinet-range-actors.json"
 $before=Expect-Listeners @()
