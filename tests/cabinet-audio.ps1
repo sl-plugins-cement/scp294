@@ -29,20 +29,40 @@ $null=Invoke-LabServer @('/decontamination disable','/wave forcepause NTF true',
 $reply=(Invoke-LabServer '/scp294fixture state') -join "`n"
 if ($reply -notmatch 'MODEL_STATE (\{[^\r\n]+\})') { throw $reply }
 $machine=$Matches[1] | ConvertFrom-Json
-# Reuse the model walkthrough's validated approach point.
-$null=Invoke-LabServer "/labplacecheck $($machine.x) $($machine.baseY + 1.04) $($machine.z - 1.3) Tutorial"
+$machine | ConvertTo-Json | Set-Content "$($Context.Evidence)/cabinet-model.json"
+if ($Context.Options.productionPlacement -and
+    ([Math]::Abs($machine.baseX - 63) -gt 0.01 -or [Math]::Abs($machine.baseZ + 51) -gt 0.01 -or
+     [Math]::Abs($machine.yaw - 180) -gt 0.01)) { throw 'Production cabinet placement was not reproduced' }
+# Use the actual custom model transform, including its rotation, for the approach.
+$reply=(Invoke-LabServer "/labplacecheck $($machine.approachX) $($machine.approachY) $($machine.approachZ) Tutorial") -join "`n"
+$reply | Set-Content "$($Context.Evidence)/cabinet-placement.txt"
+if ($reply -notmatch 'OFFLINE_LAB_PLACEMENT (\{[^\r\n]+\})') { throw "Placement check missing: $reply" }
+$placement=$Matches[1] | ConvertFrom-Json
+if (@($placement.warnings).Count) { throw "Cabinet approach has placement warnings: $reply" }
 Fixture 'place' $near
 Fixture 'audio-far' $far
 $null=Invoke-LabInput @{id='cabinet-settle';frames=120}
 $null=Set-LabAim -Target @{x=$machine.x;y=$machine.y;z=$machine.z}
+$startingVolume=if ($Context.Options.productionPlacement) { 0.6 } else { 1 }
 $before=Expect-Listeners @($near)
+if ([Math]::Abs($before.volume - $startingVolume) -gt 0.01) { throw 'Starting cabinet volume differs from config' }
+if ($Context.Options.productionPlacement) {
+    $null=Invoke-LabInput @{id='cabinet-saved-volume';frames=300;capture=$true;audio=$true;expectAudio=$true}
+    $null=Invoke-LabServer '/scp294fixture audio-volume 1'
+    $null=Invoke-LabInput @{id='cabinet-volume-settle';frames=60}
+}
+$before=Expect-Listeners @($near)
+if ([Math]::Abs($before.localX) -gt 0.01 -or [Math]::Abs($before.localY - 1.1) -gt 0.01 -or
+    [Math]::Abs($before.localZ + 0.4) -gt 0.01 -or [Math]::Abs($before.volume - 1) -gt 0.01 -or
+    [Math]::Abs($before.minDistance - 2.5) -gt 0.01) { throw "Speaker alignment/level incorrect: $($before | ConvertTo-Json -Compress)" }
 $null=Invoke-LabInput @{id='cabinet-near';frames=600;capture=$true;audio=$true;expectAudio=$true}
 $after=Expect-Listeners @($near)
 $seconds=($after.packets-$before.packets)*0.06
 if ($seconds -lt 8 -or ($after.bytes-$before.bytes) -ne 120*($after.packets-$before.packets)) { throw 'Missing 16 kb/s native packet stream' }
 $null=Invoke-LabScreenshot -Name 'cabinet-music-near'
-# Walk sideways along the open Surface road; backing up hits the wall behind this fixture.
-$null=Invoke-LabInput @{id='cabinet-leave-range';frames=600;keys=@(100);capture=$true;audio=$true}
+# Back out of production's narrow alcove; the default location opens sideways.
+$leaveKey=if ($Context.Options.productionPlacement) { 115 } else { 100 }
+$null=Invoke-LabInput @{id='cabinet-leave-range';frames=600;keys=@($leaveKey);capture=$true;audio=$true}
 Observe -ClientsOnly | ConvertTo-Json -Depth 8 | Set-Content "$($Context.Evidence)/cabinet-range-actors.json"
 $before=Expect-Listeners @()
 $null=Invoke-LabInput @{id='cabinet-out-of-range';frames=300;capture=$true;audio=$true}

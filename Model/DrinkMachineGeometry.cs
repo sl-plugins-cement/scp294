@@ -26,6 +26,7 @@ namespace Qlz.Model
         private static readonly Vector3 KeyboardCentre = new Vector3(-0.13f, 1.25f, -0.535f);
         private static readonly string[] KeyRows = { "1234567890", "QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM" };
         internal static readonly Vector3 InteractionPosition = new Vector3(0, 1.14f, -0.755f);
+        internal static readonly Vector3 SpeakerPosition = new Vector3(0, 1.1f, -0.4f);
         internal static readonly Vector3 InteractionSize = new Vector3(1.24f, 1.96f, 0.03f);
         internal static readonly IReadOnlyList<Part> Parts = Build();
         internal static readonly Label[] Labels = BuildLabels();

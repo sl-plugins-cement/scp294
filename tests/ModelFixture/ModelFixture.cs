@@ -46,6 +46,7 @@ public sealed class FixtureCommand : ICommand
     public string Command => "scp294fixture";
     public string[] Aliases => Array.Empty<string>();
     public string Description => "Offline-only model arrangement and inspection.";
+    private static Vector3 Approach(PrimitiveObjectToy root) => root.Transform.TransformPoint(new Vector3(0, 1.04f, -1.65f));
     // Read-only probe of the public ReinforcementsSystem API the SCP-294 candidate consumes.
     private static string ReinforcementForce(Player player)
     {
@@ -67,6 +68,15 @@ public sealed class FixtureCommand : ICommand
             return false;
         }
         var roots = PrimitiveObjectToy.List.Where(t => !t.IsDestroyed && t.GameObject.name == "SCP294-CoffeeMachine").ToArray();
+        if (args.Count == 2 && args.At(0) == "audio-volume" &&
+            float.TryParse(args.At(1), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float volume) &&
+            (volume == 0.6f || volume == 1f))
+        {
+            var speaker = SpeakerToy.List.Single(s => !s.IsDestroyed && s.GameObject.name == "SCP294-CabinetSpeaker");
+            speaker.Volume = volume;
+            response = "FIXTURE_OK audio-volume";
+            return true;
+        }
         if (args.Count == 1 && args.At(0) == "audio")
         {
             const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
@@ -75,7 +85,9 @@ public sealed class FixtureCommand : ICommand
             long Read(string name) => audio == null ? 0 : Convert.ToInt64(audio.GetType().GetProperty(name, flags).GetValue(audio));
             var eligible = Player.List.Where(p => audio != null && (bool)audio.GetType().GetMethod("CanHear", flags).Invoke(audio, new object[] { p })).Select(p => p.PlayerId);
             int speakers = SpeakerToy.List.Count(s => !s.IsDestroyed && s.GameObject.name == "SCP294-CabinetSpeaker");
-            response = $"AUDIO_STATE {{\"active\":{(audio != null ? "true" : "false")},\"speakers\":{speakers},\"packets\":{Read("PacketsSent")},\"bytes\":{Read("PayloadBytesSent")},\"listeners\":{Read("ListenerCount")},\"eligible\":[{string.Join(",", eligible)}]}}";
+            var speaker = SpeakerToy.List.FirstOrDefault(s => !s.IsDestroyed && s.GameObject.name == "SCP294-CabinetSpeaker");
+            Vector3 local = speaker != null && roots.Length == 1 ? roots[0].Transform.InverseTransformPoint(speaker.Position) : Vector3.zero;
+            response = FormattableString.Invariant($"AUDIO_STATE {{\"active\":{(audio != null ? "true" : "false")},\"speakers\":{speakers},\"packets\":{Read("PacketsSent")},\"bytes\":{Read("PayloadBytesSent")},\"listeners\":{Read("ListenerCount")},\"eligible\":[{string.Join(",", eligible)}],\"localX\":{local.x},\"localY\":{local.y},\"localZ\":{local.z},\"volume\":{speaker?.Volume ?? 0},\"minDistance\":{speaker?.MinDistance ?? 0}}}");
             return true;
         }
         if (args.Count == 0 || args.At(0) == "state")
@@ -90,7 +102,8 @@ public sealed class FixtureCommand : ICommand
             var target = root.GameObject.GetComponentInChildren<AdminToys.InvisibleInteractableToy>();
             Vector3 point = target.transform.position;
             Vector3 basePos = root.Transform.position;
-            response = FormattableString.Invariant($"MODEL_STATE {{\"roots\":1,\"toys\":{observedToys.Length},\"x\":{point.x},\"y\":{point.y},\"z\":{point.z},\"baseY\":{basePos.y}}}");
+            Vector3 approach = Approach(root);
+            response = FormattableString.Invariant($"MODEL_STATE {{\"roots\":1,\"toys\":{observedToys.Length},\"x\":{point.x},\"y\":{point.y},\"z\":{point.z},\"baseX\":{basePos.x},\"baseY\":{basePos.y},\"baseZ\":{basePos.z},\"yaw\":{root.Transform.eulerAngles.y},\"approachX\":{approach.x},\"approachY\":{approach.y},\"approachZ\":{approach.z}}}");
             return true;
         }
         if (args.Count != 2 || !int.TryParse(args.At(1), out int id) || !Player.TryGet(id, out Player player))
@@ -119,11 +132,11 @@ public sealed class FixtureCommand : ICommand
                 player.SetRole(RoleTypeId.Tutorial);
                 player.IsGodModeEnabled = true;
                 player.ClearInventory();
-                player.Position = roots[0].Transform.TransformPoint(new Vector3(0, 1.04f, -1.65f));
+                player.Position = Approach(roots[0]);
                 break;
             case "near":
                 if (roots.Length != 1) { response = "Expected one machine."; return false; }
-                player.Position = roots[0].Transform.TransformPoint(new Vector3(0, 1.04f, -1.65f));
+                player.Position = Approach(roots[0]);
                 break;
             case "force":
                 response = "FORCE_STATE {\"force\":\"" + ReinforcementForce(player) + "\",\"role\":\"" + player.Role + "\",\"alive\":" + (player.IsAlive ? "true" : "false") + "}";

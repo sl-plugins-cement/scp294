@@ -22,7 +22,7 @@ public sealed class Config
     public float MachineMusicRadius { get; set; } = 10f;
 
     [Description("Cabinet music volume, clamped to 0-2; 0 disables the stream.")]
-    public float MachineMusicVolume { get; set; } = 0.6f;
+    public float MachineMusicVolume { get; set; } = 1f;
 
     [Description("玩家与饮料机交互的个人冷却秒数。")]
     public float PersonalCooldown { get; set; } = 2f;
