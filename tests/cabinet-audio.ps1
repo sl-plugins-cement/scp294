@@ -43,17 +43,17 @@ Fixture 'place' $near
 Fixture 'audio-far' $far
 $null=Invoke-LabInput @{id='cabinet-settle';frames=120}
 $null=Set-LabAim -Target @{x=$machine.x;y=$machine.y;z=$machine.z}
-$startingVolume=if ($Context.Options.productionPlacement) { 0.6 } else { 1.2 }
+$startingVolume=if ($Context.Options.productionPlacement) { 0.6 } else { 1 }
 $before=Expect-Listeners @($near)
 if ([Math]::Abs($before.volume - $startingVolume) -gt 0.01) { throw 'Starting cabinet volume differs from config' }
 if ($Context.Options.productionPlacement) {
     $null=Invoke-LabInput @{id='cabinet-saved-volume';frames=300;capture=$true;audio=$true;expectAudio=$true}
-    $null=Invoke-LabServer '/scp294fixture audio-volume 1.2'
+    $null=Invoke-LabServer '/scp294fixture audio-volume 1'
     $null=Invoke-LabInput @{id='cabinet-volume-settle';frames=60}
 }
 $before=Expect-Listeners @($near)
 if ([Math]::Abs($before.localX) -gt 0.01 -or [Math]::Abs($before.localY - 1.1) -gt 0.01 -or
-    [Math]::Abs($before.localZ + 0.4) -gt 0.01 -or [Math]::Abs($before.volume - 1.2) -gt 0.01 -or
+    [Math]::Abs($before.localZ + 0.4) -gt 0.01 -or [Math]::Abs($before.volume - 1) -gt 0.01 -or
     [Math]::Abs($before.minDistance - 2.5) -gt 0.01) { throw "Speaker alignment/level incorrect: $($before | ConvertTo-Json -Compress)" }
 $null=Invoke-LabInput @{id='cabinet-near';frames=600;capture=$true;audio=$true;expectAudio=$true}
 $after=Expect-Listeners @($near)

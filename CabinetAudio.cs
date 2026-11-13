@@ -57,7 +57,7 @@ internal sealed class CabinetAudio : IDisposable
     internal static CabinetAudio? Start(Vector3 position, float radius, float volume)
     {
         if (float.IsNaN(radius) || float.IsInfinity(radius)) radius = 10f;
-        if (float.IsNaN(volume) || float.IsInfinity(volume)) volume = 1.2f;
+        if (float.IsNaN(volume) || float.IsInfinity(volume)) volume = 1f;
         radius = Mathf.Clamp(radius, 1f, 100f);
         volume = Mathf.Clamp(volume, 0f, 2f);
         if (volume == 0f) return null;

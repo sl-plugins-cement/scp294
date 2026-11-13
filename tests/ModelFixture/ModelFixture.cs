@@ -70,7 +70,7 @@ public sealed class FixtureCommand : ICommand
         var roots = PrimitiveObjectToy.List.Where(t => !t.IsDestroyed && t.GameObject.name == "SCP294-CoffeeMachine").ToArray();
         if (args.Count == 2 && args.At(0) == "audio-volume" &&
             float.TryParse(args.At(1), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float volume) &&
-            (volume == 0.6f || volume == 1.2f))
+            (volume == 0.6f || volume == 1f))
         {
             var speaker = SpeakerToy.List.Single(s => !s.IsDestroyed && s.GameObject.name == "SCP294-CabinetSpeaker");
             speaker.Volume = volume;
