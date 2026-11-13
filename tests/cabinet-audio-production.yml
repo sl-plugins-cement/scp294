@@ -1,0 +1,14 @@
+# Reproduce SR1 cabinet placement and saved audio level in the isolated lab.
+is_enabled: true
+machine_position:
+  x: 63
+  y: 292
+  z: -51
+machine_rotation:
+  x: 0
+  y: 180
+  z: 0
+machine_scale: 10
+machine_music_radius: 10
+machine_music_volume: 0.6
+spawn_on_round_start: false
