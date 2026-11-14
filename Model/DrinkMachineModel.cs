@@ -32,7 +32,8 @@ namespace Qlz.Model
                 foreach (DrinkMachineGeometry.Part part in DrinkMachineGeometry.Parts)
                 {
                     PrimitiveObjectToy toy = PrimitiveObjectToy.Create(part.Position, Quaternion.Euler(part.Rotation), part.Scale, model.root.Transform, false);
-                    toy.Type = part.Type;
+                    // Geometry stays on UnityEngine.PrimitiveType because the Unity authoring preview shares it; Cube and Cylinder keep their values in PrimitiveToyType.
+                    toy.Type = (AdminToys.PrimitiveToyType)(int)part.Type;
                     toy.Color = part.Color;
                     toy.Flags = (part.Visible ? PrimitiveFlags.Visible : PrimitiveFlags.None) | (part.Collidable ? PrimitiveFlags.Collidable : PrimitiveFlags.None);
                     toy.IsStatic = true;
