@@ -10,10 +10,10 @@ public sealed class Config
     public bool IsEnabled { get; set; } = true;
 
     [Description("SCP-294 饮料机坐标，生成时贴合下方地面。")]
-    public Vector3 MachinePosition { get; set; } = new Vector3(58f, 292f, -43f);
+    public Vector3 MachinePosition { get; set; } = new Vector3(-3f, 297.4f, -35.4f);
 
     [Description("SCP-294 饮料机的旋转，正面朝局部负 Z。")]
-    public Vector3 MachineRotation { get; set; } = Vector3.zero;
+    public Vector3 MachineRotation { get; set; } = new Vector3(0f, 180f, 0f);
 
     [Description("SCP-294 模型大小，10 为默认约 2.2 米高，按比例缩放。")]
     public float MachineScale { get; set; } = 10f;

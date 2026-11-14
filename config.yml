@@ -2,13 +2,13 @@
 is_enabled: true
 # SCP-294 position, projected onto the floor below when spawned.
 machine_position:
-  x: 58
-  y: 292
-  z: -43
+  x: -3
+  y: 297.4
+  z: -35.4
 # SCP-294 rotation; the front faces local negative Z.
 machine_rotation:
   x: 0
-  y: 0
+  y: 180
   z: 0
 # Model size: 10 gives the authored 2.2-metre cabinet; other values scale proportionally.
 machine_scale: 10

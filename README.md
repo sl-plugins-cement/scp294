@@ -38,12 +38,12 @@ Placement is configurable:
 
 ```yaml
 machine_position:
-  x: 58
-  y: 292
-  z: -43
+  x: -3
+  y: 297.4
+  z: -35.4
 machine_rotation:
   x: 0
-  y: 0
+  y: 180
   z: 0
 machine_scale: 10
 ```
