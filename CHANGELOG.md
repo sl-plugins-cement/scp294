@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- Move the default machine to the 15.0 Surface: against the south wall of the road below the garage (`-3, 297.4, -35.4`), facing north into the road.
+- Move the default machine to the 15.0 Surface: against the south wall of the road below the garage (`-1.5, 297.4, -35.4`), facing north into the road.
 - Anchor cabinet music inside the model's front panel with scale and rotation, raise its default volume to 1 and delay distance falloff until 2.5 metres.
 - Add looping cabinet music, pre-encoded as 16 kb/s mono Opus, streamed only to listeners within its configurable hearing radius.
 - Show the drink timer and 67 magazine as a row of BuffSystem's shared status panel, and send personal notices through its shared notice lane. BuffSystem is now required; `buff_hint_x`, `buff_hint_y` and `message_hint_y` are no longer read.

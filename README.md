@@ -38,7 +38,7 @@ Placement is configurable:
 
 ```yaml
 machine_position:
-  x: -3
+  x: -1.5
   y: 297.4
   z: -35.4
 machine_rotation:

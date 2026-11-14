@@ -10,7 +10,7 @@ public sealed class Config
     public bool IsEnabled { get; set; } = true;
 
     [Description("SCP-294 饮料机坐标，生成时贴合下方地面。")]
-    public Vector3 MachinePosition { get; set; } = new Vector3(-3f, 297.4f, -35.4f);
+    public Vector3 MachinePosition { get; set; } = new Vector3(-1.5f, 297.4f, -35.4f);
 
     [Description("SCP-294 饮料机的旋转，正面朝局部负 Z。")]
     public Vector3 MachineRotation { get; set; } = new Vector3(0f, 180f, 0f);
